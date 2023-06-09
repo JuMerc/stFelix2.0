@@ -13,7 +13,6 @@ import { LoginController, LoginSubmit, Logout } from "../controllers/login.js";
 import { AdminController, NewAdmin, AddNewAdmin } from "../controllers/admin.js"
 
 const adminCheckMiddleware = function (req, res, next) {
-
     if(req.session.isAdmin) {
         next();
     } else {
@@ -49,11 +48,9 @@ router.get('/logout', Logout);
 
 router.get('/admin', adminCheckMiddleware ,AdminController)
 
-
 //Affiche la page pour ajouter un nouvel admin
 
 router.get('/addnewadmin',adminCheckMiddleware,NewAdmin)
-
 
 //Ajout d'un nouvel administrateur a l'aide du formulaire
 
