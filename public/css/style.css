@@ -1,0 +1,449 @@
+@font-face{
+    font-family: "dancingScript";
+    src:url("../fonts/DancingScript-Regular.ttf") format("truetype");
+  }
+  @font-face{
+    font-family: "dancingScript";
+    src:url("../fonts/DancingScript-Bold.ttf") format("truetype");
+    font-weight: bold;
+  }
+  @font-face{
+    font-family: "montserrat";
+    src:url("../fonts/Montserrat-Regular.ttf") format("truetype");
+  }
+  @font-face{
+    font-family: "montserrat";
+    font-weight: bold;
+    font-style: italic;
+    src:url("../fonts/Montserrat-BoldItalic.ttf") format("truetype");
+  }
+  @font-face{
+    font-family: "montserrat";
+    font-style: italic;
+    src:url("../fonts/Montserrat-Italic.ttf") format("truetype");
+  }
+  *{
+      box-sizing:border-box;
+  
+  }
+  html{
+      font-size:62.5%;
+      margin:0;
+  }
+  body{
+      margin:0;
+      padding:0;
+      font-family: montserrat, sans-serif;
+      font-size: 1.5rem;
+      line-height: 1.6rem;
+      word-spacing: 1px;
+      background-color:#f3e1d3;
+  }
+  ul{
+      list-style: none;
+      padding:0;
+      margin:0;
+  }
+  a{
+      text-decoration: none;
+  }
+  h1,
+  h2,
+  h3,
+  h4{
+      font-family:dancingScript, cursive;
+  }
+  h1{
+      font-size: 5rem;
+      text-align: center;
+  }
+  h2{
+      font-size:4.5rem;
+      line-height: 4rem;
+      text-align: center;
+      width:100%;
+  }
+  h3{
+      font-size:3.5rem;
+  }
+  h4{
+      font-size:2rem;
+  }
+  .container{
+      width:95%;
+      margin:auto;
+  }
+  
+  /**********PARAMETRES***********/
+  
+  .header{
+      display:flex;
+      flex-direction: column;
+  }
+  .header .title{
+      margin:auto;
+  }
+  .title{
+      width:100%;
+      background: linear-gradient(black 20%, #f3e1d3);
+  }
+  .title .admin {
+    margin: 10px;
+    position: absolute
+  }
+  .title h1,
+  .title h2{
+      color:#f3e1d3;
+  }
+  .title a{
+      color:#f3e1d3;
+  }
+  .nav ul{
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+  }
+  .nav ul li{
+      padding: 20px;
+      border-bottom: 3px solid #f9dda2;
+      background-color: black;
+  }
+  .nav ul li a{
+      color:#f3e1d3;
+      font-style: italic;
+        
+  }
+  .nav  ul .first{
+      border-top:3px solid #f9dda2;
+  }
+  .nav ul li:active{
+      color:black;
+      background-color: #f3e1d3;
+  }
+  
+  /***************HEADER*******************/
+  
+  .footer{
+      display:flex;
+      flex-direction: column;
+      border-top: 15px solid black;
+      padding-bottom: 20px;
+      text-align: center;
+      background: linear-gradient(#f3e1d3 5%, black);
+      color:#f3e1d3;
+      margin-top:30px;
+  }
+  
+  .footer h3{
+      color:black;
+      font-weight: bold;
+  }
+  .footer i{
+      font-size: 3rem;
+      color:black;
+      margin:0 40px;
+  }
+  .footer i:hover{
+      color:#f9dda2;
+  }
+  .footer  a{
+      color:#f9dda2;
+  }
+  /****************FOOTER*****************/
+  
+  .carrousel{
+      width:95%;
+      margin:auto
+  }
+  .carrousel img{
+      width: 100%;
+      border: 5px solid black;
+  }
+  
+  .slick-prev:before {
+      content: '';
+  }
+  .slick-next:before {
+      content: '';
+  }
+  
+  .slick-dots li button::before {
+      font-size: 3rem;
+      color: black;
+  }
+  
+  .slick-dots li.slick-active button::before {
+      color: #950000;
+  }
+  
+  /***********CARROUSEL***********/
+  
+  .accueil{
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      margin:auto;
+      width:95%;
+  }
+  .accueil p{
+      text-align: justify;
+  }
+  .marques{
+      display: flex;
+      flex-wrap:wrap;
+      flex-direction: column;
+      text-align: center;
+      }
+      .single-marques{
+          margin:auto;
+          width:95%
+      }
+  .marques img{
+      width:30%;
+      border-radius:50%;
+      margin:30px;
+      border: 2px solid #f9dda2;
+      box-shadow: 5px 5px 5px grey;
+  }
+  .marques p{
+      text-align: justify;
+  }
+  
+  /**********************************ACCUEIL***************************************/
+  .tarifs {
+      width:90%;
+      margin:auto;
+  }
+  .tarifs .serve {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+  .tarifs .single-serve {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid black;
+  }
+  .tarifs .serve .single-serve span {
+    float: right;
+    font-style: italic;
+  }
+  
+  /************************************SERVICE ET TARIFS***************************************/
+  .team {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width:80%;
+    margin:auto;
+  }
+  .team .member{
+      display:flex;
+      flex-direction: column;
+      padding-bottom:30px;
+      border-bottom: 3px solid black;  
+  }
+  .team .member img {
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 3px solid black;
+  }
+  .team .member p {
+    text-align: justify;
+  }
+  .member:last-child{
+      border:none;
+  }
+  /****************************************TEAM*********************************************/
+  
+  .galerie {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: auto;
+  }
+  .galerie .image{
+      width:48%;
+      margin-bottom: 20px;
+  }
+  .galerie .image img {
+    width:100%;
+    border-radius: 10px;
+    border:2px solid black;
+  }
+  
+  /*************************************GALLERIE****************************************/
+  .contact {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 95%;
+    margin: auto;
+  }
+  .content .info{
+      margin-bottom: 50px;
+  }
+  .contact a{
+      color:black;
+      font-style: italic;
+  }
+  .content .info h3{
+      display: inline-block;
+      margin:0;
+      padding-bottom: 20px;
+      border-bottom: 1px solid black;
+  }
+  .contact .map{
+      width: 100%;
+  }
+  .contact .map iframe {
+    width:100%;
+    height:300px;
+    border-radius: 50px;
+    border: 3px solid black;
+  }
+  
+  /*************************************CONTACT****************************************/
+  
+  /**************************************MEDIA QUERIES*************************************************/
+  
+  @media screen and (min-width: 650px){
+      .nav ul{
+          flex-direction:row;
+          background-color: black;
+          justify-content: space-around;
+          border-top:3px solid #f9dda2;
+          border-bottom:3px solid #f9dda2;
+      }
+      .nav ul li{
+          border:none;
+          margin:auto;
+          font-style: italic;
+      }
+      .nav  ul .first{
+          border:none;
+      }
+      .nav ul li:hover{
+      color:#f9dda2;
+      background-color: black;
+      letter-spacing: 1px;
+      }
+      .nav ul li:active{
+          letter-spacing: 5px;
+      }
+      .footer{
+          flex-direction: row;
+          justify-content: space-around;
+      }
+      .footer .social i{
+          margin-top: 30px ;
+      }
+      .accueil{
+          flex-direction: row;
+      }
+      .accueil h2{
+          width:100%;
+      }
+      .carrousel{
+          width:48%;
+      }
+      .accueil .para{
+          width:48%;
+      }
+      .marques{
+          flex-direction: row;
+      }
+      .marques h3{
+          width: 100%;
+      }
+      .single-marques{
+          width:45%;
+          margin:auto;
+      }
+      .team {
+          flex-direction: row;
+      }
+      .team h2{
+          width:100%;
+      }
+      .team .member{
+          flex-direction: row;
+          justify-content: space-between;
+          flex-wrap: wrap;
+      }
+      .member h3{
+          width:100%;
+      }
+      .member .img{
+          width:48%;
+      }
+      .member p{
+          width:48%;
+          line-height: 2.5rem;
+      }
+      .galerie .image{
+      width:30%;
+      }
+      .contact{
+          flex-direction: row;
+          justify-content: space-between;
+      }
+      .contact .content{
+          width:48%;
+      }
+      .contact .map{
+          width:48%;
+      }
+      .contact .map iframe{
+          height: 500px
+      }
+  }
+  
+  @media screen and (min-width:980px){
+      .desktop{
+          max-width: 900px;
+          margin:auto;
+      }
+      body{
+          word-spacing: 5px;
+          line-height: 2rem;
+      }
+      .header{
+          flex-direction: row;
+          background: linear-gradient(black 20%, #f3e1d3);
+          align-items: center;
+          position:sticky;
+          top:0;
+          z-index:2;
+          border-bottom :3px solid black;
+      }
+      .header .title,
+      .header .nav{
+          width:48%;
+          padding:0;
+      }
+      .header .nav{
+          margin-right:50px;
+          margin-top:50px;
+      }
+      .header .nav ul{
+          border:none;
+          background: none;
+      }
+      .header .nav ul li{
+          padding:0 10px 0 0;
+          background: none;
+      }
+      .tarifs .serve{
+          flex-direction: row;
+          justify-content: space-between;
+      }
+      .serve .single-serve{
+          min-width:48%;
+      }
+      .galerie .image{
+      width:23%;
+      }
+  }
+  
