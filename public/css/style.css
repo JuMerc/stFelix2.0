@@ -88,11 +88,15 @@
       background: linear-gradient(black 20%, #f3e1d3);
   }
   .title .admin {
-    margin: 10px;
+    margin: 20px 10px 10px 20px;
     position: absolute
   }
   .title .logout {
-    margin: 50px 10px 10px 10px;
+    margin: 65px 10px 10px 20px;
+    position: absolute
+  }
+  .title .newAdmin {
+    margin: 110px 10px 10px 20px;
     position: absolute
   }
   .title h1,

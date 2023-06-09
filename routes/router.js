@@ -9,8 +9,8 @@ import ServeController from "../controllers/serve.js";
 import TeamController from "../controllers/team.js";
 import GalerieController from "../controllers/galerie.js";
 import ContactController from "../controllers/contact.js";
-import { LoginController, LoginSubmit, Logout} from "../controllers/login.js";
-import {AdminController} from "../controllers/admin.js"
+import { LoginController, LoginSubmit, Logout } from "../controllers/login.js";
+import { AdminController, NewAdmin, AddNewAdmin } from "../controllers/admin.js"
 
 const adminCheckMiddleware = function (req, res, next) {
 
@@ -48,6 +48,14 @@ router.get('/logout', Logout);
 //Affiche la page admin
 
 router.get('/admin', adminCheckMiddleware ,AdminController)
+
+//Affiche la page pour ajouter un nouvel admin
+
+router.get('/addnewadmin',adminCheckMiddleware,NewAdmin)
+
+//Ajout d'un nouvel administrateur a l'aide du formulaire
+
+router.post('/addnewadmin', AddNewAdmin)
 
 
 export default router;
