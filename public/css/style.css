@@ -91,6 +91,10 @@
     margin: 10px;
     position: absolute
   }
+  .title .logout {
+    margin: 50px 10px 10px 10px;
+    position: absolute
+  }
   .title h1,
   .title h2{
       color:#f3e1d3;

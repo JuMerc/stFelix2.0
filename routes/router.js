@@ -9,7 +9,8 @@ import ServeController from "../controllers/serve.js";
 import TeamController from "../controllers/team.js";
 import GalerieController from "../controllers/galerie.js";
 import ContactController from "../controllers/contact.js";
-import { LoginController, LoginSubmit} from "../controllers/login.js";
+import { LoginController, LoginSubmit, Logout} from "../controllers/login.js";
+import {AdminController} from "../controllers/admin.js"
 
 const adminCheckMiddleware = function (req, res, next) {
 
@@ -40,6 +41,13 @@ router.get('/login', LoginController)
 
 //s'identifier a l'aide du  formulaire
 router.post('/login', LoginSubmit)
+
+//ce déconnecter
+router.get('/logout', Logout);
+
+//Affiche la page admin
+
+router.get('/admin', adminCheckMiddleware ,AdminController)
 
 
 export default router;

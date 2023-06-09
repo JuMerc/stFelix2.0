@@ -13,6 +13,9 @@
 	<header class="header">
 		<div class="title">
 			<div class="admin"><a href="/admin"><i class="fa-solid fa-user-gear"></i></a></div>
+			<% if(locals.isAdmin) { %>
+			<div class="logout"><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a></div>
+			<% } %>
 			<h1><a href="/">Au Petit Salon</a></h1>
 			<h2><a href="/">Saint Félix</a></h2>
 		</div>

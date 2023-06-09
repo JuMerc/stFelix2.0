@@ -36,17 +36,6 @@ app.use(function (req, res, next) {
 	next();
 });
 
-// app.use(function(req, res, next) {
-// 	const route = parseurl(req).pathname;
-// 	const protectedRoute = ['/admin', '/add_post', 'edit_post', 'delete_post']
-
-// 	if(protectedRoute.indexOf(route) > -1 && !req.session.isAdmin){
-// 		res.redirect('/login')
-// 	} else {
-// 		next();
-// 	}
-// })
-
 //appel du routeur
 app.use('/', router);
 
