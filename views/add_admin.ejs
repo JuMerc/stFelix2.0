@@ -1,12 +1,12 @@
 <main class="desktop">
     <h2>Ajout d'un nouvel administrateur</h2>
-    <form action="/addnewadmin" method="post" class="form">
+    <form action="/addnewadmin" method="post" class="form" enctype="multipart/form-data">
 
         <input class="field email" type="email" id="email" name="email" placeholder="Email">
 
         <input class="field name" type="name" id="name" name="name" placeholder="Prenom">
 
-        <input class="field picture" type="text" id="picture" name="picture" placeholder="Photo">
+        <input class="field picture" type="file" id="myfile" name="myfile">
 
         <textarea class="field text" name="text" id="text" rows="20" cols="33"
             placeholder="Un texte de description"></textarea>
