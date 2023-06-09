@@ -49,9 +49,11 @@ router.get('/logout', Logout);
 
 router.get('/admin', adminCheckMiddleware ,AdminController)
 
+
 //Affiche la page pour ajouter un nouvel admin
 
 router.get('/addnewadmin',adminCheckMiddleware,NewAdmin)
+
 
 //Ajout d'un nouvel administrateur a l'aide du formulaire
 
