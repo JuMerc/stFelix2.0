@@ -10,8 +10,9 @@ import TeamController from "../controllers/team.js";
 import GalerieController from "../controllers/galerie.js";
 import ContactController from "../controllers/contact.js";
 import { LoginController, LoginSubmit, Logout } from "../controllers/login.js";
-import { AdminController, NewAdmin, AddNewAdmin } from "../controllers/admin.js"
+import { AdminController, NewAdmin, AddNewAdmin, AddCarrouselPicture } from "../controllers/admin.js"
 
+// Middleware qui bloque les routes si on est pas connecté
 const adminCheckMiddleware = function (req, res, next) {
     if(req.session.isAdmin) {
         next();
@@ -46,7 +47,8 @@ router.get('/logout', Logout);
 
 //Affiche la page admin
 
-router.get('/admin', adminCheckMiddleware ,AdminController)
+// router.get('/admin', adminCheckMiddleware ,AdminController)
+router.get('/admin' ,AdminController)
 
 //Affiche la page pour ajouter un nouvel admin
 
@@ -55,6 +57,10 @@ router.get('/addnewadmin',adminCheckMiddleware,NewAdmin)
 //Ajout d'un nouvel administrateur a l'aide du formulaire
 
 router.post('/addnewadmin', AddNewAdmin)
+
+//Ajout de photos dans le carrousel via un formulaire
+
+router.post('/addcarrouselpicture', AddCarrouselPicture)
 
 
 export default router;
