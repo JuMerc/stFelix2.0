@@ -6,12 +6,22 @@
             <% for (let i = 0; i < 5; i++) { %>
               <input class="field picture" type="file" id="carrousel<%= i %>" name="carrousel<%= i %>">
             <% } %>
-            <input class="button" type="submit" value="Ajout">
+            <input class="button" type="submit" value="Modifier">
           </form>
 
         <h4>Modification du texte d'accueil</h4>
         <form action="/updateindextext" method="post">
-          <textarea id="indexText" name="indexText"></textarea>
+          <textarea class="field text" id="indexText" name="indexText" rows="20" cols="50"
+          placeholder="Nouveau texte d'accueil"></textarea>
+          <input class="button" type="submit" value="Modifier">
+        </form>
+
+        <h4>Modification des marques</h4>
+        <form action="/updateBrand" method="post" class="form" enctype="multipart/form-data">
+          <% for (let i = 0; i < 5; i++) { %>
+            <input class="field picture" type="file" id="carrousel<%= i %>" name="carrousel<%= i %>">
+          <% } %>
+          <input class="button" type="submit" value="Modifier">
         </form>
     </section>
 </main>

@@ -14,8 +14,11 @@
             </div>
         </div>
         <div class="para">
-            <%= text[0].index_text %>
-          </div>
+            <% const paragraphs = text[0].index_text.split('\n'); %>
+            <% for (let i = 0; i < paragraphs.length; i++) { %>
+              <p><%= paragraphs[i] %></p>
+            <% } %>
+        </div>
     </section>
     <section class="marques">
         <h3>Nos marques partenaires</h3>

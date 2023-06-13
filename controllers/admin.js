@@ -184,3 +184,23 @@ export const UpdateCarrouselPicture = (req, res) => {
     });
   });
 };
+
+export const UpdateIndexText = (req, res) => {
+  const indexText = req.body.indexText; // Récupérer le nouveau texte à partir du corps de la requête
+  // Mettre à jour le texte dans la base de données
+  pool.query(
+    "UPDATE infos SET index_text = ?",[indexText],function (error, results) {
+      if (error) {
+        console.error(error);
+        res.status(500).send("Erreur de base de données");
+        return;
+      }
+      // Rediriger vers une autre page ou effectuer une autre action après la mise à jour
+      res.redirect("/");
+    }
+  );
+};
+
+export const UpdateBrand = (req, res) => {
+ 
+};
