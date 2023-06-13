@@ -10,7 +10,7 @@ import TeamController from "../controllers/team.js";
 import GalerieController from "../controllers/galerie.js";
 import ContactController from "../controllers/contact.js";
 import { LoginController, LoginSubmit, Logout } from "../controllers/login.js";
-import { AdminController, NewAdmin, AddNewAdmin, UpdateCarrouselPicture, UpdateIndexText, UpdateBrand } from "../controllers/admin.js"
+import { AdminController, NewAdmin, AddNewAdmin, UpdateCarrouselPicture, UpdateIndexText, AddBrand, DeleteBrand } from "../controllers/admin.js"
 
 // Middleware qui bloque les routes si on est pas connecté
 const adminCheckMiddleware = function (req, res, next) {
@@ -61,8 +61,10 @@ router.post('/addcarrouselpicture', UpdateCarrouselPicture)
 //Update du text dans l'accueil
 router.post('/updateindextext', UpdateIndexText )
 
-//Update des marques dans la page d'accueil
-router.post('/updateBrand', UpdateBrand)
+//Ajout d'une marque dans la page d'accueil
+router.post('/addbrand', AddBrand)
 
+//Suppression d'une marque
+router.delete('/brands/:id', DeleteBrand);
 
 export default router;

@@ -1,27 +1,56 @@
 <main class="desktop">
-    <section class="index">
-        <h3>Modification de la page d'accueil</h3>
-        <h4>Modification des photos du carrousel</h4>
-        <form action="/addcarrouselpicture" method="post" class="form" enctype="multipart/form-data">
-            <% for (let i = 0; i < 5; i++) { %>
-              <input class="field picture" type="file" id="carrousel<%= i %>" name="carrousel<%= i %>">
-            <% } %>
-            <input class="button" type="submit" value="Modifier">
-          </form>
-
-        <h4>Modification du texte d'accueil</h4>
-        <form action="/updateindextext" method="post">
-          <textarea class="field text" id="indexText" name="indexText" rows="20" cols="50"
-          placeholder="Nouveau texte d'accueil"></textarea>
+  <section class="index">
+    <h2>Modification de la page d'accueil</h3>
+    <div>
+    <h3>Modification des photos du carrousel</h4>
+    <form action="/addcarrouselpicture" method="post" class="form" enctype="multipart/form-data">
+      <% for (let i=0; i < 5; i++) { %>
+        <input class="field picture" type="file" id="carrousel<%= i %>" name="carrousel<%= i %>">
+        <% } %>
           <input class="button" type="submit" value="Modifier">
-        </form>
+    </form>
+  </div>
+  <div>
+    <h3>Modification du texte d'accueil</h4>
+    <form action="/updateindextext" method="post">
+      <textarea class="field text" id="indexText" name="indexText" rows="8" cols="20"
+        placeholder="Nouveau texte d'accueil"></textarea>
+      <input class="button" type="submit" value="Modifier">
+    </form>
+  </div>
 
-        <h4>Modification des marques</h4>
-        <form action="/updateBrand" method="post" class="form" enctype="multipart/form-data">
-          <% for (let i = 0; i < 5; i++) { %>
-            <input class="field picture" type="file" id="carrousel<%= i %>" name="carrousel<%= i %>">
+    <h3>Modification de la section des marques</h4>
+    <div>
+      <h4>Ajout d'une marque</h5>
+      <form action="/addbrand" method="post" class="form" enctype="multipart/form-data">
+        <input class="field" type="text" id="title" name="title" placeholder="Nom de la marque">
+        <label for="newbrand">Une photo du logo de la marque</label>
+        <input class="field picture" type="file" id="newbrand" name="newbrand">
+        <textarea class="field text" id="brandText" name="brandText" rows="8" cols="10"
+        placeholder="Description de la marque"></textarea>
+        <input class="button" type="submit" value="Ajouter">
+      </form>
+    </div>
+    <div>
+      <h4>Suppression d'une marque</h4>
+      <table class="js-post-table">
+        <thead>
+            <th>Titre</th>
+            <th>img</th>
+            <th>Texte</th>
+            <th></th>
+        </thead>
+        <tbody>
+          <% for(let i = 0; i < brands.length; i++) { %>
+            <tr data-id="<%=brands[i].id%>">
+              <td><%=brands[i].title%></td>
+              <td><img src="<%= brands[i].img %>" alt="<%= brands[i].title %>"></td>
+              <td><%=brands[i].text.substring(0, 30)%> ...</td>
+              <td><button class="remove js-remove-post-button" data-id="<%=brands[i].id%>"><i class="fa fa-remove"></i></button></td>
+            </tr>
           <% } %>
-          <input class="button" type="submit" value="Modifier">
-        </form>
-    </section>
+        </tbody>
+      </table>
+    </div>
+  </section>
 </main>

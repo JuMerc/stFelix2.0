@@ -22,25 +22,12 @@
     </section>
     <section class="marques">
         <h3>Nos marques partenaires</h3>
-        <div class="single-marques">
-            <img src="/img/davines.jpg" alt="davines">
-            <p>"Notre idéal de beauté s'inspire du concept d'équilibre entre la forme et la substance. Notre style s'inspire de la simplicité, de l'harmonie et du bon goût."</p>
-
-        </div>
-        <div class="single-marques">
-            <img src="img/alterego.jpg" alt="alterego">
-            <p>"Groupe considéré comme l'un des plus créatifs et éclectiques de la scène internationale de la coiffure"</p>
-        </div>
-        <div class="single-marques">
-            <img src="/img/loreale.jpg" alt="loreale">
-            <p>"Vous accompagner dans votre beauté pour votre accomplissement personnel, selon vos choix, vos désirs et vos propres règles. Parce que vous le valez bien."</p>
-        </div>
-        <div class="single-marques">
-            <img src="/img/kerastase.jpg" alt="kerastase">
-            <p>"Inspiré par sa connaissance approfondie de la femme moderne, Kérastase
-                continue de créer des produits et des soins sur mesure pour répondre aux
-            besoins de cheveux exceptionnels."</p>
-        </div>		
+        <% for (let i = 0; i < brands.length; i++) { %>
+            <div class="single-marques">
+                <img src="<%= brands[i].img %>" alt="<%= brands[i].title %>">
+                <p><%= brands[i].text %></p>
+            </div>
+        <% } %>
     </section>
 </main>
 <!-- PLUGIN JQUERY-->

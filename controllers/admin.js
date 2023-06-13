@@ -5,7 +5,16 @@ import formidable from "formidable";
 import fs from "fs";
 
 export const AdminController = (req, res) => {
-  res.render("layout", { template: "admin" });
+  pool.query("SELECT * FROM marques", (error, brandResults) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send("Erreur de base de données");
+      return;
+    }
+
+    // Envoyer les résultats à la vue EJS pour affichage
+    res.render("layout", { template: "admin", brands: brandResults });
+  });
 };
 
 export const NewAdmin = (req, res) => {
@@ -27,7 +36,7 @@ export const AddNewAdmin = (req, res) => {
     }
     const extension = files.myfile.originalFilename.split(".").pop();
     const oldPath = files.myfile.filepath;
-    const newPath = `./public/upload/${files.myfile.newFilename}.${extension}`;
+    const newPath = `./public/team/${files.myfile.newFilename}.${extension}`;
 
     if (files.myfile.size > maxSize) {
       return res.status(500).send("Image trop volumineuse");
@@ -77,21 +86,21 @@ export const AddNewAdmin = (req, res) => {
 //   const maxSize = 5 * 1024 * 1024;
 //   const form = new formidable.IncomingForm();
 //   const authorizedExtention = ["image/jpeg", "image/png", "image/jpg"];
-  
+
 //   form.parse(req, (err, fields, files) => {
 //     if (err) {
 //       console.error(err);
 //       return res.status(500).send("Une erreur est survenue lors de l'upload de l'image.");
 //     }
-    
+
 //     for (let i = 1; i <= 5; i++) {
 //       const carrouselFile = files[`carrousel${i}`];
-      
+
 //       if (carrouselFile && carrouselFile.originalFilename) {
 //         const extension = carrouselFile.originalFilename.split(".").pop();
 //         const oldPath = carrouselFile.filepath;
 //         const newPath = `./public/carrousel/${carrouselFile.newFilename}.${extension}`;
-        
+
 //         if (!authorizedExtention.includes(carrouselFile.mimetype)) {
 //           return res.status(500).send("Le fichier n'a pas la bonne extension");
 //         }
@@ -99,15 +108,15 @@ export const AddNewAdmin = (req, res) => {
 //         if (carrouselFile.size > maxSize) {
 //           return res.status(500).send("Image trop volumineuse");
 //         }
-        
+
 //         fs.rename(oldPath, newPath, (error) => {
 //           if (error) {
 //             console.log(error);
 //           }
 //         });
-        
+
 //         const img = `/carrousel/${carrouselFile.newFilename}.${extension}`;
-        
+
 //         pool.query(
 //           "INSERT INTO carrousel (id, img) VALUES (?, ?)",
 //           [uuidv4(), img],
@@ -117,7 +126,7 @@ export const AddNewAdmin = (req, res) => {
 //         );
 //       }
 //     }
-    
+
 //     res.redirect("/admin");
 //   });
 // };
@@ -131,17 +140,22 @@ export const UpdateCarrouselPicture = (req, res) => {
   form.parse(req, (err, fields, files) => {
     if (err) {
       console.error(err);
-      return res.status(500).send("Une erreur est survenue lors de l'upload de l'image.");
+      return res
+        .status(500)
+        .send("Une erreur est survenue lors de l'upload de l'image.");
     }
 
     pool.query("SELECT id, img FROM carrousel", (error, results) => {
       if (error) {
         console.error(error);
-        return res.status(500).send("Une erreur est survenue lors de la récupération des anciens uploads.");
+        return res
+          .status(500)
+          .send(
+            "Une erreur est survenue lors de la récupération des anciens uploads."
+          );
       }
-      
+
       for (let i = 0; i < results.length; i++) {
-        
         const row = results[i];
         const carrouselFile = files[`carrousel${i}`];
         if (carrouselFile && carrouselFile.originalFilename) {
@@ -149,25 +163,27 @@ export const UpdateCarrouselPicture = (req, res) => {
           const oldPath = carrouselFile.filepath;
           const newPath = `./public/carrousel/${carrouselFile.newFilename}.${extension}`;
           if (!authorizedExtention.includes(carrouselFile.mimetype)) {
-            return res.status(500).send("Le fichier n'a pas la bonne extension");
+            return res
+              .status(500)
+              .send("Le fichier n'a pas la bonne extension");
           }
-      
+
           if (carrouselFile.size > maxSize) {
             return res.status(500).send("Image trop volumineuse");
           }
-      
+
           // Supprimer l'ancien fichier
           const oldImagePath = `./public${row.img}`;
           fs.unlinkSync(oldImagePath);
-      
+
           fs.rename(oldPath, newPath, (error) => {
             if (error) {
               console.log(error);
             }
           });
-      
+
           const img = `/carrousel/${carrouselFile.newFilename}.${extension}`;
-      
+
           // Mettre à jour l'enregistrement avec le nouvel URL
           pool.query(
             "UPDATE carrousel SET img = ? WHERE id = ?",
@@ -189,7 +205,9 @@ export const UpdateIndexText = (req, res) => {
   const indexText = req.body.indexText; // Récupérer le nouveau texte à partir du corps de la requête
   // Mettre à jour le texte dans la base de données
   pool.query(
-    "UPDATE infos SET index_text = ?",[indexText],function (error, results) {
+    "UPDATE infos SET index_text = ?",
+    [indexText],
+    function (error, results) {
       if (error) {
         console.error(error);
         res.status(500).send("Erreur de base de données");
@@ -201,6 +219,135 @@ export const UpdateIndexText = (req, res) => {
   );
 };
 
-export const UpdateBrand = (req, res) => {
- 
+export const AddBrand = (req, res) => {
+  const form = new formidable.IncomingForm();
+  const maxSize = 5 * 1024 * 1024;
+
+  // Définir les types de fichiers d'image autorisés
+  const authorizedExtensions = ["image/jpeg", "image/png", "image/jpg"];
+
+  // Analysez la requête et récupérez les champs et les fichiers
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      console.error(err);
+      return res
+        .status(500)
+        .send("Une erreur est survenue lors de l'analyse du formulaire.");
+    }
+
+    const extension = files.newbrand.originalFilename.split(".").pop();
+    const oldPath = files.newbrand.filepath;
+    const newPath = `./public/brand_img/${files.newbrand.newFilename}.${extension}`;
+
+    // Vérifier si tous les champs requis sont présents
+    if (!files.newbrand || !fields.brandText || !fields.title) {
+      return res.status(400).send("Veuillez remplir tous les champs requis.");
+    }
+
+    // Vérifier la taille de l'image
+    if (files.newbrand.size > maxSize) {
+      return res
+        .status(500)
+        .send("La taille de l'image dépasse la limite autorisée.");
+    }
+
+    // Vérifier le format de l'image
+    if (!authorizedExtensions.includes(files.newbrand.mimetype)) {
+      return res.status(500).send("Le format de l'image n'est pas autorisé.");
+    }
+
+    const brandId = uuidv4();
+
+    // Déplacer le fichier vers le dossier de destination avec le nouveau nom
+    fs.rename(oldPath, newPath, (error) => {
+      if (error) {
+        console.log(error);
+      }
+    });
+    const img = `/brand_img/${files.newbrand.newFilename}.${extension}`;
+    const brandText = fields.brandText;
+    const title = fields.title;
+    pool.query(
+      "INSERT INTO marques (id, title, img, text) VALUES (?, ?, ?, ?)",
+      [brandId, title, img, brandText],
+      (error, result) => {
+        if (error) {
+          console.error(error);
+          return res
+            .status(500)
+            .send("Une erreur est survenue lors de l'ajout de la marque.");
+        }
+        res.redirect("/admin");
+      }
+    );
+  });
+};
+
+// export const DeleteBrand = (req, res) => {
+//   // On récupère l'id de la marque à supprimer, il a été passé en paramètre de l'url
+//   let id = req.params.id;
+
+//   // Requête de suppression en BDD
+//   let sql = "DELETE FROM marques WHERE id = ?";
+
+//   pool.query(sql, [id], function (error, result, fields) {
+//     if (error) {
+//       console.log(error);
+//       res.status(500).send({
+//         error: "Erreur lors de la suppression de la marque",
+//       });
+//     } else {
+//       res.redirect('/admin');
+//     }
+//   });
+// };
+export const DeleteBrand = (req, res) => {
+  // On récupère l'id de la marque à supprimer, il a été passé en paramètre de l'url
+  let id = req.params.id;
+
+  // Requête pour récupérer le chemin de l'image de la marque à supprimer
+  let selectSql = "SELECT img FROM marques WHERE id = ?";
+
+  pool.query(selectSql, [id], function (error, results, fields) {
+    if (error) {
+      console.log(error);
+      res.status(500).send({
+        error: "Erreur lors de la suppression de la marque",
+      });
+      return;
+    }
+    console.log(results)
+    // Vérifier s'il y a un résultat
+    if (results.length > 0) {
+      let imageFilePath = `./public${results[0].img}`;
+    
+      // Supprimer le fichier d'image correspondant
+      fs.unlink(imageFilePath, function (error) {
+        if (error) {
+          console.log(error);
+          res.status(500).send({
+            error: "Erreur lors de la suppression de l'image",
+          });
+          return;
+        }
+
+        // Requête de suppression en BDD
+        let deleteSql = "DELETE FROM marques WHERE id = ?";
+
+        pool.query(deleteSql, [id], function (error, result, fields) {
+          if (error) {
+            console.log(error);
+            res.status(500).send({
+              error: "Erreur lors de la suppression de la marque",
+            });
+          } else {
+            res.redirect("/admin");
+          }
+        });
+      });
+    } else {
+      // Aucun résultat trouvé
+      res.status(404).send({error: "La marque n'a pas été trouvée",});
+    }
+  });
 };
