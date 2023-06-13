@@ -73,7 +73,7 @@ export const AddNewAdmin = (req, res) => {
     });
   });
 };
-// export const AddCarrouselPicture = (req, res) => {
+// export const UpdateCarrouselPicture = (req, res) => {
 //   const maxSize = 5 * 1024 * 1024;
 //   const form = new formidable.IncomingForm();
 //   const authorizedExtention = ["image/jpeg", "image/png", "image/jpg"];
@@ -121,11 +121,9 @@ export const AddNewAdmin = (req, res) => {
 //     res.redirect("/admin");
 //   });
 // };
-
-
 //****************************************************AJOUT DE 5 PHOTOS POUR TESTS************************************************** */
 
-export const AddCarrouselPicture = (req, res) => {
+export const UpdateCarrouselPicture = (req, res) => {
   const maxSize = 5 * 1024 * 1024;
   const form = new formidable.IncomingForm();
   const authorizedExtention = ["image/jpeg", "image/png", "image/jpg"];

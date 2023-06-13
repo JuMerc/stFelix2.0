@@ -4,13 +4,13 @@ const router = express.Router();
 
 //appel des controllers
 
-import IndexController from "../controllers/index.js";
+import { IndexController } from "../controllers/index.js";
 import ServeController from "../controllers/serve.js";
 import TeamController from "../controllers/team.js";
 import GalerieController from "../controllers/galerie.js";
 import ContactController from "../controllers/contact.js";
 import { LoginController, LoginSubmit, Logout } from "../controllers/login.js";
-import { AdminController, NewAdmin, AddNewAdmin, AddCarrouselPicture } from "../controllers/admin.js"
+import { AdminController, NewAdmin, AddNewAdmin, UpdateCarrouselPicture } from "../controllers/admin.js"
 
 // Middleware qui bloque les routes si on est pas connecté
 const adminCheckMiddleware = function (req, res, next) {
@@ -46,21 +46,20 @@ router.post('/login', LoginSubmit)
 router.get('/logout', Logout);
 
 //Affiche la page admin
-
 // router.get('/admin', adminCheckMiddleware ,AdminController)
 router.get('/admin' ,AdminController)
 
 //Affiche la page pour ajouter un nouvel admin
-
 router.get('/addnewadmin',adminCheckMiddleware,NewAdmin)
 
 //Ajout d'un nouvel administrateur a l'aide du formulaire
-
 router.post('/addnewadmin', AddNewAdmin)
 
-//Ajout de photos dans le carrousel via un formulaire
+//Update des photos dans le carrousel via un formulaire
+router.post('/addcarrouselpicture', UpdateCarrouselPicture)
 
-router.post('/addcarrouselpicture', AddCarrouselPicture)
+//Update du text dans l'accueil
+router.post('/updateindextext', )
 
 
 export default router;
