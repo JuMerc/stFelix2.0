@@ -1,7 +1,7 @@
 function removePostButtonEventListener(event) {
     const buttonElement = event.target.closest("tr");
     const id = buttonElement.getAttribute('data-id');
-    console.log(event.target)
+    console.log(buttonElement)
     const options = {
       method: 'DELETE',
       headers: {
