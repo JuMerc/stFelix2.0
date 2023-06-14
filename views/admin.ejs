@@ -46,7 +46,7 @@
               <td><%=brands[i].title%></td>
               <td><img src="<%= brands[i].img %>" alt="<%= brands[i].title %>"></td>
               <td><%=brands[i].text.substring(0, 30)%> ...</td>
-              <td><button class="remove js-remove-post-button" data-id="<%=brands[i].id%>"><i class="fa fa-remove"></i></button></td>
+              <td><button class="js-remove-post-button" data-id="<%=brands[i].id%>"><i class="fa fa-remove"></i></button></td>
             </tr>
           <% } %>
         </tbody>

@@ -65,6 +65,6 @@ router.post('/updateindextext', UpdateIndexText )
 router.post('/addbrand', AddBrand)
 
 //Suppression d'une marque
-router.delete('/brands/:id', DeleteBrand);
+router.delete('/brand/:id', DeleteBrand);
 
 export default router;

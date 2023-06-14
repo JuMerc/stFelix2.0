@@ -1,15 +1,14 @@
 function removePostButtonEventListener(event) {
-    const buttonElement = event.target.parentElement;
+    const buttonElement = event.target.closest("tr");
     const id = buttonElement.getAttribute('data-id');
-  
+    console.log(event.target)
     const options = {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
       }
     };
-  
-    const url = `/brands/${id}`;
+    const url = `/brand/${id}`;
   
     fetch(url, options)
       .then(function (response) {
@@ -26,8 +25,13 @@ function removePostButtonEventListener(event) {
       });
   }
   
-  // Ajouter l'event listener à tous les boutons de suppression
-  const removeButtons = document.querySelectorAll('.js-remove-post-button');
-  removeButtons.forEach(button => {
-    button.addEventListener('click', removePostButtonEventListener);
-  });
+  document.addEventListener('DOMContentLoaded', function () {
+    // Administration posts remove button listener
+    const postRemoveButtonsList = document.querySelectorAll('.js-remove-post-button');
+    
+    if (postRemoveButtonsList.length > 0) {
+        postRemoveButtonsList.forEach(function (postRemoveButton) {
+            postRemoveButton.addEventListener('click', removePostButtonEventListener);
+        });
+    }
+});

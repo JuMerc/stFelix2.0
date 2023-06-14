@@ -11,7 +11,6 @@ export const AdminController = (req, res) => {
       res.status(500).send("Erreur de base de données");
       return;
     }
-
     // Envoyer les résultats à la vue EJS pour affichage
     res.render("layout", { template: "admin", brands: brandResults });
   });
@@ -267,10 +266,7 @@ export const AddBrand = (req, res) => {
     const img = `/brand_img/${files.newbrand.newFilename}.${extension}`;
     const brandText = fields.brandText;
     const title = fields.title;
-    pool.query(
-      "INSERT INTO marques (id, title, img, text) VALUES (?, ?, ?, ?)",
-      [brandId, title, img, brandText],
-      (error, result) => {
+    pool.query("INSERT INTO marques (id, title, img, text) VALUES (?, ?, ?, ?)",[brandId, title, img, brandText],(error, result) => {
         if (error) {
           console.error(error);
           return res
@@ -304,11 +300,10 @@ export const AddBrand = (req, res) => {
 export const DeleteBrand = (req, res) => {
   // On récupère l'id de la marque à supprimer, il a été passé en paramètre de l'url
   let id = req.params.id;
-
   // Requête pour récupérer le chemin de l'image de la marque à supprimer
   let selectSql = "SELECT img FROM marques WHERE id = ?";
 
-  pool.query(selectSql, [id], function (error, results, fields) {
+  pool.query(selectSql, [id], (error, results, fields) => {
     if (error) {
       console.log(error);
       res.status(500).send({
@@ -316,7 +311,6 @@ export const DeleteBrand = (req, res) => {
       });
       return;
     }
-    console.log(results)
     // Vérifier s'il y a un résultat
     if (results.length > 0) {
       let imageFilePath = `./public${results[0].img}`;
@@ -341,7 +335,7 @@ export const DeleteBrand = (req, res) => {
               error: "Erreur lors de la suppression de la marque",
             });
           } else {
-            res.redirect("/admin");
+            res.status(204).send();
           }
         });
       });
@@ -349,5 +343,5 @@ export const DeleteBrand = (req, res) => {
       // Aucun résultat trouvé
       res.status(404).send({error: "La marque n'a pas été trouvée",});
     }
-  });
+  })
 };
