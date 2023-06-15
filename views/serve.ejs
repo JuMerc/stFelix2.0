@@ -1,13 +1,13 @@
 <main class="desktop">
     <section class="tarifs">
         <h2>Services et Prestations</h2>
-        <% for(let i = 0; i < categories.length; i++) { %>
-            <h3><%= categories[i].title %></h3>
+        <% for(let i = 0; i < category.length; i++) { %>
+            <h3><%= category[i].title %></h3>
             <div class="serve">
-                <% for(let j = 0; j < prestations.length; j++) { %>
-                    <% if (prestations[j].categorie_id === categories[i].id) { %>
+                <% for(let j = 0; j < benefit.length; j++) { %>
+                    <% if (benefit[j].categorie_id === category[i].id) { %>
                         <div class="single-serve">
-                            <p><%= prestations[j].title %> <span><%= prestations[j].prix %></span></p>
+                            <p><%= benefit[j].title %> <span><%= benefit[j].prix %></span></p>
                         </div>
                     <% } %>
                 <% } %>

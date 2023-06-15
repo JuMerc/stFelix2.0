@@ -13,9 +13,14 @@
 	<header class="header">
 		<div class="title">
 			<div class="admin"><a href="/admin"><i class="fa-solid fa-user-gear"></i></a></div>
-			<% if(locals.isAdmin) { %>
+			
 			<div class="logout"><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a></div>
 			<div class="newAdmin"><a href="/addnewadmin"><i class="fa-solid fa-user-plus"></i></a></div>
+			<% if(locals.second) { %>
+				<div class="logout"><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a></div>
+			<% } %>	
+			<% if(locals.main) { %>
+				
 			<% } %>
 			<h1><a href="/">Au Petit Salon</a></h1>
 			<h2><a href="/">Saint Félix</a></h2>

@@ -28,4 +28,20 @@
 
         <input class="button" type="submit" value="Ajout">
     </form>
+    <h2>Suppression d'un administrateur</h2>
+    <table class="js-post-table-admin">
+        <thead>
+            <th>administrateur secondaire</th>
+            <th>Photo</th>
+        </thead>
+        <tbody>
+          <% for(let i = 0; i < admin.length; i++) { %>
+            <% if(admin[i].role === 'second'){ %>
+            <tr data-id="<%=admin[i].id%>">
+              <td><%=admin[i].name%></td>
+              <td><img src="<%= admin[i].picture %>" alt="<%= admin[i].name %>"></td>
+            </tr>
+          <% }} %>
+        </tbody>
+      </table>
 </main>

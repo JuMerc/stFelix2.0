@@ -18,7 +18,7 @@ export const LoginSubmit = function (req, res) {
             } else {
                 bcrypt.compare(password, result[0].password, function(error, isAllowed) {
                     if (isAllowed) {
-                        req.session.isAdmin = true;
+                        req.session.role = result[0].role;
                         req.session.user = {email:result[0].email}
                         res.redirect('/admin');
                     } else {

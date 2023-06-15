@@ -31,7 +31,8 @@ app.use(express.urlencoded({ extended: true }))
 
 
 app.use(function (req, res, next) {
-	res.locals.isAdmin = req.session.isAdmin ? true : false;
+	res.locals.main = req.session.role === 'main' ? true : false;
+	res.locals.second = req.session.role === 'second' ? true : false;
 	res.locals.user = req.session.user
 	next();
 });
