@@ -1,66 +1,17 @@
 <main class="desktop">
     <section class="tarifs">
-
-        <h2>Services et Prestations</h2> 
-        <h3>Nos créations</h3>
-        <div class="serve">
-            <div class="single-serve">
-                <p>Bain brush court <span>€25</span></p>
+        <h2>Services et Prestations</h2>
+        <% for(let i = 0; i < categories.length; i++) { %>
+            <h3><%= categories[i].title %></h3>
+            <div class="serve">
+                <% for(let j = 0; j < prestations.length; j++) { %>
+                    <% if (prestations[j].categorie_id === categories[i].id) { %>
+                        <div class="single-serve">
+                            <p><%= prestations[j].title %> <span><%= prestations[j].prix %></span></p>
+                        </div>
+                    <% } %>
+                <% } %>
             </div>
-            <div class="single-serve">
-                <p>Bain brush long <span>€29</span></p>
-            </div>
-            <div class="single-serve">
-                <p>Bain coupe brush court <span>€37</span></p>
-            </div>
-            <div class="single-serve">
-                <p>bain coupe brush long <span>€40</span></p>
-            </div>
-            <div class="single-serve">
-                <p>Bain coupe coiffage Homme<span>€24</span></p>
-            </div>
-            <div class="single-serve">
-                <p>Forfait étudiant / étudiante<span>€20 - €25</span></p>
-            </div>
-        </div>
-
-        <h3>Nos Colorations</h3>
-        <div class="serve">
-            <div class="single-serve">
-                <p>Coloration sans ammoniaque <span>€32</span></p>
-            </div>
-            <div class="single-serve">
-                <p>Coloration ton sur ton <span>€24</span></p>
-            </div>
-        </div>
-
-        <h3>Prestations spéciales et soins</h3>
-        <div class="serve">
-            <div class="single-serve">
-                <p>Mèche/Balayage/Ombré hair <span>35 à 60€</span></p>
-            </div>
-            <div class="single-serve">
-                <p>Permanente<span>35 à 56€</span></p>
-            </div>
-            <div class="single-serve">
-                <p>Lissage à la kératine<span>45 à 120€</span></p>
-            </div>
-            <div class="single-serve">
-                <p>Masque hydratant<span>7,50€</span></p>
-            </div>
-        </div>
-
-        <h3>Les enfants</h3>
-        <div class="serve">
-            <div class="single-serve">
-                <p>Coupe -2 ans<span>€10</span></p>
-            </div>
-            <div class="single-serve">
-                <p>Coupe -14 ans garçon<span>€16</span></p>
-            </div>
-            <div class="single-serve">
-                <p>Coupe -14 ans fille<span>€19</span></p>
-            </div>
-        </div>
-    </section>	
+        <% } %>
+    </section>
 </main>

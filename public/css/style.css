@@ -546,17 +546,18 @@ h4 {
         flex-wrap: wrap;
     }
 
+    
+    .member .teamParas{
+        width:48%;
+        line-height: 2.5rem;
+    }
+
     .member h3 {
         width: 100%;
     }
 
     .member .img {
         width: 48%;
-    }
-
-    .member p {
-        width: 48%;
-        line-height: 2.5rem;
     }
 
     .galerie .image {

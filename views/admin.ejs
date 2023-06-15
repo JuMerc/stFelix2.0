@@ -33,12 +33,11 @@
     </div>
     <div>
       <h4>Suppression d'une marque</h4>
-      <table class="js-post-table">
+      <table class="js-post-table-brand">
         <thead>
             <th>Titre</th>
             <th>img</th>
             <th>Texte</th>
-            <th></th>
         </thead>
         <tbody>
           <% for(let i = 0; i < brands.length; i++) { %>
@@ -46,11 +45,55 @@
               <td><%=brands[i].title%></td>
               <td><img src="<%= brands[i].img %>" alt="<%= brands[i].title %>"></td>
               <td><%=brands[i].text.substring(0, 30)%> ...</td>
-              <td><button class="js-remove-post-button" data-id="<%=brands[i].id%>"><i class="fa fa-remove"></i></button></td>
             </tr>
           <% } %>
         </tbody>
       </table>
     </div>
   </section>
+
+
+  <section>
+    <h2>Modification de la page des prestations</h2>
+    <div>
+    <h3>Ajout d'une catégorie </h3>
+    <form action="/addcategory" method="post" class="form">
+      <input class="field" type="text" id="categorie" name="categorie" placeholder="Nouvelle catégorie">
+      <input class="button" type="submit" value="Ajouter">
+    </form>
+  </div>
+  <div>
+    <h3>Ajout d'une prestation</h3>
+    <form action="/addbenefit" method="post" class="form">
+      <select name="category" id="category">
+        <% for(let i = 0; i < category.length; i++) { %>
+          <option value="<%=category[i].id%>"><%=category[i].title%></option>
+        <% } %>
+      </select>
+      <input class="field" type="text" id="prestation" name="prestation" placeholder="Nouvelle prestation">
+      <input class="field" type="text" id="price" name="price" placeholder="prix">
+      <input class="button" type="submit" value="Ajouter">
+    </form>
+  </div>
+  <div>
+    <h3>Suppression d'une catégorie ou d'une prestation</h3>
+    <table class="js-post-table-category">
+      <thead>
+          <th>catégorie</th>
+          <th></th>
+      </thead>
+      <tbody>
+        <% for(let i = 0; i < category.length; i++) { %>
+          <tr data-id="<%=category[i].id%>">
+            <td><%=category[i].title%></td>
+            <td><button class="js-remove-post-button" data-id="<%=category[i].id%>"><i class="fa fa-remove"></i></button></td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+    
+  </section>
+
+
 </main>

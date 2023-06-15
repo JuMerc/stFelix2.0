@@ -5,12 +5,12 @@ const router = express.Router();
 //appel des controllers
 
 import { IndexController } from "../controllers/index.js";
-import ServeController from "../controllers/serve.js";
-import TeamController from "../controllers/team.js";
+import { ServeController } from "../controllers/serve.js";
+import { TeamController } from "../controllers/team.js";
 import GalerieController from "../controllers/galerie.js";
 import ContactController from "../controllers/contact.js";
 import { LoginController, LoginSubmit, Logout } from "../controllers/login.js";
-import { AdminController, NewAdmin, AddNewAdmin, UpdateCarrouselPicture, UpdateIndexText, AddBrand, DeleteBrand } from "../controllers/admin.js"
+import { AdminController, NewAdmin, AddNewAdmin, UpdateCarrouselPicture, UpdateIndexText, AddBrand, DeleteBrand, AddCategory, AddBenefit, DeleteCategory, DeleteBenefit } from "../controllers/admin.js"
 
 // Middleware qui bloque les routes si on est pas connecté
 const adminCheckMiddleware = function (req, res, next) {
@@ -66,5 +66,17 @@ router.post('/addbrand', AddBrand)
 
 //Suppression d'une marque
 router.delete('/brand/:id', DeleteBrand);
+
+//Ajout d'une catégorie dans la page prestation
+router.post('/addcategory', AddCategory)
+
+//Ajout d'une prestation et d'un prix liés à une catégorie
+router.post('/addbenefit', AddBenefit)
+
+//Suppression d'une catégorie de prestation
+router.delete('/category/:id', DeleteCategory);
+
+//Suppression d'une prestation
+router.delete('/benefit/:id', DeleteBenefit);
 
 export default router;

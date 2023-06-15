@@ -11,8 +11,15 @@ export const AdminController = (req, res) => {
       res.status(500).send("Erreur de base de données");
       return;
     }
-    // Envoyer les résultats à la vue EJS pour affichage
-    res.render("layout", { template: "admin", brands: brandResults });
+    pool.query("SELECT * FROM categories", (error, categoriesResult) => {
+      if (error) {
+        console.error(error);
+        res.status(500).send("Erreur de base de données");
+        return;
+      }
+      
+      res.render("layout", { template: "admin", brands: brandResults, category: categoriesResult });
+    });
   });
 };
 
@@ -278,25 +285,6 @@ export const AddBrand = (req, res) => {
     );
   });
 };
-
-// export const DeleteBrand = (req, res) => {
-//   // On récupère l'id de la marque à supprimer, il a été passé en paramètre de l'url
-//   let id = req.params.id;
-
-//   // Requête de suppression en BDD
-//   let sql = "DELETE FROM marques WHERE id = ?";
-
-//   pool.query(sql, [id], function (error, result, fields) {
-//     if (error) {
-//       console.log(error);
-//       res.status(500).send({
-//         error: "Erreur lors de la suppression de la marque",
-//       });
-//     } else {
-//       res.redirect('/admin');
-//     }
-//   });
-// };
 export const DeleteBrand = (req, res) => {
   // On récupère l'id de la marque à supprimer, il a été passé en paramètre de l'url
   let id = req.params.id;
@@ -345,3 +333,54 @@ export const DeleteBrand = (req, res) => {
     }
   })
 };
+
+export const AddCategory = (req, res) => {
+  const input = {
+    category: req.body.categorie,
+    id : uuidv4()
+  }
+
+  if (!input.category) {
+    res.status(400).send("Veuillez saisir une catégorie");
+    return;
+  }
+
+  // Requête d'insertion en BDD avec l'ID UUID
+  const sql = "INSERT INTO categories (id, title) VALUES (?, ?)";
+
+  pool.query(sql, [input.id, input.category], (error, result) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send("Erreur lors de l'ajout de la catégorie");
+    } else {
+      res.redirect("/admin");
+    }
+  });
+};
+
+export const AddBenefit = (req, res) => {
+  const { category, prestation, price } = req.body;
+  const id = uuidv4();
+  // Requête pour insérer la prestation dans la table "prestations"
+  const sql = "INSERT INTO prestations (id, title, prix, categorie_id) VALUES (?, ?, ?, ?)";
+  const values = [id, prestation, price, category];
+  pool.query(sql, values, (error, result) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send("Erreur de base de données");
+      return;
+    }
+
+    res.redirect("/admin"); // Rediriger vers la page d'administration après l'ajout réussi
+  });
+};
+
+export const DeleteCategory = (req, res) => {
+  
+};
+
+export const DeleteBenefit = (req, res) => {
+  
+};
+
+

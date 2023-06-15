@@ -1,34 +1,17 @@
 <main class="desktop">
     <section class="team">
         <h2>Notre équipe</h2>
+        <% for(let i = 0; i < users.length; i++) { %>
             <div class="member">
-                <h3>Jean-Michel</h3>
-                <div class="img"><img src="img/jm.jpg" alt="jm"></div>
-                <p>Jean-Michel, notre gérant est apprécié par ses salariés pour ça générosité et ça reconnaissance. Coiffeur depuis une trentaine d'années, il à ouvert différents salons et à su ce faire une place dans son domaine.<br>Vous pouvez le retrouver tout les mercredi au salon St Félix, où il est spécialisé dans la coupe homme.</p>
+                <h3><%= users[i].name %></h3>
+                <div class="img"><img src="<%= users[i].picture %>" alt="<%= users[i].name %>"></div>
+                <% const paragraphs = users[i].text.split('\n'); %>
+                <div class="teamParas">
+                <% for(let i = 0; i < paragraphs.length; i++) { %>
+                    <p><%= paragraphs[i] %></p>
+                <% } %>
+                </div>
             </div>
-
-            <div class="member">
-                <h3>Alice</h3>
-                <div class="img"><img src="img/alice.jpg" alt="alice"></div>
-                <p>La solaire Alice, responsable du salon, saura vous conseiller et vous accompagner dans votre prestation, et jamais sans son sourir communicatif. Coiffeuse depuis une dizaine d'années et ayant travaillée dans différents salons, elle a accumulée de l'expérience pour pouvoir réaliser toute vos envis!</p>
-            </div>
-
-            <div class="member">
-                <h3>Julie</h3>
-                <div class="img"><img src="img/julie.jpg" alt="julie"></div>
-                <p>La pétillante Julie, collaboratrice au Petit Salon vous accompagnera avec bienvellance pour la mise en beautée de votre chevelure. Elle saura vous conseiller avec goût, passionée par la mode, elle est à l'affue des nouevlles tendances et ce forme regulièremenet aux nouvelles techniques</p>
-            </div>
-
-            <div class="member">
-                <h3>Héléna</h3>
-                <div class="img"><img src="img/helena.jpg" alt="helena"></div>
-                <p>Héléna notre portugaise au grand coeur, collaboratrice au Petit Salon, vous comblera grâce a son professionalisme. avec ces trentes années d'experiences, la coiffure n'as plus de secrets pour elle. Ca clientelle fidèle depuis des années ne la quitterait pour rien au monde!</p>
-            </div>
-
-            <div class="member">
-                <h3>Agathe</h3>
-                <div class="img"><img src="img/agathe.jpg" alt="agathe"></div>
-                <p>Agathe, qui réalise son BTS coiffure au Petit Salon vous séduira par ça discrétion et son naturel. Elle vous conseillera parfaitement pour embellir vos cheveux. Très à l'écoute, elle saura vous donner les conseils necessaires à l'entretien de votre chevelure.</p>
-            </div>
+        <% } %>
     </section>
 </main>
