@@ -15,6 +15,7 @@ debug.log
 config.js
 config.json
 
+
 # Dépendances spécifiques à l'IDE (ajoutez les fichiers propres à votre IDE si nécessaire)
 .vscode/
 .idea/
