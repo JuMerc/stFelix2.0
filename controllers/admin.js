@@ -17,15 +17,31 @@ export const AdminController = (req, res) => {
         res.status(500).send("Erreur de base de données");
         return;
       }
-      pool.query("SELECT * FROM prestations ORDER BY id", (error, benefitResult) => {
-        if (error) {
-          console.error(error);
-          res.status(500).send("Erreur de base de données");
-          return;
+      pool.query(
+        "SELECT * FROM prestations ORDER BY id",
+        (error, benefitResult) => {
+          if (error) {
+            console.error(error);
+            res.status(500).send("Erreur de base de données");
+            return;
+          }
+          pool.query("SELECT * FROM users", (error, adminResult) => {
+            if (error) {
+              console.error(error);
+              res.status(500).send("Erreur de base de données");
+              return;
+            }
+            pool.query("SELECT * FROM galerie ORDER BY date", (error, galerieResult) => {
+              if (error) {
+                console.error(error);
+                res.status(500).send("Erreur de base de données");
+                return;
+              }
+              res.render("layout", {template: "admin",brands: brandResults,category: categoriesResult,benefit: benefitResult,admin: adminResult, galerie: galerieResult});
+            });
+          });
         }
-        
-        res.render("layout", { template: "admin", brands: brandResults, category: categoriesResult, benefit: benefitResult });
-      });
+      );
     });
   });
 };
@@ -119,7 +135,7 @@ export const DeleteAdmin = (req, res) => {
     // Vérifier s'il y a un résultat
     if (results.length > 0) {
       let imageFilePath = `./public${results[0].picture}`;
-    
+
       // Supprimer le fichier d'image correspondant
       fs.unlink(imageFilePath, function (error) {
         if (error) {
@@ -146,9 +162,9 @@ export const DeleteAdmin = (req, res) => {
       });
     } else {
       // Aucun résultat trouvé
-      res.status(404).send({error: "La marque n'a pas été trouvée",});
+      res.status(404).send({ error: "La marque n'a pas été trouvée" });
     }
-  })
+  });
 };
 // export const UpdateCarrouselPicture = (req, res) => {
 //   const maxSize = 5 * 1024 * 1024;
@@ -335,7 +351,10 @@ export const AddBrand = (req, res) => {
     const img = `/brand_img/${files.newbrand.newFilename}.${extension}`;
     const brandText = fields.brandText;
     const title = fields.title;
-    pool.query("INSERT INTO marques (id, title, img, text) VALUES (?, ?, ?, ?)",[brandId, title, img, brandText],(error, result) => {
+    pool.query(
+      "INSERT INTO marques (id, title, img, text) VALUES (?, ?, ?, ?)",
+      [brandId, title, img, brandText],
+      (error, result) => {
         if (error) {
           console.error(error);
           return res
@@ -364,7 +383,7 @@ export const DeleteBrand = (req, res) => {
     // Vérifier s'il y a un résultat
     if (results.length > 0) {
       let imageFilePath = `./public${results[0].img}`;
-    
+
       // Supprimer le fichier d'image correspondant
       fs.unlink(imageFilePath, function (error) {
         if (error) {
@@ -391,17 +410,17 @@ export const DeleteBrand = (req, res) => {
       });
     } else {
       // Aucun résultat trouvé
-      res.status(404).send({error: "La marque n'a pas été trouvée",});
+      res.status(404).send({ error: "La marque n'a pas été trouvée" });
     }
-  })
+  });
 };
 
 export const AddCategory = (req, res) => {
   const input = {
     category: req.body.categorie,
-    ordre : req.body.categoryOrder,
-    id : uuidv4()
-  }
+    ordre: req.body.categoryOrder,
+    id: uuidv4(),
+  };
 
   if (!input.category) {
     res.status(400).send("Veuillez saisir une catégorie");
@@ -425,7 +444,8 @@ export const AddBenefit = (req, res) => {
   const { category, prestation, price, benefitOrder } = req.body;
   const id = uuidv4();
   // Requête pour insérer la prestation dans la table "prestations"
-  const sql = "INSERT INTO prestations (id, title, prix, categorie_id, ordre) VALUES (?, ?, ?, ?, ?)";
+  const sql =
+    "INSERT INTO prestations (id, title, prix, categorie_id, ordre) VALUES (?, ?, ?, ?, ?)";
   const values = [id, prestation, price, category, benefitOrder];
   pool.query(sql, values, (error, result) => {
     if (error) {
@@ -441,71 +461,165 @@ export const AddBenefit = (req, res) => {
 export const UpdateCategory = (req, res) => {
   const { updateCategory, updateCategoryOrder, categoryId } = req.body;
 
-  const sql = 'UPDATE categories SET title = ?, ordre = ? WHERE id = ?';
+  const sql = "UPDATE categories SET title = ?, ordre = ? WHERE id = ?";
   const values = [updateCategory, updateCategoryOrder, categoryId];
 
   pool.query(sql, values, (error, results) => {
     if (error) {
       console.error(error);
-      res.status(500).send('Erreur de base de données');
+      res.status(500).send("Erreur de base de données");
       return;
     }
-    res.redirect('/admin'); // Redirigez vers la page souhaitée après la mise à jour
+    res.redirect("/admin"); // Redirigez vers la page souhaitée après la mise à jour
   });
 };
 
 // Contrôleur pour mettre à jour une prestation
 export const UpdateBenefit = (req, res) => {
-  const { updateBenefitTitle, updateBenefitPrice, updateBenefitOrder, benefitId } = req.body;
-  const sql = 'UPDATE prestations SET title = ?, prix = ?, ordre = ? WHERE id = ?';
-  const values = [updateBenefitTitle, updateBenefitPrice, updateBenefitOrder, benefitId];
+  const {
+    updateBenefitTitle,
+    updateBenefitPrice,
+    updateBenefitOrder,
+    benefitId,
+  } = req.body;
+  const sql =
+    "UPDATE prestations SET title = ?, prix = ?, ordre = ? WHERE id = ?";
+  const values = [
+    updateBenefitTitle,
+    updateBenefitPrice,
+    updateBenefitOrder,
+    benefitId,
+  ];
 
   pool.query(sql, values, (error, results) => {
     if (error) {
       console.error(error);
-      res.status(500).send('Erreur de base de données');
+      res.status(500).send("Erreur de base de données");
       return;
     }
-    res.redirect('/admin'); // Redirigez vers la page souhaitée après la mise à jour
+    res.redirect("/admin"); // Redirigez vers la page souhaitée après la mise à jour
   });
 };
 
 export const DeleteCategory = (req, res) => {
   let id = req.params.id;
   // Requête pour récupérer le chemin de l'image de la marque à supprimer
-  
-        let deleteSql = "DELETE FROM categories WHERE id = ?";
 
-        pool.query(deleteSql, [id], function (error, result, fields) {
-          if (error) {
-            console.log(error);
-            res.status(500).send({
-              error: "Erreur lors de la suppression de la catégorie",
-            });
-          } else {
-            res.status(204).send();
-          }
-        });
-      };
- 
+  let deleteSql = "DELETE FROM categories WHERE id = ?";
+
+  pool.query(deleteSql, [id], function (error, result, fields) {
+    if (error) {
+      console.log(error);
+      res.status(500).send({
+        error: "Erreur lors de la suppression de la catégorie",
+      });
+    } else {
+      res.status(204).send();
+    }
+  });
+};
 
 export const DeleteBenefit = (req, res) => {
   let id = req.params.id;
   // Requête pour récupérer le chemin de l'image de la marque à supprimer
   
-        let deleteSql = "DELETE FROM prestations WHERE id = ?";
+  let deleteSql = "DELETE FROM prestations WHERE id = ?";
+
+  pool.query(deleteSql, [id], function (error, result, fields) {
+    if (error) {
+      console.log(error);
+      res.status(500).send({
+        error: "Erreur lors de la suppression de la catégorie",
+      });
+    } else {
+      res.status(204).send();
+    }
+  });
+};
+export const AddPictureInGallery = (req, res) => {
+  const maxSize = 5 * 1024 * 1024;
+  const form = new formidable.IncomingForm();
+  const authorizedExtention = ["image/jpeg", "image/png", "image/jpg"];
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send("Une erreur est survenue lors de l'upload de l'image.");
+    }
+    const extension = files.newpicture.originalFilename.split(".").pop();
+    const oldPath = files.newpicture.filepath;
+    const newPath = `./public/gallery/${files.newpicture.newFilename}.${extension}`;
+
+    if (files.newpicture.size > maxSize) {
+      return res.status(500).send("Image trop volumineuse");
+    }
+    if (!authorizedExtention.includes(files.newpicture.mimetype)) {
+      return res.status(500).send("Le fichier n'a pas la bonne extention");
+    }
+    fs.rename(oldPath, newPath, (error) => {
+      if (error) {
+        console.log(error);
+      }
+    });
+
+    const img = `/gallery/${files.newpicture.newFilename}.${extension}`;
+    const newPicture = {
+      id: uuidv4(),
+      img: img,
+      name: fields.name,
+    };
+
+    pool.query("INSERT INTO galerie (id, img, name) VALUES (?, ?, ?)",
+    [newPicture.id, newPicture.img, newPicture.name],
+      function (error, result) {
+        if (error) {
+          console.error(error);
+          res.status(500).send("Erreur de base de données");
+        } else {
+          res.redirect("/admin");
+        }
+      }
+    );
+  });
+};
+export const DeletePictureInGallery = (req, res) => {
+  let id = req.params.id;
+  let selectSql = "SELECT img FROM galerie WHERE id = ?";
+
+  pool.query(selectSql, [id], (error, results, fields) => {
+    if (error) {
+      console.log(error);
+      res.status(500).send({
+        error: "Erreur lors de la suppression de la photo",
+      });
+      return;
+    }
+    // Vérifier s'il y a un résultat
+    if (results.length > 0) {
+      let imageFilePath = `./public${results[0].img}`;
+      fs.unlink(imageFilePath, function (error) {
+        if (error) {
+          console.log(error);
+          res.status(500).send({
+            error: "Erreur lors de la suppression de l'image",
+          });
+          return;
+        }
+        let deleteSql = "DELETE FROM galerie WHERE id = ?";
 
         pool.query(deleteSql, [id], function (error, result, fields) {
           if (error) {
             console.log(error);
             res.status(500).send({
-              error: "Erreur lors de la suppression de la catégorie",
+              error: "Erreur lors de la suppression de la marque",
             });
           } else {
             res.status(204).send();
           }
         });
-      };
-
-
-
+      });
+    } else {
+      // Aucun résultat trouvé
+      res.status(404).send({ error: "La marque n'a pas été trouvée" });
+    }
+  });
+};

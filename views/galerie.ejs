@@ -1,29 +1,11 @@
 <main class="desktop">
     <section class="galerie">
         <h2>Quelques unes de nos réalisations...</h2>
-
-        <div class="image"><img src="img/coiffure1.jpg" alt="réalisation1"></div>
-        <div class="image"><img src="img/coiffure2.jpg" alt="réalisation2"></div>
-        <div class="image"><img src="img/coiffure3.jpg" alt="réalisation3"></div>
-        <div class="image"><img src="img/coiffure4.jpg" alt="réalisation4"></div>
-        <div class="image"><img src="img/coiffure5.jpg" alt="réalisation5"></div>
-
-        <div class="image"><img src="img/coiffure6.jpg" alt="réalisation6"></div>
-        <div class="image"><img src="img/coiffure7.jpg" alt="réalisation7"></div>
-        <div class="image"><img src="img/coiffure8.jpg" alt="réalisation8"></div>
-        <div class="image"><img src="img/coiffure9.jpg" alt="réalisation9"></div>
-        <div class="image"><img src="img/coiffure10.jpg" alt="réalisation10"></div>
-
-        <div class="image"><img src="img/coiffure11.jpg" alt="réalisation11"></div>
-        <div class="image"><img src="img/coiffure12.jpg" alt="réalisation12"></div>
-        <div class="image"><img src="img/coiffure13.jpg" alt="réalisation13"></div>
-        <div class="image"><img src="img/coiffure14.jpg" alt="réalisation14"></div>
-        <div class="image"><img src="img/coiffure15.jpg" alt="réalisation15"></div> 
-
-        <div class="image"><img src="img/coiffure16.jpg" alt="réalisation16"></div>
-        <div class="image"><img src="img/coiffure17.jpg" alt="réalisation17"></div>
-        <div class="image"><img src="img/coiffure18.jpg" alt="réalisation18"></div>
-        <div class="image"><img src="img/coiffure19.jpg" alt="réalisation19"></div>
-        <div class="image"><img src="img/coiffure20.jpg" alt="réalisation20"></div>
-    </section>
+        <% for(let i = 0; i < galerie.length; i++){ %>
+          <div class="image">
+            <img src="<%= galerie[i].img %>" alt="Réalisation">
+            <p>By <%=galerie[i].name%></p>
+          </div>
+        <% }; %>
+      </section>
 </main>

@@ -116,8 +116,9 @@
         <% } %>
       </select>
       <input class="button" type="submit" value="Modifier">
+      <% }  %>
     </form>
-    <% }}} %>
+    <% }} %>
   </div>
   </section>
   <section>
@@ -152,8 +153,29 @@
       </tbody>
     </table>
   </div>
-    
   </section>
-
-
+  <section>
+    <h2>Modification de la galerie photo</h2>
+    <div>
+      <h3>Ajout d'une photo</h3>
+      <form action="/addpictureingallery" method="post" class="form" enctype="multipart/form-data">
+        <input class="field picture" type="file" id="newpicture" name="newpicture">
+        <select name="name" id="name">
+          <% for(let i = 0; i < admin.length; i++) { %>
+            <option value="<%=admin[i].name%>"><%=admin[i].name%></option>
+          <% } %>
+        </select>
+        <input class="button" type="submit" value="Ajout">
+      </form>
+    </div>
+    <div class="js-post-div-picture">
+      <h3>Suppression d'une photo</h3>
+      <% for(let i = 0; i < galerie.length; i++){ %>
+        <div  data-id="<%=galerie[i].id%>">
+          <img src="<%= galerie[i].img %>" alt="Réalisation">
+          <p>By <%=galerie[i].name%></p>
+        </div>
+      <% }; %>
+    </div>
+    </section>
 </main>

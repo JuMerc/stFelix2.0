@@ -101,12 +101,37 @@ function removeAdminRowEventListener(event) {
       console.log(err);
     });
 }
+function removePictureEventListener(event) {
+  const divElement = event.target.closest('div');
+  const id = divElement.getAttribute('data-id');
+  const options = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  const url = `/picture/${id}`;
+
+  fetch(url, options)
+    .then(function (response) {
+      if (response.ok) {
+        // Récupérer la ligne à supprimer
+        divElement.remove();
+      } else {
+        response.json().then(console.log);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
 
 document.addEventListener('DOMContentLoaded', function () {
   const brandRows = document.querySelectorAll('.js-post-table-brand tr[data-id]');
   const adminRows = document.querySelectorAll('.js-post-table-admin tr[data-id]');
   const categoryRows = document.querySelectorAll('.js-post-table-category tr[data-id]');
   const benefitRows = document.querySelectorAll('.js-post-table-benefit tr[data-id]');
+  const galleryPicture = document.querySelectorAll('.js-post-div-picture div[data-id]')
   if (brandRows.length > 0) {
     brandRows.forEach(function (rows) {
       rows.addEventListener('click', removeBrandRowEventListener);
@@ -125,6 +150,11 @@ document.addEventListener('DOMContentLoaded', function () {
   if (benefitRows.length > 0) {
     benefitRows.forEach(function (rows) {
       rows.addEventListener('click', removeBenefitRowEventListener);
+    });
+  }
+  if (galleryPicture.length > 0) {
+    galleryPicture.forEach(function (divs) {
+      divs.addEventListener('click', removePictureEventListener);
     });
   }
 });
