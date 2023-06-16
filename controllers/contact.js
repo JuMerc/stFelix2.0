@@ -1,3 +1,12 @@
-export default (req, res) => {
-    res.render('layout', {template: 'contact'});
+import pool from "../config/database.js";
+
+export const ContactController =  (req, res) => {
+    pool.query("SELECT * FROM infos", (error, infosResult) => {
+        if (error) {
+          console.error(error);
+          res.status(500).send("Erreur de base de données");
+          return;
+        }
+        res.render("layout", {template: "contact",info: infosResult});
+      });
 }

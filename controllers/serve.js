@@ -13,7 +13,14 @@ export const ServeController = (req, res) => {
           res.status(500).send("Erreur de base de données");
           return;
         }
-        res.render("layout", { template: "serve", category: categoriesResult, benefit: prestationsResult });
+        pool.query("SELECT * FROM infos", (error, infosResult) => {
+          if (error) {
+            console.error(error);
+            res.status(500).send("Erreur de base de données");
+            return;
+          }
+          res.render("layout", { template: "serve", category: categoriesResult, benefit: prestationsResult, info: infosResult });
+        });
       });
     });
   };

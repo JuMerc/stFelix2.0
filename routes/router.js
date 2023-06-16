@@ -8,10 +8,10 @@ import { IndexController } from "../controllers/index.js";
 import { ServeController } from "../controllers/serve.js";
 import { TeamController } from "../controllers/team.js";
 import { GalerieController } from "../controllers/galerie.js";
-import ContactController from "../controllers/contact.js";
+import { ContactController } from "../controllers/contact.js";
 import { LoginController, LoginSubmit, Logout } from "../controllers/login.js";
 import { AdminController, NewAdmin, AddNewAdmin, DeleteAdmin,UpdateCarrouselPicture, UpdateIndexText, AddBrand, DeleteBrand, AddCategory, AddBenefit,
-     DeleteCategory, DeleteBenefit, UpdateCategory, UpdateBenefit, AddPictureInGallery, DeletePictureInGallery } from "../controllers/admin.js"
+     DeleteCategory, DeleteBenefit, UpdateCategory, UpdateBenefit, AddPictureInGallery, DeletePictureInGallery, UpdateInfos, AddNewSchedule } from "../controllers/admin.js"
 
 // Middleware qui bloque les routes si on est pas connecté
 const adminCheckMiddleware = (roles) => (req, res, next) => {
@@ -95,5 +95,11 @@ router.post('/addpictureingallery', AddPictureInGallery);
 
 //Suppression d'une photo dans la galerie
 router.delete('/picture/:id', DeletePictureInGallery);
+
+//Modification des informations diverses
+router.post('/updateinfos', UpdateInfos)
+
+//Ajout d'un nouvel horaire
+router.post('/addnewschedule', AddNewSchedule)
 
 export default router;

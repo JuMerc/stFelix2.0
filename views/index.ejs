@@ -3,18 +3,13 @@
         <h2>Bienvenue!</h2>
         <div class="carrousel">
             <div class="slider">
-                <!-- <div><img src="/img/saloon.jpg" alt="ImageSalon1"></div>
-                <div><img src="/img/saloon1.jpg" alt="ImageSalon2"></div>
-                <div><img src="/img/saloon2.jpg" alt="ImageSalon3"></div>
-                <div><img src="/img/saloon3.jpg" alt="ImageSalon4"></div>
-                <div><img src="/img/saloon4.jpg" alt="ImageSalon5"></div> -->
                 <% for (let i = 0; i < img.length; i++) { %>
                     <div><img src="<%= img[i].img %>"></div>
                   <% } %>
             </div>
         </div>
         <div class="para">
-            <% const paragraphs = text[0].index_text.split('\n'); %>
+            <% const paragraphs = info[0].index_text.split('\n'); %>
             <% for (let i = 0; i < paragraphs.length; i++) { %>
               <p><%= paragraphs[i] %></p>
             <% } %>

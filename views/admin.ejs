@@ -1,6 +1,6 @@
 <main class="desktop">
   <section class="index">
-    <h2>Modification de la page d'accueil</h3>
+    <h2>Page d'accueil</h3>
     <div>
     <h3>Modification des photos du carrousel</h4>
     <form action="/addcarrouselpicture" method="post" class="form" enctype="multipart/form-data">
@@ -54,7 +54,7 @@
 
 
   <section>
-    <h2>Modification de la page des prestations</h2>
+    <h2>Services et tarifs</h2>
     <div>
     <h3>Ajout d'une catégorie </h3>
     <form action="/addcategory" method="post" class="form">
@@ -155,7 +155,7 @@
   </div>
   </section>
   <section>
-    <h2>Modification de la galerie photo</h2>
+    <h2>Galerie photo</h2>
     <div>
       <h3>Ajout d'une photo</h3>
       <form action="/addpictureingallery" method="post" class="form" enctype="multipart/form-data">
@@ -178,4 +178,57 @@
       <% }; %>
     </div>
     </section>
+    <section>
+      <h3>Informations diverses</h3>
+      <div>
+        <form action="/updateinfos" method="post">
+        <div>
+          <label for="updateTel">Numero de telephone : </label>
+          <input class="field" type="text" id="updateTel" name="updateTel" value="<%=info[0].telephone %>">
+        </div>
+        <div>
+          <label for="updateFacebookLink">Lien vers la page facebook : </label>
+          <input class="field" type="text" id="updateFacebookLink" name="updateFacebookLink" value="<%=info[0].fb_link %>">
+        </div>
+        <div>
+          <label for="updateInstragramLink">Lien vers la page instagram : </label>
+          <input class="field" type="text" id="updateInstragramLink" name="updateInstragramLink" value="<%=info[0].insta_link %>">
+        </div>
+        <input class="button" type="submit" value="Modifier">
+      </form>
+    </div>
+  </section>
+  <section>
+    <h3>Horaires</h3>
+    <div>
+      <h3>Ajouter un nouvel horaire</h3>
+      <form action="/addnewschedule" method="post">
+        <input class="field" type="text" id="addDays" name="addDays" placeholder="Ajouter les jours">
+        <input class="field" type="text" id="addHours" name="addHours" placeholder="Ajouter les heures">
+        <select name="orderSchedule" id="orderSchedule">
+          <% for(let i = 1; i <= 10; i++) { %>
+            <option value="<%=[i]%>"><%=[i]%></option>
+          <% } %>
+        </select>
+        <input class="button" type="submit" value="Ajouter">
+      </form>
+    </div> 
+    <div>
+      <h3>Supprimer un horaire</h3>
+      <table class="js-post-table-schedule">
+        <thead>
+            <th>Jours</th>
+            <th>Heures</th>
+        </thead>
+        <tbody>
+          <% for(let i = 0; i < schedule.length; i++) { %>
+            <tr data-id="<%=schedule[i].id%>">
+              <td><%=schedule[i].jours%></td>
+              <td><%=schedule[i].heures%></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </section>
 </main>

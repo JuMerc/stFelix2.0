@@ -8,15 +8,12 @@ export const IndexController = (req, res) => {
         return;
       }
   
-      pool.query("SELECT index_text FROM infos", (error, textResults) => {
+      pool.query("SELECT * FROM infos", (error, infoResults) => {
         if (error) {
           console.error(error);
           res.status(500).send("Erreur de base de données");
           return;
         }
-  
-        const img = imgResults;
-        const text = textResults;
   
         // Récupérer les marques depuis la base de données
         pool.query("SELECT * FROM marques", (error, brandResults) => {
@@ -27,7 +24,7 @@ export const IndexController = (req, res) => {
           }
   
           // Envoyer les résultats à la vue EJS pour affichage
-          res.render('layout', { template: 'index', img: img, text: text, brands: brandResults });
+          res.render('layout', { template: 'index', img: imgResults, info: infoResults, brands: brandResults });
         });
       });
     });

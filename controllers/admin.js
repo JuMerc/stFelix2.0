@@ -37,7 +37,22 @@ export const AdminController = (req, res) => {
                 res.status(500).send("Erreur de base de données");
                 return;
               }
-              res.render("layout", {template: "admin",brands: brandResults,category: categoriesResult,benefit: benefitResult,admin: adminResult, galerie: galerieResult});
+              pool.query("SELECT * FROM infos", (error, infosResult) => {
+                if (error) {
+                  console.error(error);
+                  res.status(500).send("Erreur de base de données");
+                  return;
+                }
+                pool.query("SELECT * FROM horaires ORDER BY ordre", (error, scheduleResult) => {
+                  if (error) {
+                    console.error(error);
+                    res.status(500).send("Erreur de base de données");
+                    return;
+                  }
+                  res.render("layout", {template: "admin",brands: brandResults,category: categoriesResult,benefit: benefitResult,admin: adminResult, 
+                  galerie: galerieResult, info: infosResult, schedule: scheduleResult});
+                });
+              });
             });
           });
         }
@@ -351,8 +366,7 @@ export const AddBrand = (req, res) => {
     const img = `/brand_img/${files.newbrand.newFilename}.${extension}`;
     const brandText = fields.brandText;
     const title = fields.title;
-    pool.query(
-      "INSERT INTO marques (id, title, img, text) VALUES (?, ?, ?, ?)",
+    pool.query("INSERT INTO marques (id, title, img, text) VALUES (?, ?, ?, ?)",
       [brandId, title, img, brandText],
       (error, result) => {
         if (error) {
@@ -482,8 +496,7 @@ export const UpdateBenefit = (req, res) => {
     updateBenefitOrder,
     benefitId,
   } = req.body;
-  const sql =
-    "UPDATE prestations SET title = ?, prix = ?, ordre = ? WHERE id = ?";
+  const sql = "UPDATE prestations SET title = ?, prix = ?, ordre = ? WHERE id = ?";
   const values = [
     updateBenefitTitle,
     updateBenefitPrice,
@@ -621,5 +634,33 @@ export const DeletePictureInGallery = (req, res) => {
       // Aucun résultat trouvé
       res.status(404).send({ error: "La marque n'a pas été trouvée" });
     }
+  });
+};
+
+export const UpdateInfos = (req, res) => {
+  const {updateTel , updateFacebookLink, updateInstragramLink} = req.body
+  const sql = "UPDATE infos SET telephone = ?, fb_link = ?, insta_link = ?"
+  const values = [updateTel , updateFacebookLink, updateInstragramLink]
+  pool.query(sql, values, (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send("Erreur de base de données");
+      return;
+    }
+    res.redirect("/admin");
+  });
+};
+export const AddNewSchedule = (req, res) => {
+  const {addDays , addHours, orderSchedule} = req.body
+  const id = uuidv4();
+  const sql = "INSERT INTO horaires (id, jours, heures, ordre) VALUES (?, ?, ?, ?)"
+  const values = [id, addDays , addHours, orderSchedule]
+  pool.query(sql, values, (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send("Erreur de base de données");
+      return;
+    }
+    res.redirect("/admin");
   });
 };

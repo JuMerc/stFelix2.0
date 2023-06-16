@@ -1,7 +1,6 @@
 # Dossiers
 node_modules/
 dist/
-config/
 
 # Fichiers
 .env

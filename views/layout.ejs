@@ -40,8 +40,8 @@
 	<footer class="footer">
 		<div class="social">
 			<h3>Suivez nous sur nos réseaux</h3>
-			<a href="https://www.instagram.com/aupetitsalon_stfelix/"><i class="fa-brands fa-facebook-f"></i></a>
-			<a href="https://www.facebook.com/search/top?q=au%20petit%20salon%20saint%20f%C3%A9lix"><i class="fa-brands fa-instagram"></i></a>
+			<a href="<%=info[0].fb_link %>"><i class="fa-brands fa-facebook-f"></i></a>
+			<a href="<%=info[0].insta_link %>"><i class="fa-brands fa-instagram"></i></a>
 			<h3>Notre 2<sup>ème</sup>salon</h3>
 			<a href="#">Au Petit Salon - Butte St Anne</a>
 		</div>
@@ -50,7 +50,7 @@
 			<p>Au Petit Salon St Félix</p>
 			<p>Place de St Félix</p>
 			<p>44400 Nantes</p>
-			<p><a href="tel:+33789003780">07 89 00 37 80</a></p>
+			<p><a href="tel:<%=info[0].telephone %>"><%=info[0].telephone %></a></p>
 			<p>© Au Petit Salon St Félix | tout droits réservés.</p>
 		</div>
 
