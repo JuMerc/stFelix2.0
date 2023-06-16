@@ -2,7 +2,14 @@ import pool from "../config/database.js";
 import bcrypt from 'bcrypt';
 
 export const LoginController = function (req, res) {
-    res.render('layout', {template:'login_form'})
+    pool.query("SELECT * FROM infos", (error, infosResult) => {
+        if (error) {
+          console.error(error);
+          res.status(500).send("Erreur de base de données");
+          return;
+        }
+        res.render('layout', { template: 'login_form', info: infosResult  });
+      });
 }
 
 export const LoginSubmit = function (req, res) {

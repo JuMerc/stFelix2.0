@@ -68,7 +68,15 @@ export const NewAdmin = (req, res) => {
       res.status(500).send("Erreur de base de données");
       return;
     }
-    res.render("layout", { template: "add_admin", admin: adminResult });
+    pool.query("SELECT * FROM infos", (error, infosResult) => {
+      if (error) {
+        console.error(error);
+        res.status(500).send("Erreur de base de données");
+        return;
+      }
+      res.render("layout", { template: "add_admin", admin: adminResult, info: infosResult });
+    });
+    
   });
 };
 
@@ -662,5 +670,21 @@ export const AddNewSchedule = (req, res) => {
       return;
     }
     res.redirect("/admin");
+  });
+};
+export const DeleteSchedule = (req, res) => {
+  let id = req.params.id;
+  
+  let deleteSql = "DELETE FROM horaires WHERE id = ?";
+
+  pool.query(deleteSql, [id], function (error, result, fields) {
+    if (error) {
+      console.log(error);
+      res.status(500).send({
+        error: "Erreur lors de la suppression de la catégorie",
+      });
+    } else {
+      res.status(204).send();
+    }
   });
 };

@@ -1,6 +1,6 @@
-function removeBrandRowEventListener(event) {
-  const rowElement = event.target.closest('tr');
-  const id = rowElement.getAttribute('data-id');
+function removeRowEventListener(event, url) {
+  const element = event.target.closest('tr') || event.target.closest('div');
+  const id = element.getAttribute('data-id');
 
   const options = {
     method: 'DELETE',
@@ -8,153 +8,33 @@ function removeBrandRowEventListener(event) {
       'Content-Type': 'application/json'
     }
   };
-  const url = `/brand/${id}`;
 
-  fetch(url, options)
-    .then(function (response) {
+  fetch(url + id, options)
+    .then(response => {
       if (response.ok) {
-        // Récupérer la ligne à supprimer
-        rowElement.remove();
+        element.remove();
       } else {
         response.json().then(console.log);
       }
     })
-    .catch((err) => {
+    .catch(err => {
       console.log(err);
     });
 }
 
-function removeCategoryRowEventListener(event) {
-  const rowElement = event.target.closest('tr');
-  const id = rowElement.getAttribute('data-id');
+function addEventListeners(selector, url) {
+  const elements = document.querySelectorAll(selector);
 
-  const options = {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-  const url = `/category/${id}`;
-
-  fetch(url, options)
-    .then(function (response) {
-      if (response.ok) {
-        // Récupérer la ligne à supprimer
-        rowElement.remove();
-      } else {
-        response.json().then(console.log);
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  elements.forEach(element => {
+    element.addEventListener('click', event => removeRowEventListener(event, url));
+  });
 }
 
-function removeBenefitRowEventListener(event) {
-  const rowElement = event.target.closest('tr');
-  const id = rowElement.getAttribute('data-id');
-
-  const options = {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-  const url = `/benefit/${id}`;
-
-  fetch(url, options)
-    .then(function (response) {
-      if (response.ok) {
-        // Récupérer la ligne à supprimer
-        rowElement.remove();
-      } else {
-        response.json().then(console.log);
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
-function removeAdminRowEventListener(event) {
-  const rowElement = event.target.closest('tr');
-  const id = rowElement.getAttribute('data-id');
-
-  const options = {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-  const url = `/admin/${id}`;
-
-  fetch(url, options)
-    .then(function (response) {
-      if (response.ok) {
-        // Récupérer la ligne à supprimer
-        rowElement.remove();
-      } else {
-        response.json().then(console.log);
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-function removePictureEventListener(event) {
-  const divElement = event.target.closest('div');
-  const id = divElement.getAttribute('data-id');
-  const options = {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-  const url = `/picture/${id}`;
-
-  fetch(url, options)
-    .then(function (response) {
-      if (response.ok) {
-        // Récupérer la ligne à supprimer
-        divElement.remove();
-      } else {
-        response.json().then(console.log);
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-  const brandRows = document.querySelectorAll('.js-post-table-brand tr[data-id]');
-  const adminRows = document.querySelectorAll('.js-post-table-admin tr[data-id]');
-  const categoryRows = document.querySelectorAll('.js-post-table-category tr[data-id]');
-  const benefitRows = document.querySelectorAll('.js-post-table-benefit tr[data-id]');
-  const galleryPicture = document.querySelectorAll('.js-post-div-picture div[data-id]')
-  if (brandRows.length > 0) {
-    brandRows.forEach(function (rows) {
-      rows.addEventListener('click', removeBrandRowEventListener);
-      });
-  }
-  if (adminRows.length > 0) {
-    adminRows.forEach(function (rows) {
-      rows.addEventListener('click', removeAdminRowEventListener);
-    });
-  }
-  if (categoryRows.length > 0) {
-    categoryRows.forEach(function (rows) {
-      rows.addEventListener('click', removeCategoryRowEventListener);
-      });
-  }
-  if (benefitRows.length > 0) {
-    benefitRows.forEach(function (rows) {
-      rows.addEventListener('click', removeBenefitRowEventListener);
-    });
-  }
-  if (galleryPicture.length > 0) {
-    galleryPicture.forEach(function (divs) {
-      divs.addEventListener('click', removePictureEventListener);
-    });
-  }
+document.addEventListener('DOMContentLoaded', () => {
+  addEventListeners('.js-post-table-brand tr[data-id]', '/brand/');
+  addEventListeners('.js-post-table-admin tr[data-id]', '/admin/');
+  addEventListeners('.js-post-table-category tr[data-id]', '/category/');
+  addEventListeners('.js-post-table-benefit tr[data-id]', '/benefit/');
+  addEventListeners('.js-post-table-schedule tr[data-id]', '/schedule/');
+  addEventListeners('.js-post-div-picture div[data-id]', '/picture/');
 });

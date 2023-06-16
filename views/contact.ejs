@@ -10,9 +10,9 @@
             </div>
             <div class="info">
                 <h3>Horaires d'ouverture</h3>
-                <p>Lundi : 14h - 18h30</p>
-                <p>Mardi au Vendredi : 9h30 - 19h</p>
-                <p>Samedi : 9h - 17h</p>
+                <% for(let i = 0; i < schedule.length; i++) { %>
+                    <p><%=schedule[i].jours%> : <%=schedule[i].heures%></p>
+                  <% } %>
             </div>
             <div class="info">
                 <h3>Accès</h3>
