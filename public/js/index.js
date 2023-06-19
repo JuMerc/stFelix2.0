@@ -1,5 +1,5 @@
 function removeRowEventListener(event, url) {
-  const element = event.target.closest('tr') || event.target.closest('div');
+  const element = event.target.closest('tr');
   const id = element.getAttribute('data-id');
 
   const options = {
@@ -36,5 +36,16 @@ document.addEventListener('DOMContentLoaded', () => {
   addEventListeners('.js-post-table-category tr[data-id]', '/category/');
   addEventListeners('.js-post-table-benefit tr[data-id]', '/benefit/');
   addEventListeners('.js-post-table-schedule tr[data-id]', '/schedule/');
-  addEventListeners('.js-post-div-picture div[data-id]', '/picture/');
+  addEventListeners('.js-post-table-picture tr[data-id]', '/picture/');
 });
+
+let imageContainers = document.querySelectorAll('.image-container');
+imageContainers.forEach(function(container) {
+  let img = container.querySelector('img');
+  img.addEventListener('click', function() {
+    let fileInput = container.querySelector('.file-input');
+    fileInput.click();
+    // document.querySelector('.file-label').style.backgroundColor = 'rgba(62,160,85,0.5);'
+  });
+});
+

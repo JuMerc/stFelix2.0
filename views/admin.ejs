@@ -1,247 +1,339 @@
 <main class="desktop">
-  <section class="index">
+  <section class="admin">
     <h2>Page d'accueil</h3>
-    <div>
-    <h3>Modification des photos du carrousel</h4>
-    <form action="/addcarrouselpicture" method="post" class="form" enctype="multipart/form-data">
-      <% for (let i=0; i < 5; i++) { %>
-        <input class="field picture" type="file" id="carrousel<%= i %>" name="carrousel<%= i %>">
-        <% } %>
-          <input class="button" type="submit" value="Modifier">
-    </form>
-  </div>
-  <div>
-    <h3>Modification du texte d'accueil</h4>
-    <form action="/updateindextext" method="post">
-      <textarea class="field text" id="indexText" name="indexText" rows="8" cols="20"
-        placeholder="Nouveau texte d'accueil"></textarea>
-      <input class="button" type="submit" value="Modifier">
-    </form>
-  </div>
+      <h3>Modification des photos du carrousel</h4>
+        <div class="carrousel-admin">
+          <form action="/addcarrouselpicture" method="post" class="form" enctype="multipart/form-data">
+            <% for (let i=0; i < carrousel.length; i++) { %>
+              <div class="image-container">
+                <img src="<%=carrousel[i].img%>">
+                <label class="file-label" for="carrousel<%= i %>">
+                  <i class="fas fa-download"> - <%= i+1 %></i>
+                </label>
+                <input class="file-input" type="file" id="carrousel<%= i %>" name="carrousel<%= i %>">
+              </div>
+              <% } %>
+                <input class="button" type="submit" value="Modifier">
+        </div>
+        </form>
 
-    <h3>Modification de la section des marques</h4>
-    <div>
-      <h4>Ajout d'une marque</h5>
-      <form action="/addbrand" method="post" class="form" enctype="multipart/form-data">
-        <input class="field" type="text" id="title" name="title" placeholder="Nom de la marque">
-        <label for="newbrand">Une photo du logo de la marque</label>
-        <input class="field picture" type="file" id="newbrand" name="newbrand">
-        <textarea class="field text" id="brandText" name="brandText" rows="8" cols="10"
-        placeholder="Description de la marque"></textarea>
-        <input class="button" type="submit" value="Ajouter">
+        <div class="index-text">
+          <h3>Modification du texte d'accueil</h4>
+            <form action="/updateindextext" method="post" class="form">
+              <textarea class="field text" id="indexText" name="indexText"
+                placeholder="Nouveau texte d'accueil"></textarea>
+              <input class="button" type="submit" value="Modifier">
+            </form>
+        </div>
+
+        <h3>Modification de la section des marques</h4>
+          <div class="add-brand">
+            <h4>Ajout d'une marque</h5>
+              <form action="/addbrand" method="post" class="form" enctype="multipart/form-data">
+                <input class="field" type="text" id="title" name="title" placeholder="Nom de la marque">
+                <fieldset class="field">
+                  <legend>Logo de la marque</legend>
+                  <input class="field picture" type="file" id="newbrand" name="newbrand">
+                </fieldset>
+                <textarea class="field text" id="brandText" name="brandText" rows="8" cols="10"
+                  placeholder="Description de la marque"></textarea>
+                <input class="button admin-button" type="submit" value="Ajouter">
+              </form>
+          </div>
+          <div>
+            <h4>Suppression d'une marque</h4>
+            <table class="tab js-post-table-brand">
+              <thead>
+                <th>Titre</th>
+                <th>img</th>
+                <th>Texte</th>
+              </thead>
+              <tbody>
+                <% for(let i=0; i < brands.length; i++) { %>
+                  <tr data-id="<%=brands[i].id%>">
+                    <td>
+                      <%=brands[i].title%>
+                    </td>
+                    <td><img src="<%= brands[i].img %>" alt="<%= brands[i].title %>"></td>
+                    <td>
+                      <%=brands[i].text.substring(0, 30)%> ...
+                    </td>
+                  </tr>
+                  <% } %>
+              </tbody>
+            </table>
+          </div>
+  </section>
+  <section class="admin">
+    <h2>Services et tarifs</h2>
+    <h3>Ajout d'une catégorie </h3>
+    <div class="add-category">
+      <form action="/addcategory" method="post" class="form">
+        <div class="sub-form">
+          <input class="field" type="text" id="categorie" name="categorie" placeholder="Nouvelle catégorie">
+          <select class="field" name="categoryOrder" id="categoryOrder">
+            <% for(let i=1; i <=10; i++) { %>
+              <option value="<%=[i]%>">Ordre : <%=[i]%>
+              </option>
+              <% } %>
+          </select>
+        </div>
+        <input class="button admin-button" type="submit" value="Ajouter">
       </form>
     </div>
     <div>
-      <h4>Suppression d'une marque</h4>
-      <table class="js-post-table-brand">
+      <h3>Ajout d'une prestation</h3>
+      <div class="add-benefit">
+        <form action="/addbenefit" method="post" class="form">
+          <div class="sub-form">
+            <select class="field" name="category" id="category">
+              <% for(let i=0; i < category.length; i++) { %>
+                <option value="<%=category[i].id%>">
+                  <%=category[i].title%>
+                </option>
+                <% } %>
+            </select>
+            <input class="field" type="text" id="prestation" name="prestation" placeholder="Nouvelle prestation">
+          </div>
+          <div class="sub-form">
+            <input class="field" type="text" id="price" name="price" placeholder="Prix">
+            <select class="field" name="benefitOrder" id="benefitOrder">
+              <% for(let i=1; i <=10; i++) { %>
+                <option value="<%=[i]%>">ordre : <%=[i]%>
+                </option>
+                <% } %>
+            </select>
+          </div>
+          <input class="button admin-button" type="submit" value="Ajouter">
+        </form>
+      </div>
+
+    </div>
+    <h3>Modification d'une catégorie ou d'une prestation</h3>
+    <% for(let i=0; i < category.length; i++) { %>
+      <fieldset class="fieldset">
+        <legend>
+          <%=category[i].title%>
+        </legend>
+        <fieldset class="field update-category">
+          <legend>Catégorie</legend>
+          <form action="/updatecategory" method="post">
+            <input type="hidden" id="categoryId" name="categoryId" value="<%= category[i].id %>">
+            <input class="field" type="text" id="updateCategory" name="updateCategory" value="<%=category[i].title %>">
+            <label for="updateBenefitOrder">Ordre : <%= category[i].ordre %>
+                <% if(category[i].ordre==1) { %><sup>er</sup><% } else { %><sup>ème</sup><% } %></label>
+            <select class="field" name="updateCategoryOrder" id="updateCategoryOrder">
+              <% for(let j=1; j <=10; j++) { %>
+                <option value="<%=[j]%>">
+                  <%=[j]%>
+                </option>
+                <% } %>
+            </select>
+            <input class="button" type="submit" value="Modifier">
+          </form>
+        </fieldset>
+        <fieldset class="field update-benefit">
+          <legend>Prestation</legend>
+          <% for(let k=0; k < benefit.length; k++) { %>
+            <form action="/updatebenefit" method="post" class="form">
+              <% if (benefit[k].categorie_id===category[i].id) { %>
+                <input type="hidden" id="benefitId" name="benefitId" value="<%= benefit[k].id %>">
+                <input class="field" type="text" id="updateBenefitTitle" name="updateBenefitTitle"
+                  value="<%=benefit[k].title %>">
+                <input class="field price" type="text" id="updateBenefitPrice" name="updateBenefitPrice"
+                  value="<%=benefit[k].prix %>">
+                <label for="updateBenefitOrder">Ordre : <%= benefit[k].ordre %>
+                    <% if(benefit[k].ordre==1) { %><sup>er</sup>
+                      <% } else { %><sup>ème</sup>
+                        <% } %></label>
+                <select class="field" name="updateBenefitOrder" id="updateBenefitOrder">
+                  <% for(let l=1; l <=10; l++) { %>
+                    <option value="<%=[l]%>">
+                      <%=[l]%>
+                    </option>
+                    <% } %>
+                </select>
+                <input class="button" type="submit" value="Modifier">
+                <% } %>
+            </form>
+
+            <% } %>
+        </fieldset>
+      </fieldset>
+      <% } %>
+  </section>
+  <section class="admin">
+    <h3>Suppression d'une catégorie ou d'une prestation</h3>
+    <div>
+      <table class="tab js-post-table-benefit">
         <thead>
-            <th>Titre</th>
-            <th>img</th>
-            <th>Texte</th>
+          <tr>
+            <th>Catégorie</th>
+            <th>Prestations</th>
+            <th>Prix</th>
+          </tr>
         </thead>
         <tbody>
-          <% for(let i = 0; i < brands.length; i++) { %>
-            <tr data-id="<%=brands[i].id%>">
-              <td><%=brands[i].title%></td>
-              <td><img src="<%= brands[i].img %>" alt="<%= brands[i].title %>"></td>
-              <td><%=brands[i].text.substring(0, 30)%> ...</td>
-            </tr>
+          <% for(let i=0; i < benefit.length; i++) { %>
+          <tr data-id="<%=benefit[i].id%>">
+            <% for(let j=0; j < category.length; j++) { %>
+              <% if (benefit[i].categorie_id===category[j].id) { %>
+                <td><%=category[j].title%></td>
+              <% } %>
+            <% } %>
+            <td><%=benefit[i].title%></td>
+            <td><%=benefit[i].prix%></td>
+          </tr>
           <% } %>
         </tbody>
       </table>
     </div>
-  </section>
-
-
-  <section>
-    <h2>Services et tarifs</h2>
     <div>
-    <h3>Ajout d'une catégorie </h3>
-    <form action="/addcategory" method="post" class="form">
-      <input class="field" type="text" id="categorie" name="categorie" placeholder="Nouvelle catégorie">
-      <select class="field" name="categoryOrder" id="categoryOrder">
-        <% for(let i = 1; i <= 10; i++) { %>
-          <option value="<%=[i]%>">Ordre : <%=[i]%></option>
-        <% } %>
-      </select>
-      <input class="button" type="submit" value="Ajouter">
-    </form>
-  </div>
-  <div>
-    <h3>Ajout d'une prestation</h3>
-    <form action="/addbenefit" method="post" class="form">
-      <select class="field" name="category" id="category">
-        <% for(let i = 0; i < category.length; i++) { %>
-          <option value="<%=category[i].id%>"><%=category[i].title%></option>
-        <% } %>
-      </select>
-      <input class="field" type="text" id="prestation" name="prestation" placeholder="Nouvelle prestation">
-      <input class="field" type="text" id="price" name="price" placeholder="prix">
-      <select class="field" name="benefitOrder" id="benefitOrder">
-        <% for(let i = 1; i <= 10; i++) { %>
-          <option value="<%=[i]%>">ordre : <%=[i]%></option>
-        <% } %>
-      </select>
-      <input class="button" type="submit" value="Ajouter">
-    </form>
-  </div>
-  <div>
-    <h3>Modification d'une catégorie ou d'une prestation</h3>
-
-    <% for(let i = 0; i < category.length; i++) { %>
-      <form action="/updatecategory" method="post">
-      <input type="hidden" id="categoryId" name="categoryId" value="<%= category[i].id %>">
-      <input class="field" type="text" id="updateCategory" name="updateCategory" value="<%=category[i].title %>">
-      <label for="updateBenefitOrder">Ordre : <%= category[i].ordre %> <% if(category[i].ordre == 1) { %><sup>er</sup><% } else { %><sup>ème</sup><% } %></label>
-      <select class="field" name="updateCategoryOrder" id="updateCategoryOrder">
-        <% for(let j = 1; j <= 10; j++) { %>
-          <option value="<%=[j]%>"><%=[j]%></option>
-        <% } %>
-      </select>
-      <input class="button" type="submit" value="Modifier">
-    </form>
-    
-    <% for(let k = 0; k < benefit.length; k++) { %>
-      <form action="/updatebenefit" method="post">
-      <% if (benefit[k].categorie_id === category[i].id) { %>
-      <input type="hidden" id="benefitId" name="benefitId" value="<%= benefit[k].id %>">
-      <input class="field" type="text" id="updateBenefitTitle" name="updateBenefitTitle" value="<%=benefit[k].title %>">
-      <input class="field" type="text" id="updateBenefitPrice" name="updateBenefitPrice" value="<%=benefit[k].prix %>">
-      <label for="updateBenefitOrder">Ordre : <%= benefit[k].ordre %> <% if(benefit[k].ordre == 1) { %><sup>er</sup><% } else { %><sup>ème</sup><% } %></label>
-      <select class="field" name="updateBenefitOrder" id="updateBenefitOrder">
-        <% for(let l = 1; l <= 10; l++) { %>
-          <option value="<%=[l]%>"><%=[l]%></option>
-        <% } %>
-      </select>
-      <input class="button" type="submit" value="Modifier">
-      <% }  %>
-    </form>
-    <% }} %>
-  </div>
-  </section>
-  <section>
-  <div>
-    <h3>Suppression d'une catégorie ou d'une prestation</h3>
-    <table class="js-post-table-category">
-      <thead>
+      
+      <table class="tab js-post-table-category">
+        <thead>
           <th>catégorie</th>
-          <th></th>
-      </thead>
-      <tbody>
-        <% for(let i = 0; i < category.length; i++) { %>
-          <tr data-id="<%=category[i].id%>">
-            <td><%=category[i].title%></td>
-          </tr>
-        <% } %>
-      </tbody>
-    </table>
-  </div>
-  <div>
-    <table class="js-post-table-benefit">
-      <thead>
-          <th>Prestations</th>
-          <th></th>
-      </thead>
-      <tbody>
-        <% for(let i = 0; i < benefit.length; i++) { %>
-          <tr data-id="<%=benefit[i].id%>">
-            <td><%=benefit[i].title%></td>
-          </tr>
-        <% } %>
-      </tbody>
-    </table>
-  </div>
+        </thead>
+        <tbody>
+          <% for(let i=0; i < category.length; i++) { %>
+            <tr data-id="<%=category[i].id%>">
+              <td>
+                <%=category[i].title%>
+              </td>
+            </tr>
+            <% } %>
+        </tbody>
+      </table>
+    </div>
   </section>
-  <section>
+  <section class="admin">
     <h2>Galerie photo</h2>
-    <div>
+    <div class="add-picture">
       <h3>Ajout d'une photo</h3>
       <form action="/addpictureingallery" method="post" class="form" enctype="multipart/form-data">
+        <div class="sub-form">
         <input class="field picture" type="file" id="newpicture" name="newpicture">
         <select class="field" name="name" id="name">
-          <% for(let i = 0; i < admin.length; i++) { %>
-            <option value="<%=admin[i].name%>"><%=admin[i].name%></option>
-          <% } %>
+          <% for(let i=0; i < admin.length; i++) { %>
+            <option value="<%=admin[i].name%>">
+              <%=admin[i].name%>
+            </option>
+            <% } %>
         </select>
+      </div>
         <input class="button" type="submit" value="Ajout">
       </form>
     </div>
-    <div class="js-post-div-picture">
-      <h3>Suppression d'une photo</h3>
-      <% for(let i = 0; i < galerie.length; i++){ %>
-        <div data-id="<%=galerie[i].id%>">
-          <img src="<%= galerie[i].img %>" alt="Réalisation">
-          <p>By <%=galerie[i].name%></p>
-        </div>
-      <% }; %>
-    </div>
-    </section>
-    <section>
-      <h3>Informations diverses</h3>
-      <div>
-        <form action="/updateinfos" method="post">
+    <h3>Suppression d'une photo</h3>
+    <table class="tab js-post-table-picture">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Par</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let i=0; i < galerie.length; i++) { %>
+        <tr data-id="<%=galerie[i].id%>">
+          <td>
+            <img src="<%= galerie[i].img %>" alt="Réalisation">
+          </td>
+          <td>
+            <%=galerie[i].name%>
+          </td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </section>
+  <section class="admin">
+    <h3>Informations diverses</h3>
+    <div class="info-admin">
+      <form action="/updateinfos" method="post" class="form">
         <div>
           <label for="updateTel">Numero de telephone : </label>
           <input class="field" type="text" id="updateTel" name="updateTel" value="<%=info[0].telephone %>">
         </div>
         <div>
           <label for="updateFacebookLink">Lien vers la page facebook : </label>
-          <input class="field" type="text" id="updateFacebookLink" name="updateFacebookLink" value="<%=info[0].fb_link %>">
+          <input class="field" type="text" id="updateFacebookLink" name="updateFacebookLink"
+            value="<%=info[0].fb_link %>">
         </div>
         <div>
           <label for="updateInstragramLink">Lien vers la page instagram : </label>
-          <input class="field" type="text" id="updateInstragramLink" name="updateInstragramLink" value="<%=info[0].insta_link %>">
+          <input class="field" type="text" id="updateInstragramLink" name="updateInstragramLink"
+            value="<%=info[0].insta_link %>">
         </div>
         <input class="button" type="submit" value="Modifier">
       </form>
     </div>
   </section>
-  <section>
+  <section class="admin">
     <h2>Horaires</h2>
-    <div>
+    <div class="update-schedule-admin">
       <h3>Modification d'un horaire</h3>
-      <% for(let i = 0; i < schedule.length; i++) { %>
-        <form action="/updateschedule" method="post">
-        <input type="hidden" id="scheduleId" name="scheduleId" value="<%= schedule[i].id %>">
-        <input class="field" type="text" id="scheduleDay" name="scheduleDay" value="<%=schedule[i].jours %>">
-        <input class="field" type="text" id="scheduleHour" name="scheduleHour" value="<%=schedule[i].heures %>">
-        <label for="scheduleOrder">Ordre : <%= schedule[i].ordre %> <% if(schedule[i].ordre == 1) { %><sup>er</sup><% } else { %><sup>ème</sup><% } %></label>
-        <select class="field" name="scheduleOrder" id="scheduleOrder">
-          <% for(let j = 1; j <= 10; j++) { %>
-            <option value="<%=[j]%>"><%=[j]%></option>
-          <% } %>
-        </select>
-        <input class="button" type="submit" value="Modifier">
-      </form>
-      <% } %>
+      <% for(let i=0; i < schedule.length; i++) { %>
+        <form action="/updateschedule" method="post" class="form">
+          <input type="hidden" id="scheduleId" name="scheduleId" value="<%= schedule[i].id %>">
+          <input class="field" type="text" id="scheduleDay" name="scheduleDay" value="<%=schedule[i].jours %>">
+          <input class="field" type="text" id="scheduleHour" name="scheduleHour" value="<%=schedule[i].heures %>">
+          <div class="sub-form">
+          <div class="sub-form">
+          <label for="scheduleOrder">Ordre : <%= schedule[i].ordre %>
+              <% if(schedule[i].ordre==1) { %><sup>er</sup>
+                <% } else { %><sup>ème</sup>
+                  <% } %></label>
+          <select class="field" name="scheduleOrder" id="scheduleOrder">
+            <% for(let j=1; j <=10; j++) { %>
+              <option value="<%=[j]%>">
+                <%=[j]%>
+              </option>
+              <% } %>
+          </select>
+        </div>
+          <input class="button" type="submit" value="Modifier">
+        </div>
+        </form>
+        <% } %>
     </div>
     <div>
       <h3>Ajout un nouvel horaire</h3>
-      <form action="/addnewschedule" method="post">
+      <form action="/addnewschedule" method="post" class="form">
+        <div class="sub-form">
         <input class="field" type="text" id="addDays" name="addDays" placeholder="Ajouter les jours">
         <input class="field" type="text" id="addHours" name="addHours" placeholder="Ajouter les heures">
+        </div>
+        <div class="sub-form">
+        <label for="scheduleOrder">Ordre : </label>
         <select class="field" name="orderSchedule" id="orderSchedule">
-          <% for(let i = 1; i <= 10; i++) { %>
-            <option value="<%=[i]%>"><%=[i]%></option>
-          <% } %>
+          <% for(let i=1; i <=10; i++) { %>
+            <option value="<%=[i]%>">
+              <%=[i]%>
+            </option>
+            <% } %>
         </select>
         <input class="button" type="submit" value="Ajouter">
+      </div>
       </form>
-    </div> 
+    </div>
     <div>
       <h3>Suppression d'un horaire</h3>
-      <table class="js-post-table-schedule">
+      <table class="tab js-post-table-schedule">
         <thead>
-            <th>Jours</th>
-            <th>Heures</th>
+          <th>Jours</th>
+          <th>Heures</th>
         </thead>
         <tbody>
-          <% for(let i = 0; i < schedule.length; i++) { %>
+          <% for(let i=0; i < schedule.length; i++) { %>
             <tr data-id="<%=schedule[i].id%>">
-              <td><%=schedule[i].jours%></td>
-              <td><%=schedule[i].heures%></td>
+              <td>
+                <%=schedule[i].jours%>
+              </td>
+              <td>
+                <%=schedule[i].heures%>
+              </td>
             </tr>
-          <% } %>
+            <% } %>
         </tbody>
       </table>
     </div>

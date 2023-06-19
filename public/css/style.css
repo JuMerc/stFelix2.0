@@ -88,12 +88,16 @@ h3 {
 }
 
 h4 {
-    font-size: 2rem;
+    font-size: 3rem;
 }
 
 .container {
     width: 95%;
     margin: auto;
+}
+
+legend{
+    text-align: left;
 }
 
 /**********PARAMETRES***********/
@@ -112,7 +116,7 @@ h4 {
     background: linear-gradient(black 20%, var(--main-color));
 }
 
-.title .admin {
+.title .admin-icone {
     margin: 20px 10px 10px 20px;
     position: absolute
 }
@@ -122,9 +126,13 @@ h4 {
     position: absolute
 }
 
-.title .newAdmin {
+.title .newAdmin-icone {
     margin: 110px 10px 10px 20px;
     position: absolute
+}
+
+.title i:hover{
+    color: var(--second-color);
 }
 
 .title h1,
@@ -196,19 +204,29 @@ h4 {
 }
 
 /****************FOOTER*****************/
-
-.form {
-    display: flex;
-    flex-direction: column;
+.add-admin textarea{
+width: 100%;
+height: 200px
 }
-
 .field {
-    margin: 20px;
     border-radius: 10px;
     padding: 10px;
+    margin-top:20px;
+    margin-bottom: 20px;
     border-color: var(--second-color);
     resize: none;
     font-size: 1.8rem;
+    line-height: 20px;
+    font-family: montserrat, sans-serif;
+}
+.fieldset{
+    border-radius: 5px;
+    padding: 10px;
+    margin-top:20px;
+    margin-bottom: 20px;
+    border-color: black;
+    resize: none;
+    font-size: 3rem;
     line-height: 20px;
     font-family: montserrat, sans-serif;
 }
@@ -222,8 +240,8 @@ h4 {
     width: 200px;
     height: 50px;
     border: 2px solid black;
-    background-color: var(--second-color);
-    color: white;
+    background-color: var(--third-color);
+    color: black;
     border-radius: 10px;
     cursor: pointer;
     font-size: 1.8rem;
@@ -233,6 +251,8 @@ h4 {
 
 [type="file"]::file-selector-button:hover {
     background-color: black;
+    color:white;
+    transition: 0.3s all linear;
     border: 2px solid var(--second-color)
 }
 
@@ -245,11 +265,11 @@ h4 {
     height: 16px;
     border: 16px solid white;
     box-shadow: 2px 2px 2px black;
-    ;
     transition: 0.5s all linear;
     margin-right: 5px;
     position: relative;
     top: 4px;
+    cursor: pointer;
 }
 
 [type="radio"]:checked {
@@ -259,7 +279,6 @@ h4 {
 .button {
     width: 150px;
     height: 30px;
-    margin: auto;
     border: 2px solid black;
     background-color: var(--second-color);
     color: white;
@@ -268,6 +287,7 @@ h4 {
     font-size: 1.8rem;
     line-height: 20px;
     font-family: montserrat, sans-serif;
+    transition: 0.3s all linear;
 }
 
 .button:hover {
@@ -275,13 +295,15 @@ h4 {
     border: 2px solid var(--second-color)
 }
 
-.login {
+.admin .login {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    width:100%
 }
 
 .login .button {
-    margin-top: 50px;
+    margin-top: 40px;
 }
 
 /****************Formulaires Admins*****************/
@@ -290,6 +312,7 @@ h4 {
     width: 95%;
     margin: auto
 }
+
 
 .carrousel img {
     width: 100%;
@@ -462,6 +485,180 @@ h4 {
 }
 
 /*************************************CONTACT****************************************/
+.admin h3{
+    line-height: 30px;
+}
+.admin{
+    max-width: 95%;
+    margin:auto;
+    padding: 30px 0;
+    Border-bottom: 5px solid var(--second-color)
+} 
+
+.admin:last-child{
+    border-bottom: none;
+}
+.carrousel-admin .form{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    text-align: center;
+}
+.carrousel-admin .form .button{
+    width:61%;
+    margin:40px auto auto auto;
+}
+.image-container {
+    position: relative;
+    width: 45%;
+    margin: auto;
+}
+.image-container img{
+    width: 100%;
+    height: 100%;
+    margin: auto;
+}
+
+.image-container:hover img {
+    filter: grayscale(100%);
+    transition: filter 0.3s ease;
+}
+
+.file-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 95%;
+    height: 95%;
+    transform: translate(-50%, -50%);
+    /* display: none; */
+    color: white;
+    font-size: 5rem;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+/* .image-container:hover .file-label {
+    display: block;
+} */
+
+.file-input{
+    display:none
+}
+
+/****************Carrousel Admin***************/
+.admin .index-text{
+    width:100%;
+    text-align: center;
+}
+.admin .index-text textarea{
+    width:100%;
+    height: 300px;
+}
+
+
+/**************Index text admin***************/
+
+.add-brand .field,
+.add-brand textarea{
+    width:100%
+}
+.add-brand {
+    text-align: center;
+}
+
+/**************Ajout de marques***************/
+
+.tab {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+.tab th,
+.tab td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+}
+
+.tab th {
+    background-color: #f2f2f2;
+}
+
+.tab tbody tr:hover {
+    background-color: rgba(172,24,32,0.5);
+    transition: 0.5s linear;
+    cursor: pointer;
+}
+
+.tab td img {
+    max-width: 100px;
+    height: auto;
+}
+
+/*****************Tableaux de supression********************/
+.add-category,
+.add-benefit{
+    text-align: center;
+}
+.sub-form{
+    justify-content: space-between;
+    text-align: center;
+    width:100%
+}
+.sub-form input,
+.sub-form select{
+    width:48%;
+}
+.update{
+    display: flex;
+}
+.update-category{
+    width: 100%;
+    display:flex;
+    justify-content: space-between;
+    text-align: center;
+}
+.update-benefit{
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.price{
+    width: 70px
+}
+
+/*****************Services et tarifs************************/
+
+.add-picture .form{
+    text-align: center;
+}
+.add-picture .sub-form select{
+    width: 20%;
+}
+.add-picture .sub-form input{
+    width: 60%;
+}
+
+/*******************Galerie****************************/
+
+.info-admin .button{
+    margin-top: 40px;
+}
+
+.update-schedule-admin .form{
+    display: flex;
+    flex-direction: column;
+}
+
+/***********************Info/horaires************************/
+
+
+/**************************************ADMIN****************************************/
 
 /**************************************MEDIA QUERIES*************************************************/
 
@@ -579,49 +776,6 @@ h4 {
 
     .contact .map iframe {
         height: 500px
-    }
-
-    .form {
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-
-    .form .email {
-        width: 43%;
-    }
-
-    .form .field {
-        margin: auto
-    }
-
-    .form .name {
-        width: 43%;
-    }
-
-    .form .picture{
-        margin:20px auto
-    }
-
-    .form .text {
-        width: 80%;
-    }
-
-    .form .role {
-        margin: 20px auto
-    }
-
-    .form .password {
-        width: 70%
-    }
-
-    .form .button {
-        width: 31%;
-        margin-top: 50px
-    }
-
-    .login {
-        width: 60%;
-        margin: auto
     }
 }
 

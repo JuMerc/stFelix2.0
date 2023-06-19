@@ -49,8 +49,15 @@ export const AdminController = (req, res) => {
                     res.status(500).send("Erreur de base de données");
                     return;
                   }
-                  res.render("layout", {template: "admin",brands: brandResults,category: categoriesResult,benefit: benefitResult,admin: adminResult, 
-                  galerie: galerieResult, info: infosResult, schedule: scheduleResult});
+                  pool.query("SELECT * FROM carrousel", (error, carrouselResult) => {
+                    if (error) {
+                      console.error(error);
+                      res.status(500).send("Erreur de base de données");
+                      return;
+                    }
+                    res.render("layout", {template: "admin",brands: brandResults,category: categoriesResult,benefit: benefitResult,admin: adminResult, 
+                    galerie: galerieResult, info: infosResult, schedule: scheduleResult, carrousel: carrouselResult});
+                  });
                 });
               });
             });
