@@ -45,7 +45,6 @@ imageContainers.forEach(function(container) {
   img.addEventListener('click', function() {
     let fileInput = container.querySelector('.file-input');
     fileInput.click();
-    // document.querySelector('.file-label').style.backgroundColor = 'rgba(62,160,85,0.5);'
   });
 });
 

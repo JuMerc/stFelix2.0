@@ -2,7 +2,7 @@ import pool from "../config/database.js";
 import bcrypt from 'bcrypt';
 
 export const LoginController = function (req, res) {
-    pool.query("SELECT * FROM infos", (error, infosResult) => {
+    pool.query("SELECT * FROM Info", (error, infosResult) => {
         if (error) {
           console.error(error);
           res.status(500).send("Erreur de base de données");
@@ -15,7 +15,7 @@ export const LoginController = function (req, res) {
 export const LoginSubmit = function (req, res) {
     const { email, password } = req.body;
     
-    pool.query('SELECT * from users WHERE email = ?', [email], function (error, result) {
+    pool.query('SELECT * from User WHERE email = ?', [email], function (error, result) {
         if (error) {
             console.error(error);
             res.status(500).send('Erreur de base de données');

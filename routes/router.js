@@ -7,7 +7,7 @@ const router = express.Router();
 import { IndexController } from "../controllers/index.js";
 import { ServeController } from "../controllers/serve.js";
 import { TeamController } from "../controllers/team.js";
-import { GalerieController } from "../controllers/galerie.js";
+import { GalleryController } from "../controllers/gallery.js";
 import { ContactController } from "../controllers/contact.js";
 import { LoginController, LoginSubmit, Logout } from "../controllers/login.js";
 import { AdminController, NewAdmin, AddNewAdmin, DeleteAdmin,UpdateCarrouselPicture, UpdateIndexText, AddBrand, DeleteBrand, AddCategory, AddBenefit,
@@ -32,7 +32,7 @@ router.get('/serve', ServeController);
 router.get('/team', TeamController);
 
 // Affiche la page des services et prix
-router.get('/galerie',  GalerieController);
+router.get('/galerie',  GalleryController);
 
 // Affiche la page des services et prix
 router.get('/contact', ContactController);

@@ -5,51 +5,51 @@ import formidable from "formidable";
 import fs from "fs";
 
 export const AdminController = (req, res) => {
-  pool.query("SELECT * FROM marques", (error, brandResults) => {
+  pool.query("SELECT * FROM Brand", (error, brandResults) => {
     if (error) {
       console.error(error);
       res.status(500).send("Erreur de base de données");
       return;
     }
-    pool.query("SELECT * FROM categories", (error, categoriesResult) => {
+    pool.query("SELECT * FROM Category", (error, categoriesResult) => {
       if (error) {
         console.error(error);
         res.status(500).send("Erreur de base de données");
         return;
       }
       pool.query(
-        "SELECT * FROM prestations ORDER BY id",
+        "SELECT * FROM Benefit ORDER BY id",
         (error, benefitResult) => {
           if (error) {
             console.error(error);
             res.status(500).send("Erreur de base de données");
             return;
           }
-          pool.query("SELECT * FROM users", (error, adminResult) => {
+          pool.query("SELECT * FROM User", (error, adminResult) => {
             if (error) {
               console.error(error);
               res.status(500).send("Erreur de base de données");
               return;
             }
-            pool.query("SELECT * FROM galerie ORDER BY date", (error, galerieResult) => {
+            pool.query("SELECT * FROM Gallery ORDER BY date", (error, galerieResult) => {
               if (error) {
                 console.error(error);
                 res.status(500).send("Erreur de base de données");
                 return;
               }
-              pool.query("SELECT * FROM infos", (error, infosResult) => {
+              pool.query("SELECT * FROM Info", (error, infosResult) => {
                 if (error) {
                   console.error(error);
                   res.status(500).send("Erreur de base de données");
                   return;
                 }
-                pool.query("SELECT * FROM horaires ORDER BY ordre", (error, scheduleResult) => {
+                pool.query("SELECT * FROM Schedule ORDER BY pos", (error, scheduleResult) => {
                   if (error) {
                     console.error(error);
                     res.status(500).send("Erreur de base de données");
                     return;
                   }
-                  pool.query("SELECT * FROM carrousel", (error, carrouselResult) => {
+                  pool.query("SELECT * FROM Carousel", (error, carrouselResult) => {
                     if (error) {
                       console.error(error);
                       res.status(500).send("Erreur de base de données");
@@ -69,13 +69,13 @@ export const AdminController = (req, res) => {
 };
 
 export const NewAdmin = (req, res) => {
-  pool.query("SELECT * FROM users", (error, adminResult) => {
+  pool.query("SELECT * FROM User", (error, adminResult) => {
     if (error) {
       console.error(error);
       res.status(500).send("Erreur de base de données");
       return;
     }
-    pool.query("SELECT * FROM infos", (error, infosResult) => {
+    pool.query("SELECT * FROM Info", (error, infosResult) => {
       if (error) {
         console.error(error);
         res.status(500).send("Erreur de base de données");
@@ -132,7 +132,7 @@ export const AddNewAdmin = (req, res) => {
         };
 
         pool.query(
-          "INSERT INTO users SET ?",
+          "INSERT INTO User SET ?",
           [newUser],
           function (error, result) {
             if (error) {
@@ -152,7 +152,7 @@ export const AddNewAdmin = (req, res) => {
 export const DeleteAdmin = (req, res) => {
   let id = req.params.id;
   // Requête pour récupérer le chemin de l'image de la marque à supprimer
-  let selectSql = "SELECT picture FROM users WHERE id = ?";
+  let selectSql = "SELECT picture FROM User WHERE id = ?";
 
   pool.query(selectSql, [id], (error, results, fields) => {
     if (error) {
@@ -177,7 +177,7 @@ export const DeleteAdmin = (req, res) => {
         }
 
         // Requête de suppression en BDD
-        let deleteSql = "DELETE FROM users WHERE id = ?";
+        let deleteSql = "DELETE FROM User WHERE id = ?";
 
         pool.query(deleteSql, [id], function (error, result, fields) {
           if (error) {
@@ -259,7 +259,7 @@ export const UpdateCarrouselPicture = (req, res) => {
         .send("Une erreur est survenue lors de l'upload de l'image.");
     }
 
-    pool.query("SELECT id, img FROM carrousel", (error, results) => {
+    pool.query("SELECT id, img FROM Carousel", (error, results) => {
       if (error) {
         console.error(error);
         return res
@@ -300,7 +300,7 @@ export const UpdateCarrouselPicture = (req, res) => {
 
           // Mettre à jour l'enregistrement avec le nouvel URL
           pool.query(
-            "UPDATE carrousel SET img = ? WHERE id = ?",
+            "UPDATE Carousel SET img = ? WHERE id = ?",
             [img, row.id],
             function (error, result, fields) {
               if (error) {
@@ -319,7 +319,7 @@ export const UpdateIndexText = (req, res) => {
   const indexText = req.body.indexText; // Récupérer le nouveau texte à partir du corps de la requête
   // Mettre à jour le texte dans la base de données
   pool.query(
-    "UPDATE infos SET index_text = ?",
+    "UPDATE Info SET index_text = ?",
     [indexText],
     function (error, results) {
       if (error) {
@@ -381,7 +381,7 @@ export const AddBrand = (req, res) => {
     const img = `/brand_img/${files.newbrand.newFilename}.${extension}`;
     const brandText = fields.brandText;
     const title = fields.title;
-    pool.query("INSERT INTO marques (id, title, img, text) VALUES (?, ?, ?, ?)",
+    pool.query("INSERT INTO Brand (id, title, img, text) VALUES (?, ?, ?, ?)",
       [brandId, title, img, brandText],
       (error, result) => {
         if (error) {
@@ -399,7 +399,7 @@ export const DeleteBrand = (req, res) => {
   // On récupère l'id de la marque à supprimer, il a été passé en paramètre de l'url
   let id = req.params.id;
   // Requête pour récupérer le chemin de l'image de la marque à supprimer
-  let selectSql = "SELECT img FROM marques WHERE id = ?";
+  let selectSql = "SELECT img FROM Brand WHERE id = ?";
 
   pool.query(selectSql, [id], (error, results, fields) => {
     if (error) {
@@ -424,7 +424,7 @@ export const DeleteBrand = (req, res) => {
         }
 
         // Requête de suppression en BDD
-        let deleteSql = "DELETE FROM marques WHERE id = ?";
+        let deleteSql = "DELETE FROM Brand WHERE id = ?";
 
         pool.query(deleteSql, [id], function (error, result, fields) {
           if (error) {
@@ -457,7 +457,7 @@ export const AddCategory = (req, res) => {
   }
 
   // Requête d'insertion en BDD avec l'ID UUID
-  const sql = "INSERT INTO categories (id, title, ordre) VALUES (?, ?, ?)";
+  const sql = "INSERT INTO Category (id, title, pos) VALUES (?, ?, ?)";
 
   pool.query(sql, [input.id, input.category, input.ordre], (error, result) => {
     if (error) {
@@ -474,7 +474,7 @@ export const AddBenefit = (req, res) => {
   const id = uuidv4();
   // Requête pour insérer la prestation dans la table "prestations"
   const sql =
-    "INSERT INTO prestations (id, title, prix, categorie_id, ordre) VALUES (?, ?, ?, ?, ?)";
+    "INSERT INTO Benefit (id, title, price, category_id, order) VALUES (?, ?, ?, ?, ?)";
   const values = [id, prestation, price, category, benefitOrder];
   pool.query(sql, values, (error, result) => {
     if (error) {
@@ -490,7 +490,7 @@ export const AddBenefit = (req, res) => {
 export const UpdateCategory = (req, res) => {
   const { updateCategory, updateCategoryOrder, categoryId } = req.body;
 
-  const sql = "UPDATE categories SET title = ?, ordre = ? WHERE id = ?";
+  const sql = "UPDATE Category SET title = ?, pos = ? WHERE id = ?";
   const values = [updateCategory, updateCategoryOrder, categoryId];
 
   pool.query(sql, values, (error, results) => {
@@ -511,7 +511,7 @@ export const UpdateBenefit = (req, res) => {
     updateBenefitOrder,
     benefitId,
   } = req.body;
-  const sql = "UPDATE prestations SET title = ?, prix = ?, ordre = ? WHERE id = ?";
+  const sql = "UPDATE Benefit SET title = ?, price = ?, pos = ? WHERE id = ?";
   const values = [
     updateBenefitTitle,
     updateBenefitPrice,
@@ -533,7 +533,7 @@ export const DeleteCategory = (req, res) => {
   let id = req.params.id;
   // Requête pour récupérer le chemin de l'image de la marque à supprimer
 
-  let deleteSql = "DELETE FROM categories WHERE id = ?";
+  let deleteSql = "DELETE FROM Category WHERE id = ?";
 
   pool.query(deleteSql, [id], function (error, result, fields) {
     if (error) {
@@ -551,7 +551,7 @@ export const DeleteBenefit = (req, res) => {
   let id = req.params.id;
   // Requête pour récupérer le chemin de l'image de la marque à supprimer
   
-  let deleteSql = "DELETE FROM prestations WHERE id = ?";
+  let deleteSql = "DELETE FROM Benefit WHERE id = ?";
 
   pool.query(deleteSql, [id], function (error, result, fields) {
     if (error) {
@@ -596,7 +596,7 @@ export const AddPictureInGallery = (req, res) => {
       name: fields.name,
     };
 
-    pool.query("INSERT INTO galerie (id, img, name) VALUES (?, ?, ?)",
+    pool.query("INSERT INTO Gallery (id, img, name) VALUES (?, ?, ?)",
     [newPicture.id, newPicture.img, newPicture.name],
       function (error, result) {
         if (error) {
@@ -611,7 +611,7 @@ export const AddPictureInGallery = (req, res) => {
 };
 export const DeletePictureInGallery = (req, res) => {
   let id = req.params.id;
-  let selectSql = "SELECT img FROM galerie WHERE id = ?";
+  let selectSql = "SELECT img FROM Gallery WHERE id = ?";
 
   pool.query(selectSql, [id], (error, results, fields) => {
     if (error) {
@@ -632,7 +632,7 @@ export const DeletePictureInGallery = (req, res) => {
           });
           return;
         }
-        let deleteSql = "DELETE FROM galerie WHERE id = ?";
+        let deleteSql = "DELETE FROM Gallery WHERE id = ?";
 
         pool.query(deleteSql, [id], function (error, result, fields) {
           if (error) {
@@ -654,7 +654,7 @@ export const DeletePictureInGallery = (req, res) => {
 
 export const UpdateInfos = (req, res) => {
   const {updateTel , updateFacebookLink, updateInstragramLink} = req.body
-  const sql = "UPDATE infos SET telephone = ?, fb_link = ?, insta_link = ?"
+  const sql = "UPDATE Info SET telephone = ?, fb_link = ?, insta_link = ?"
   const values = [updateTel , updateFacebookLink, updateInstragramLink]
   pool.query(sql, values, (error, results) => {
     if (error) {
@@ -668,7 +668,7 @@ export const UpdateInfos = (req, res) => {
 export const AddNewSchedule = (req, res) => {
   const {addDays , addHours, orderSchedule} = req.body
   const id = uuidv4();
-  const sql = "INSERT INTO horaires (id, jours, heures, ordre) VALUES (?, ?, ?, ?)"
+  const sql = "INSERT INTO Schedule (id, day, hour, pos) VALUES (?, ?, ?, ?)"
   const values = [id, addDays , addHours, orderSchedule]
   pool.query(sql, values, (error, results) => {
     if (error) {
@@ -682,7 +682,7 @@ export const AddNewSchedule = (req, res) => {
 export const DeleteSchedule = (req, res) => {
   let id = req.params.id;
   
-  let deleteSql = "DELETE FROM horaires WHERE id = ?";
+  let deleteSql = "DELETE FROM Schedule WHERE id = ?";
 
   pool.query(deleteSql, [id], function (error, result, fields) {
     if (error) {

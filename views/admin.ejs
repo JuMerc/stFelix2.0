@@ -47,6 +47,7 @@
                 <th>Titre</th>
                 <th>img</th>
                 <th>Texte</th>
+                <th></th>
               </thead>
               <tbody>
                 <% for(let i=0; i < brands.length; i++) { %>
@@ -58,6 +59,7 @@
                     <td>
                       <%=brands[i].text.substring(0, 30)%> ...
                     </td>
+                    <td><i class="fa-solid fa-trash-can"></i></td>
                   </tr>
                   <% } %>
               </tbody>
@@ -171,6 +173,7 @@
             <th>Catégorie</th>
             <th>Prestations</th>
             <th>Prix</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -183,6 +186,7 @@
             <% } %>
             <td><%=benefit[i].title%></td>
             <td><%=benefit[i].prix%></td>
+            <td><i class="fa-solid fa-trash-can"></i></td>
           </tr>
           <% } %>
         </tbody>
@@ -193,6 +197,7 @@
       <table class="tab js-post-table-category">
         <thead>
           <th>catégorie</th>
+          <th></th>
         </thead>
         <tbody>
           <% for(let i=0; i < category.length; i++) { %>
@@ -200,6 +205,7 @@
               <td>
                 <%=category[i].title%>
               </td>
+              <td><i class="fa-solid fa-trash-can"></i></td>
             </tr>
             <% } %>
         </tbody>
@@ -230,6 +236,7 @@
         <tr>
           <th>Image</th>
           <th>Par</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -241,6 +248,7 @@
           <td>
             <%=galerie[i].name%>
           </td>
+          <td><i class="fa-solid fa-trash-can"></i></td>
         </tr>
         <% } %>
       </tbody>
@@ -322,6 +330,7 @@
         <thead>
           <th>Jours</th>
           <th>Heures</th>
+          <th></th>
         </thead>
         <tbody>
           <% for(let i=0; i < schedule.length; i++) { %>
@@ -332,6 +341,7 @@
               <td>
                 <%=schedule[i].heures%>
               </td>
+              <td><i class="fa-solid fa-trash-can"></i></td>
             </tr>
             <% } %>
         </tbody>

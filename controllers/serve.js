@@ -1,19 +1,19 @@
 import pool from "../config/database.js";
 
 export const ServeController = (req, res) => {
-    pool.query("SELECT * FROM categories ORDER BY ordre", (error, categoriesResult) => {
+    pool.query("SELECT * FROM Category ORDER BY pos", (error, categoriesResult) => {
       if (error) {
         console.error(error);
         res.status(500).send("Erreur de base de données");
         return;
       }
-      pool.query("SELECT * FROM prestations ORDER BY ordre", (error, prestationsResult) => {
+      pool.query("SELECT * FROM Benefit ORDER BY pos", (error, prestationsResult) => {
         if (error) {
           console.error(error);
           res.status(500).send("Erreur de base de données");
           return;
         }
-        pool.query("SELECT * FROM infos", (error, infosResult) => {
+        pool.query("SELECT * FROM Info", (error, infosResult) => {
           if (error) {
             console.error(error);
             res.status(500).send("Erreur de base de données");
