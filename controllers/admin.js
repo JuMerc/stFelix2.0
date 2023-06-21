@@ -18,7 +18,7 @@ export const AdminController = (req, res) => {
         return;
       }
       pool.query(
-        "SELECT * FROM Benefit ORDER BY id",
+        "SELECT * FROM Benefit ORDER BY pos",
         (error, benefitResult) => {
           if (error) {
             console.error(error);
@@ -474,7 +474,7 @@ export const AddBenefit = (req, res) => {
   const id = uuidv4();
   // Requête pour insérer la prestation dans la table "prestations"
   const sql =
-    "INSERT INTO Benefit (id, title, price, category_id, order) VALUES (?, ?, ?, ?, ?)";
+    "INSERT INTO Benefit (id, title, price, category_id, pos) VALUES (?, ?, ?, ?, ?)";
   const values = [id, prestation, price, category, benefitOrder];
   pool.query(sql, values, (error, result) => {
     if (error) {

@@ -2,6 +2,7 @@
     --main-color: #f3e1d3;
     --second-color: #C3672D;
     --third-color: #f9dda2;
+    --dark-main-color: #222;
 }
 
 
@@ -33,10 +34,23 @@
     font-style: italic;
     src: url("../fonts/Montserrat-Italic.ttf") format("truetype");
 }
+@font-face {
+    font-family: "dyslexic";
+    src: url("../fonts/OpenDyslexic-Regular.otf") format("woff2");
+}
+@font-face {
+    font-family: "dyslexic";
+    src: url("../fonts/OpenDyslexic-Italic.otf") format("woff2");
+    font-style: italic;
+}
+@font-face {
+    font-family: "dyslexic";
+    src: url("../fonts/OpenDyslexic-Bold.otf") format("woff2");
+    font-weight: bold;
+}
 
 * {
     box-sizing: border-box;
-
 }
 
 html {
@@ -52,6 +66,7 @@ body {
     line-height: 1.6rem;
     word-spacing: 1px;
     background-color: var(--main-color);
+    transition: background-color 0.2s linear;
 }
 
 ul {
@@ -101,6 +116,137 @@ legend{
 }
 
 /**********PARAMETRES***********/
+.toggle-container-dark {
+    display: inline-block;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+  .toggle-checkbox-dark {
+    display: none;
+  }
+  .toggle-label-dark {
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    background-color: var(--dark-main-color);
+    border-radius: 18px;
+    position: relative;
+    cursor: pointer;
+  }
+  .toggle-text-dark {
+    font-size: 20px;
+    position: absolute;
+    top: 5px;
+  }
+  .toggle-text-day {
+    left: 6px;
+  }
+  .toggle-text-night {
+    right: 6px;
+  }
+  .fa-moon,
+  .fa-sun{
+    color:var(--second-color)
+  }
+  .toggle-handle-dark {
+    width: 28px;
+    height: 28px;
+    z-index: 2;
+    background-color: #fff;
+    border-radius: 16px;
+    position: absolute;
+    top: 1.5px;
+    left: 1.5px;
+    transition: transform 0.3s;
+  }
+  .toggle-checkbox-dark:checked + .toggle-label-dark {
+    background-color: var(--dark-main-color);
+  }
+  .toggle-checkbox-dark:checked + .toggle-label-dark .toggle-handle-dark {
+    transform: translateX(30px);
+  }
+  .toggle-checkbox-dark:checked + .toggle-label-dark .toggle-handle-dark.dark-mode{
+    transform: translateX(-30px);
+  }
+
+body.dark-mode {
+    background-color: var(--dark-main-color);
+    color: var(--main-color);
+    transition: 0.2s linear;
+}
+
+.title.dark-mode,
+.header.dark-mode{
+    background: linear-gradient(var(--main-color) 20%, var(--dark-main-color));
+    transition: 0.2s linear;
+}
+
+.footer.dark-mode {
+    background: linear-gradient(var(--dark-main-color) 5%, var(--main-color));
+    transition: 0.2s linear;
+}
+.dark.dark-mode{
+    color:var(--dark-main-color);
+    transition: 0.2s linear;
+}
+.light.dark-mode{
+    color:var(--main-color);
+    transition: 0.2s linear;
+}
+/***********DARK-MODE***********/
+
+.toggle-container-dys {
+    display: inline-block;
+    position: absolute;
+    top: 50px;
+    right: 5px;
+  }
+  .toggle-checkbox-dys {
+    display: none;
+  }
+  .toggle-label-dys {
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    background-color: var(--dark-main-color);
+    border-radius: 18px;
+    position: relative;
+    cursor: pointer;
+  }
+  .toggle-text-dys {
+    font-size: 20px;
+    position: absolute;
+    top: 5px;
+  }
+  .toggle-text-dys {
+    left: 6px;
+  }
+  .toggle-text-nodys {
+    right: 6px;
+  }
+  .toggle-handle-dys {
+    width: 28px;
+    height: 28px;
+    z-index: 2;
+    background-color: #fff;
+    border-radius: 16px;
+    position: absolute;
+    top: 1.5px;
+    left: 1.5px;
+    transition: transform 0.3s;
+  }
+  .toggle-checkbox-dys:checked + .toggle-label-dys {
+    background-color: var(--dark-main-color);
+  }
+  .toggle-checkbox-dys:checked + .toggle-label-dark .toggle-handle-dys {
+    transform: translateX(30px);
+  }
+  /* .toggle-checkbox-dys:checked + .toggle-label-dys .toggle-handle-dys{
+    transform: translateX(-30px);
+  } */
+
+/***********Dyslexia************/
 
 .header {
     display: flex;
@@ -152,7 +298,7 @@ legend{
 
 .nav ul li {
     padding: 20px;
-    border-bottom: 3px solid var(--third-color);
+    border-bottom: 3px solid var(--second-color);
     background-color: black;
 }
 
@@ -163,12 +309,12 @@ legend{
 }
 
 .nav ul .first {
-    border-top: 3px solid var(--third-color);
+    border-top: 3px solid var(--second-color);
 }
 
 .nav ul li:active {
     color: black;
-    background-color: var(--main-color);
+    background-color: var(--second-color);
 }
 
 /***************HEADER*******************/
@@ -389,7 +535,7 @@ height: 200px
 .tarifs .single-serve {
     margin-bottom: 20px;
     padding-bottom: 20px;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid var(--second-color);
 }
 
 .tarifs .serve .single-serve span {
@@ -410,7 +556,7 @@ height: 200px
     display: flex;
     flex-direction: column;
     padding-bottom: 30px;
-    border-bottom: 3px solid black;
+    border-bottom: 3px solid var(--second-color);
 }
 
 .team .member img {
@@ -445,7 +591,7 @@ height: 200px
 .galerie .image img {
     width: 100%;
     border-radius: 10px;
-    border: 2px solid black;
+    border: 2px solid var(--second-color);
 }
 
 /*************************************GALLERIE****************************************/
@@ -470,7 +616,7 @@ height: 200px
     display: inline-block;
     margin: 0;
     padding-bottom: 20px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--second-color);
 }
 
 .contact .map {
@@ -481,7 +627,7 @@ height: 200px
     width: 100%;
     height: 300px;
     border-radius: 50px;
-    border: 3px solid black;
+    border: 3px solid var(--second-color);
 }
 
 /*************************************CONTACT****************************************/
@@ -511,8 +657,7 @@ height: 200px
 .image-container {
     position: relative;
     width: 45%;
-    margin: auto;
-    
+    margin: 10px auto;
 }
 .image-container img{
     width: 100%;
@@ -522,25 +667,20 @@ height: 200px
 
 .image-container:hover img {
     filter: grayscale(100%);
-    transform: scale(1.2);
-    z-index:10;
-    transition: 0.3s ease;
+    
 }
 
 .file-label {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 95%;
-    height: 95%;
-    /* transform: translate(-50%, -50%); */
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
     color: white;
     font-size: 5rem;
     background-color: rgba(0, 0, 0, 0.4);
-    padding: 10px;
     cursor: pointer;
-    z-index: 1;
- 
 }
 
 .file-input{
@@ -573,18 +713,27 @@ height: 200px
 .tab {
     width: 100%;
     border-collapse: collapse;
+    margin-bottom:40px
   }
 
-.tab th,
+.tab th{
+    text-decoration: underline;
+    padding: 10px;
+    text-align: center;
+    border-top: 2px solid var(--second-color);
+    border-bottom: 2px solid var(--second-color);
+    
+}
 .tab td {
     padding: 10px;
     text-align: center;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--second-color);
 }
 
-.tab th {
-    background-color: #f2f2f2;
-}
+
+/* .tab th {
+    background-color: var(--second-color);
+} */
 
 .tab tbody tr:hover {
     background-color: rgba(172,24,32,0.5);
@@ -666,8 +815,8 @@ height: 200px
         flex-direction: row;
         background-color: black;
         justify-content: space-around;
-        border-top: 3px solid var(--third-color);
-        border-bottom: 3px solid var(--third-color);
+        border-top: 3px solid var(--second-color);
+        border-bottom: 3px solid var(--second-color);
     }
 
     .nav ul li {
@@ -778,11 +927,13 @@ height: 200px
     }
     .image-container {
         width: 30%;
-        padding:10px
+    }
+    .image-container:hover img {
+        transform: scale(1.1);
+        transition: 0.3s ease;
     }
     .file-label { 
         display: none;
-        padding:10px;
     }
     
     .image-container:hover .file-label {
@@ -808,7 +959,7 @@ height: 200px
         position: sticky;
         top: 0;
         z-index: 2;
-        border-bottom: 3px solid black;
+        border-bottom: 3px solid var(--second-color);
     }
 
     .header .title,
@@ -844,7 +995,10 @@ height: 200px
     .galerie .image {
         width: 23%;
     }
+    .carrousel-admin .form {
+        justify-content: space-between;
+    }  
     .image-container {
-        width: 20%;
+        width: 18%;
     }
 }

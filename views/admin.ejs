@@ -117,7 +117,7 @@
         <legend>
           <%=category[i].title%>
         </legend>
-        <fieldset class="field update-category">
+        <fieldset class="field update-benefit">
           <legend>Catégorie</legend>
           <form action="/updatecategory" method="post">
             <input type="hidden" id="categoryId" name="categoryId" value="<%= category[i].id %>">
@@ -138,12 +138,12 @@
           <legend>Prestation</legend>
           <% for(let k=0; k < benefit.length; k++) { %>
             <form action="/updatebenefit" method="post" class="form">
-              <% if (benefit[k].categorie_id===category[i].id) { %>
+              <% if (benefit[k].category_id===category[i].id) { %>
                 <input type="hidden" id="benefitId" name="benefitId" value="<%= benefit[k].id %>">
                 <input class="field" type="text" id="updateBenefitTitle" name="updateBenefitTitle"
                   value="<%=benefit[k].title %>">
                 <input class="field price" type="text" id="updateBenefitPrice" name="updateBenefitPrice"
-                  value="<%=benefit[k].prix %>">
+                  value="<%=benefit[k].price %>">
                 <label for="updateBenefitOrder">Ordre : <%= benefit[k].ordre %>
                     <% if(benefit[k].ordre==1) { %><sup>er</sup>
                       <% } else { %><sup>ème</sup>
@@ -180,12 +180,12 @@
           <% for(let i=0; i < benefit.length; i++) { %>
           <tr data-id="<%=benefit[i].id%>">
             <% for(let j=0; j < category.length; j++) { %>
-              <% if (benefit[i].categorie_id===category[j].id) { %>
+              <% if (benefit[i].category_id===category[j].id) { %>
                 <td><%=category[j].title%></td>
               <% } %>
             <% } %>
             <td><%=benefit[i].title%></td>
-            <td><%=benefit[i].prix%></td>
+            <td><%=benefit[i].price%></td>
             <td><i class="fa-solid fa-trash-can"></i></td>
           </tr>
           <% } %>
@@ -193,10 +193,9 @@
       </table>
     </div>
     <div>
-      
       <table class="tab js-post-table-category">
         <thead>
-          <th>catégorie</th>
+          <th>Catégorie</th>
           <th></th>
         </thead>
         <tbody>
@@ -283,8 +282,8 @@
       <% for(let i=0; i < schedule.length; i++) { %>
         <form action="/updateschedule" method="post" class="form">
           <input type="hidden" id="scheduleId" name="scheduleId" value="<%= schedule[i].id %>">
-          <input class="field" type="text" id="scheduleDay" name="scheduleDay" value="<%=schedule[i].jours %>">
-          <input class="field" type="text" id="scheduleHour" name="scheduleHour" value="<%=schedule[i].heures %>">
+          <input class="field" type="text" id="scheduleDay" name="scheduleDay" value="<%=schedule[i].day %>">
+          <input class="field" type="text" id="scheduleHour" name="scheduleHour" value="<%=schedule[i].hour %>">
           <div class="sub-form">
           <div class="sub-form">
           <label for="scheduleOrder">Ordre : <%= schedule[i].ordre %>
@@ -336,10 +335,10 @@
           <% for(let i=0; i < schedule.length; i++) { %>
             <tr data-id="<%=schedule[i].id%>">
               <td>
-                <%=schedule[i].jours%>
+                <%=schedule[i].day%>
               </td>
               <td>
-                <%=schedule[i].heures%>
+                <%=schedule[i].hour%>
               </td>
               <td><i class="fa-solid fa-trash-can"></i></td>
             </tr>

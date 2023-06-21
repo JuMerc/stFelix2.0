@@ -6,12 +6,12 @@
                 <h3>Au Petit Salon St Félix</h3>
                 <p>Place St Félix</p>
                 <p>44400 Nantes</p>
-                <p><a href="tel:<%=info[0].telephone %>"><%=info[0].telephone %></a></p>
+                <p><a href="tel:<%=info[0].telephone %>" class="light"><%=info[0].telephone %></a></p>
             </div>
             <div class="info">
                 <h3>Horaires d'ouverture</h3>
                 <% for(let i = 0; i < schedule.length; i++) { %>
-                    <p><%=schedule[i].jours%> : <%=schedule[i].heures%></p>
+                    <p><%=schedule[i].day%> : <%=schedule[i].hour%></p>
                   <% } %>
             </div>
             <div class="info">

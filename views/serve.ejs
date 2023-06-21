@@ -5,7 +5,7 @@
             <h3><%= category[i].title %></h3>
             <div class="serve">
                 <% for(let j = 0; j < benefit.length; j++) { %>
-                    <% if (benefit[j].categorie_id === category[i].id) { %>
+                    <% if (benefit[j].category_id === category[i].id) { %>
                         <div class="single-serve">
                             <p><%= benefit[j].title %> <span><%= benefit[j].prix %></span></p>
                         </div>

@@ -12,23 +12,38 @@
 <body>
 	<header class="header">
 		<div class="title">
-			<div class="admin-icone"><a href="/admin"><i class="fa-solid fa-user-gear"></i></a></div>
+			<div class="admin-icone"><a href="/admin" class="dark"><i class="fa-solid fa-user-gear"></i></a></div>
 			
-			<div class="logout"><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a></div>
-			<div class="newAdmin-icone"><a href="/addnewadmin"><i class="fa-solid fa-user-plus"></i></a></div>
+			<div class="logout dark"><a href="/logout" class="dark"><i class="fa-solid fa-right-from-bracket"></i></a></div>
+			<div class="newAdmin-icone dark"><a href="/addnewadmin" class="dark"><i class="fa-solid fa-user-plus"></i></a></div>
 			<% if(locals.second) { %>
-				<div class="logout"><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a></div>
+	
 			<% } %>	
 			<% if(locals.main) { %>
 				
 			<% } %>
-			<h1><a href="/">Au Petit Salon</a></h1>
-			<h2><a href="/">Saint Félix</a></h2>
+			<h1><a href="/" class="dark">Au Petit Salon</a></h1>
+			<h2><a href="/" class="dark">Saint Félix</a></h2>
+			<div class="toggle-container-dark">
+				<input type="checkbox" class="toggle-checkbox-dark" id="toggle-button-dark">
+				<label class="toggle-label-dark" for="toggle-button-dark">
+				  <span class="toggle-text-dark toggle-text-day"><i class="fa-solid fa-sun"></i></span>
+				  <span class="toggle-text-dark toggle-text-night"><i class="fa-solid fa-moon"></i></span>
+				  <span class="toggle-handle-dark"></span>
+				</label>
+			</div>
+			<div class="toggle-container-dys">
+				<input type="checkbox" class="toggle-checkbox-dys" id="toggle-button-dys">
+				<label class="toggle-label-dys" for="toggle-button-dys">
+				  <span class="toggle-text-dys toggle-text-dys">Dys</span>
+				  <span class="toggle-text-dys toggle-text-nodys"><del>Dys</del></span>
+				</label>
+			</div>
 		</div>
 		<nav class="nav">
 			<ul>
 				<li class="first"><a href="/serve">Services et tarifs</a></li>
-				<li><a href="/team">Notre équipe</a></li>
+				<li><a href="/team" >Notre équipe</a></li>
 				<li><a href="/galerie">Galerie photo</a></li>
 				<li><a href="/contact">Contact</a></li>
 			</ul>	
@@ -39,19 +54,19 @@
 
 	<footer class="footer">
 		<div class="social">
-			<h3>Suivez nous sur nos réseaux</h3>
+			<h3 class="light">Suivez nous sur nos réseaux</h3>
 			<a href="<%=info[0].fb_link %>"><i class="fa-brands fa-facebook-f"></i></a>
 			<a href="<%=info[0].insta_link %>"><i class="fa-brands fa-instagram"></i></a>
 			<h3>Notre 2<sup>ème</sup>salon</h3>
-			<a href="#">Au Petit Salon - Butte St Anne</a>
+			<a href="#" class="dark">Au Petit Salon - Butte St Anne</a>
 		</div>
 		<div class="propos">
-			<h3>À propos</h3>
-			<p>Au Petit Salon St Félix</p>
-			<p>Place de St Félix</p>
-			<p>44400 Nantes</p>
-			<p><a href="tel:<%=info[0].telephone %>"><%=info[0].telephone %></a></p>
-			<p>© Au Petit Salon St Félix | tout droits réservés.</p>
+			<h3 class="light">À propos</h3>
+			<p class="dark">Au Petit Salon St Félix</p>
+			<p class="dark">Place de St Félix</p>
+			<p class="dark">44400 Nantes</p>
+			<p><a href="tel:<%=info[0].telephone %>" class="dark"><%=info[0].telephone %></a></p>
+			<p class="dark">© Au Petit Salon St Félix | tout droits réservés.</p>
 		</div>
 
 	</footer>
