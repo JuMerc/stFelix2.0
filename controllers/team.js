@@ -16,4 +16,4 @@ export const TeamController = (req, res) => {
         res.render('layout', { template: 'team', users: users, info: infosResult });
       });
     });
-  };
+  }; 
