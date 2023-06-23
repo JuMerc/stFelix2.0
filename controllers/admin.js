@@ -16,7 +16,7 @@ export const AdminController = (req, res) => {
       handleError(error);
       return;
     }
-    pool.query("SELECT * FROM Category", (error, categoriesResult) => {
+    pool.query("SELECT * FROM Category ORDER BY pos", (error, categoriesResult) => {
       if (error) {
         handleError(error);
         return;
@@ -661,6 +661,20 @@ export const UpdateInfos = (req, res) => {
   const {updateTel , updateFacebookLink, updateInstragramLink} = req.body
   const sql = "UPDATE Info SET telephone = ?, fb_link = ?, insta_link = ?"
   const values = [updateTel , updateFacebookLink, updateInstragramLink]
+  pool.query(sql, values, (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send("Erreur de base de données");
+      return;
+    }
+    res.redirect("/admin");
+  });
+};
+
+export const UpdateSchedule = (req, res) => {
+  const {scheduleDay , scheduleHour, scheduleOrder, scheduleId} = req.body
+  const sql = "UPDATE Schedule SET day = ?, hour = ?, pos = ? WHERE id = ?"
+  const values = [scheduleDay , scheduleHour, scheduleOrder, scheduleId]
   pool.query(sql, values, (error, results) => {
     if (error) {
       console.error(error);

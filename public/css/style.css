@@ -5,7 +5,6 @@
     --dark-main-color: #222;
 }
 
-
 @font-face {
     font-family: "dancingScript";
     src: url("../fonts/DancingScript-Regular.ttf") format("truetype");
@@ -388,23 +387,13 @@ height: 200px
     border-radius: 5px;
     padding: 10px;
     margin-top:20px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     border-color: black;
     resize: none;
     font-size: 3rem;
     line-height: 20px;
     font-family: montserrat, sans-serif;
     text-align: center;
-}
-
-.delete{
-    display: inline;
-    float: right;
-    cursor: pointer;
-}
-
-.delete:hover{
-    background-color: rgba(172,24,32,0.5);
 }
 
 .form .role {
@@ -454,7 +443,7 @@ height: 200px
 
 .button {
     width: 150px;
-    height: 30px;
+    padding:10px;
     border: 2px solid black;
     background-color: var(--second-color);
     color: white;
@@ -740,55 +729,78 @@ height: 200px
 
 /**************Ajout de marques***************/
 
-.tab {
+ .tab-benefit tr, .tab-schedule tr{
     width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     border-collapse: collapse;
-    margin-bottom:40px
+    border-bottom: 2px solid var(--second-color);
+    padding: 10px 0 10px 0
   }
-
-.tab th{
-    text-decoration: underline;
+  .tab-benefit tr:last-child, .tab-schedule tr:last-child{
+    border:none
+  }
+.tab-benefit thead, .tab-schedule thead{
+    display:none
+  }
+  .tab-main{
+    width:100%
+  }
+  .tab-main input{
+    width:100%
+  }
+  .tab-second{
+    width:75%
+  }
+  .tab-second select{
+    width:25%
+  }
+  .tab-third{
+    width:20%;
+  }
+  .tab-third input{
+    width:100%;
+  }
+  .tab-second input{
+    width:100%
+  }
+.delete{
+    border-radius: 10px;
+    float: right;
+    padding: 10px;
+    border-color: var(--second-color);
+    font-size: 1.8rem;
+    line-height: 20px;
+    font-family: montserrat, sans-serif;
+}
+.tab{
+    border-collapse: collapse;
+    width:100%
+}
+  .tab th {
     padding: 10px;
     text-align: center;
     border-top: 2px solid var(--second-color);
     border-bottom: 2px solid var(--second-color);
-    
-}
-.tab td {
+  }
+  .tab td {
     padding: 10px;
     text-align: center;
     border-bottom: 1px solid var(--second-color);
-}
-
-.tab tbody tr:hover {
-    background-color: rgba(172,24,32,0.5);
+  }
+  .tab tbody tr:hover {
+    background-color: rgba(172, 24, 32, 0.5);
     transition: 0.5s linear;
     cursor: pointer;
-}
-
-.tab td img {
+  }
+  .tab td img {
     max-width: 100px;
     height: auto;
-}
-
-.tab-benefit {
-    width: 100%;
-    border-collapse: collapse;
   }
+  
 
-.tab-benefit th{
-    text-decoration: underline;
-    padding: 10px;
-    text-align: center;
-    
-}
-.tab-benefit td {
-    padding: 10px;
-    text-align: center;
-    border-top: 2px solid var(--second-color);
-}
-
-/*****************Tableaux de supression********************/
+/*****************Tableaux de supression/modification********************/
 .add-category,
 .add-benefit{
     text-align: center;
@@ -805,22 +817,7 @@ height: 200px
 .update{
     display: flex;
 }
-.update-category{
-    width: 100%;
-    display:flex;
-    justify-content: space-between;
-    text-align: center;
-}
-.update-benefit{
-    width: 100%;
-    justify-content: space-between;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-}
-.price{
-    width: 70px
-}
+
 
 /*****************Services et tarifs************************/
 
@@ -981,6 +978,55 @@ height: 200px
     .image-container:hover .file-label {
         display: block;
     }
+
+
+
+    .tab-benefit thead, .tab-schedule thead{
+        display:block
+      }
+    .tab, .tab-benefit, .tab-schedule {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      
+      .tab th, .tab-benefit th, .tab-schedule th {
+        text-decoration: underline;
+        padding: 10px;
+        text-align: center;
+        border-top: 2px solid var(--second-color);
+        border-bottom: 2px solid var(--second-color);
+      }
+      
+      .tab td, .tab-benefit td, .tab-schedule td {
+        padding: 10px;
+        text-align: center;
+        border-bottom: 1px solid var(--second-color);
+      }
+      
+      .tab tbody tr:hover {
+        background-color: rgba(172, 24, 32, 0.5);
+        transition: 0.5s linear;
+        cursor: pointer;
+      }
+      
+      .tab td img {
+        max-width: 100px;
+        height: auto;
+      }
+      
+      .tab-schedule {
+        margin-bottom: 40px;
+      }
+        .tab-main,
+        .tab-main input,
+        .tab-second,
+        .tab-second select,
+        .tab-third,
+        .tab-third input {
+         width: auto;
+}
+
+      
 }
 
 @media screen and (min-width:980px) {
@@ -1025,9 +1071,9 @@ height: 200px
         background: none;
     }
     .header .nav ul li a{
-        color:black;
+        color:var(--main-color);
         font-weight: 500;
-        text-shadow: var(--main-color) 1px 1px 2px;
+        text-shadow: black 3px 3px 5px;
     } 
     .tarifs .serve {
         flex-direction: row;

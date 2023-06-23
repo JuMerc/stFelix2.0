@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   addEventListeners(".js-post-table-admin tr[data-id]", "/admin/");
   addEventListeners(".js-category button[data-id]", "/category/");
   addEventListeners(".js-benefit button[data-id]", "/benefit/");
-  addEventListeners(".js-post-table-schedule tr[data-id]", "/schedule/");
+  addEventListeners(".js-post-table-schedule button[data-id]", "/schedule/");
   addEventListeners(".js-post-table-picture tr[data-id]", "/picture/");
 });
 

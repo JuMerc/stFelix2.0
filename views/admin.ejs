@@ -1,4 +1,13 @@
 <main class="desktop">
+  <nav>
+    <ul>
+      <li><a href=""></a></li>
+      <li><a href=""></a></li>
+      <li><a href=""></a></li>      
+      <li><a href=""></a></li>
+      <li><a href=""></a></li>
+    </ul>
+  </nav>
   <section class="admin">
     <h2>Page d'accueil</h3>
       <h3>Modification des photos du carrousel</h4>
@@ -111,12 +120,13 @@
       </div>
 
     </div>
+    <a href="/admin/benefit"></a>
     <h3>Modification d'une catégorie ou d'une prestation</h3>
     <% for (let i = 0; i < category.length; i++) { %>
       <fieldset class="field fieldset js-category" data-id="<%= category[i].id %>">
-        <button data-id="<%= category[i].id %>" class="delete field"><i class="fa-solid fa-trash-can-arrow-up"></i></button>
+        
         <legend><%= category[i].title %></legend>
-    
+        <button data-id="<%= category[i].id %>" class="delete"><i class="fa-solid fa-trash-can-arrow-up"></i></button>
         <form action="/updatecategory" method="post">
           <input type="hidden" id="categoryId" name="categoryId" value="<%= category[i].id %>">
           <input class="field" type="text" id="updateCategory" name="updateCategory" value="<%= category[i].title %>">
@@ -132,7 +142,7 @@
           </select>
           <input class="button" type="submit" value="Modifier">
         </form>
-    
+        
         <fieldset class="field update-benefit js-benefit">
           <legend>Prestations</legend>
           
@@ -151,14 +161,14 @@
                   <% if (benefit[j].category_id === category[i].id) { %>
                     <form action="/updatebenefit" method="post" class="form">
                     <tr data-id="<%= benefit[j].id %>">
-                      <td>
+                      <td class="tab-main">
                         <input type="hidden" id="benefitId" name="benefitId" value="<%= benefit[j].id %>">
                         <input class="field" type="text" id="updateBenefitTitle" name="updateBenefitTitle" value="<%= benefit[j].title %>">
                       </td>
-                      <td>
-                        <input class="field price" type="text" id="updateBenefitPrice" name="updateBenefitPrice" value="<%= benefit[j].price %>">
+                      <td class="tab-third">
+                        <input class="field" type="text" id="updateBenefitPrice" name="updateBenefitPrice" value="<%= benefit[j].price %>">
                       </td>
-                      <td>
+                      <td class="tab-second">
                         <label for="updateBenefitOrder">Ordre : <%= benefit[j].pos %>
                           <% if (benefit[j].pos == 1) { %><sup>er</sup>
                           <% } else { %><sup>ème</sup>
@@ -172,12 +182,12 @@
                           <% } %>
                         </select>
                       </td>
-                      <td>
+                      <td class="tab-second">
                         <input class="button" type="submit" value="Modifier">
                       </td>
                     </form>
-                      <td>
-                        <button data-id="<%= benefit[j].id %>" class="delete field"><i class="fa-solid fa-trash-can"></i></button>
+                      <td class="tab-third">
+                        <button data-id="<%= benefit[j].id %>" class="delete"><i class="fa-solid fa-trash-can"></i></button>
                       </td>
                     </tr>
                   <% } %>
@@ -255,32 +265,45 @@
   </section>
   <section class="admin">
     <h2>Horaires</h2>
-    <div class="update-schedule-admin">
       <h3>Modification d'un horaire</h3>
-      <% for(let i=0; i < schedule.length; i++) { %>
-        <form action="/updateschedule" method="post" class="form">
-          <input type="hidden" id="scheduleId" name="scheduleId" value="<%= schedule[i].id %>">
-          <input class="field" type="text" id="scheduleDay" name="scheduleDay" value="<%=schedule[i].day %>">
-          <input class="field" type="text" id="scheduleHour" name="scheduleHour" value="<%=schedule[i].hour %>">
-          <div class="sub-form">
-          <div class="sub-form">
-          <label for="scheduleOrder">Ordre : <%= schedule[i].ordre %>
-              <% if(schedule[i].ordre==1) { %><sup>er</sup>
+      <table class="tab-schedule js-post-table-schedule">
+        <thead>
+          <th>Jours</th>
+          <th>Heures</th>
+          <th>Ordre</th>
+          <th></th>
+          <th></th>
+        </thead>
+        <tbody>
+          <% for(let i=0; i < schedule.length; i++) { %>
+            <form action="/updateschedule" method="post">
+            <tr data-id="<%=schedule[i].id%>">
+              <td class="tab-main">
+                <input type="hidden" id="scheduleId" name="scheduleId" value="<%= schedule[i].id %>">
+                <input class="field" type="text" id="scheduleDay" name="scheduleDay" value="<%=schedule[i].day %>">
+              </td>
+              <td class="tab-main">
+                <input class="field" type="text" id="scheduleHour" name="scheduleHour" value="<%=schedule[i].hour %>">
+              </td>
+              <td class="tab-main"><label for="scheduleOrder">Ordre : <%= schedule[i].pos %>
+                <% if (schedule[i].pos == 1) { %><sup>er</sup>
                 <% } else { %><sup>ème</sup>
-                  <% } %></label>
-          <select class="field" name="scheduleOrder" id="scheduleOrder">
-            <% for(let j=1; j <=10; j++) { %>
-              <option value="<%=[j]%>">
-                <%=[j]%>
-              </option>
-              <% } %>
-          </select>
-        </div>
-          <input class="button" type="submit" value="Modifier">
-        </div>
-        </form>
-        <% } %>
-    </div>
+                <% } %>
+              </label>
+              <select class="field" name="scheduleOrder" id="scheduleOrder">
+                <% for (let k = 1; k <= 10; k++) { %>
+                  <option value="<%= k %>">
+                    <%= k %>
+                  </option>
+                <% } %>
+              </select></td>
+              <td class="tab-main"><input class="button" type="submit" value="Modifier"></td>
+              <td><button data-id="<%=schedule[i].id%>" class="delete field"><i class="fa-solid fa-trash-can"></i></button></td>
+            </tr>
+          </form>
+            <% } %>
+        </tbody>
+      </table>
     <div>
       <h3>Ajout un nouvel horaire</h3>
       <form action="/addnewschedule" method="post" class="form">
@@ -301,28 +324,6 @@
       </div>
       </form>
     </div>
-    <div>
-      <h3>Suppression d'un horaire</h3>
-      <table class="tab js-post-table-schedule">
-        <thead>
-          <th>Jours</th>
-          <th>Heures</th>
-          <th></th>
-        </thead>
-        <tbody>
-          <% for(let i=0; i < schedule.length; i++) { %>
-            <tr data-id="<%=schedule[i].id%>">
-              <td>
-                <%=schedule[i].day%>
-              </td>
-              <td>
-                <%=schedule[i].hour%>
-              </td>
-              <td><i class="fa-solid fa-trash-can"></i></td>
-            </tr>
-            <% } %>
-        </tbody>
-      </table>
-    </div>
+    
   </section>
 </main>

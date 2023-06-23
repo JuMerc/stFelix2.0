@@ -11,7 +11,7 @@ import { GalleryController } from "../controllers/gallery.js";
 import { ContactController } from "../controllers/contact.js";
 import { LoginController, LoginSubmit, Logout } from "../controllers/login.js";
 import { AdminController, NewAdmin, AddNewAdmin, DeleteAdmin,UpdateCarrouselPicture, UpdateIndexText, AddBrand, DeleteBrand, AddCategory, AddBenefit,
-     DeleteCategory, DeleteBenefit, UpdateCategory, UpdateBenefit, AddPictureInGallery, DeletePictureInGallery, UpdateInfos, AddNewSchedule, DeleteSchedule } from "../controllers/admin.js"
+     DeleteCategory, DeleteBenefit, UpdateCategory, UpdateBenefit, AddPictureInGallery, DeletePictureInGallery, UpdateInfos, UpdateSchedule ,AddNewSchedule, DeleteSchedule } from "../controllers/admin.js"
 
 // Middleware qui bloque les routes si on est pas connecté
 const adminCheckMiddleware = (roles) => (req, res, next) => {
@@ -109,10 +109,12 @@ router.post('/addpictureingallery',  AddPictureInGallery);
 // router.delete('/picture/:id', adminCheckMiddleware(['main', 'second']) , DeletePictureInGallery);
 router.delete('/picture/:id',  DeletePictureInGallery);
 
-
 //Modification des informations diverses
 // router.post('/updateinfos', adminCheckMiddleware(['main', 'second']) , UpdateInfos)
 router.post('/updateinfos',  UpdateInfos)
+
+//Modification d'un horaire
+router.post('/updateschedule', UpdateSchedule)
 
 //Ajout d'un nouvel horaire
 // router.post('/addnewschedule', adminCheckMiddleware(['main']) , AddNewSchedule)
