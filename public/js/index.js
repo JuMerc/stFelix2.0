@@ -1,5 +1,5 @@
 function removeRowEventListener(event, url) {
-  const element = event.target.closest("tr");
+  const element = event.target.closest("tr") || event.target.closest("fieldset");
   const id = element.getAttribute("data-id");
 
   const options = {
@@ -35,8 +35,8 @@ function addEventListeners(selector, url) {
 document.addEventListener("DOMContentLoaded", () => {
   addEventListeners(".js-post-table-brand tr[data-id]", "/brand/");
   addEventListeners(".js-post-table-admin tr[data-id]", "/admin/");
-  addEventListeners(".js-post-table-category tr[data-id]", "/category/");
-  addEventListeners(".js-post-table-benefit tr[data-id]", "/benefit/");
+  addEventListeners(".js-category button[data-id]", "/category/");
+  addEventListeners(".js-benefit button[data-id]", "/benefit/");
   addEventListeners(".js-post-table-schedule tr[data-id]", "/schedule/");
   addEventListeners(".js-post-table-picture tr[data-id]", "/picture/");
 });

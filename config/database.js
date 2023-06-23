@@ -4,7 +4,6 @@ dotenv.config();
 const dbHost = process.env.DB_HOST;
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASSWORD;
-console.log([dbHost,dbUser,dbPassword])
 let pool  = mysql.createPool({
   connectionLimit : 10000,
     host: dbHost,

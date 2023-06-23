@@ -21,7 +21,7 @@
           <h3>Modification du texte d'accueil</h4>
             <form action="/updateindextext" method="post" class="form">
               <textarea class="field text" id="indexText" name="indexText"
-                placeholder="Nouveau texte d'accueil"></textarea>
+><%=info[0].index_text%></textarea>
               <input class="button" type="submit" value="Modifier">
             </form>
         </div>
@@ -112,105 +112,83 @@
 
     </div>
     <h3>Modification d'une catégorie ou d'une prestation</h3>
-    <% for(let i=0; i < category.length; i++) { %>
-      <fieldset class="fieldset">
-        <legend>
-          <%=category[i].title%>
-        </legend>
-        <fieldset class="field update-benefit">
-          <legend>Catégorie</legend>
-          <form action="/updatecategory" method="post">
-            <input type="hidden" id="categoryId" name="categoryId" value="<%= category[i].id %>">
-            <input class="field" type="text" id="updateCategory" name="updateCategory" value="<%=category[i].title %>">
-            <label for="updateBenefitOrder">Ordre : <%= category[i].ordre %>
-                <% if(category[i].ordre==1) { %><sup>er</sup><% } else { %><sup>ème</sup><% } %></label>
-            <select class="field" name="updateCategoryOrder" id="updateCategoryOrder">
-              <% for(let j=1; j <=10; j++) { %>
-                <option value="<%=[j]%>">
-                  <%=[j]%>
-                </option>
-                <% } %>
-            </select>
-            <input class="button" type="submit" value="Modifier">
-          </form>
-        </fieldset>
-        <fieldset class="field update-benefit">
-          <legend>Prestation</legend>
-          <% for(let k=0; k < benefit.length; k++) { %>
-            <form action="/updatebenefit" method="post" class="form">
-              <% if (benefit[k].category_id===category[i].id) { %>
-                <input type="hidden" id="benefitId" name="benefitId" value="<%= benefit[k].id %>">
-                <input class="field" type="text" id="updateBenefitTitle" name="updateBenefitTitle"
-                  value="<%=benefit[k].title %>">
-                <input class="field price" type="text" id="updateBenefitPrice" name="updateBenefitPrice"
-                  value="<%=benefit[k].price %>">
-                <label for="updateBenefitOrder">Ordre : <%= benefit[k].ordre %>
-                    <% if(benefit[k].ordre==1) { %><sup>er</sup>
-                      <% } else { %><sup>ème</sup>
-                        <% } %></label>
-                <select class="field" name="updateBenefitOrder" id="updateBenefitOrder">
-                  <% for(let l=1; l <=10; l++) { %>
-                    <option value="<%=[l]%>">
-                      <%=[l]%>
-                    </option>
-                    <% } %>
-                </select>
-                <input class="button" type="submit" value="Modifier">
-                <% } %>
-            </form>
-
+    <% for (let i = 0; i < category.length; i++) { %>
+      <fieldset class="field fieldset js-category" data-id="<%= category[i].id %>">
+        <button data-id="<%= category[i].id %>" class="delete field"><i class="fa-solid fa-trash-can-arrow-up"></i></button>
+        <legend><%= category[i].title %></legend>
+    
+        <form action="/updatecategory" method="post">
+          <input type="hidden" id="categoryId" name="categoryId" value="<%= category[i].id %>">
+          <input class="field" type="text" id="updateCategory" name="updateCategory" value="<%= category[i].title %>">
+          <label for="updateBenefitOrder">Ordre : <%= category[i].pos %>
+            <% if (category[i].pos == 1) { %><sup>er</sup><% } else { %><sup>ème</sup><% } %>
+          </label>
+          <select class="field" name="updateCategoryOrder" id="updateCategoryOrder">
+            <% for (let j = 1; j <= 10; j++) { %>
+              <option value="<%= j %>">
+                <%= j %>
+              </option>
             <% } %>
+          </select>
+          <input class="button" type="submit" value="Modifier">
+        </form>
+    
+        <fieldset class="field update-benefit js-benefit">
+          <legend>Prestations</legend>
+          
+            <table class="tab-benefit">
+              <thead>
+                <tr>
+                  <th>Prestations</th>
+                  <th>Prix</th>
+                  <th>Ordre</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% for (let j = 0; j < benefit.length; j++) { %>
+                  <% if (benefit[j].category_id === category[i].id) { %>
+                    <form action="/updatebenefit" method="post" class="form">
+                    <tr data-id="<%= benefit[j].id %>">
+                      <td>
+                        <input type="hidden" id="benefitId" name="benefitId" value="<%= benefit[j].id %>">
+                        <input class="field" type="text" id="updateBenefitTitle" name="updateBenefitTitle" value="<%= benefit[j].title %>">
+                      </td>
+                      <td>
+                        <input class="field price" type="text" id="updateBenefitPrice" name="updateBenefitPrice" value="<%= benefit[j].price %>">
+                      </td>
+                      <td>
+                        <label for="updateBenefitOrder">Ordre : <%= benefit[j].pos %>
+                          <% if (benefit[j].pos == 1) { %><sup>er</sup>
+                          <% } else { %><sup>ème</sup>
+                          <% } %>
+                        </label>
+                        <select class="field" name="updateBenefitOrder" id="updateBenefitOrder">
+                          <% for (let k = 1; k <= 10; k++) { %>
+                            <option value="<%= k %>">
+                              <%= k %>
+                            </option>
+                          <% } %>
+                        </select>
+                      </td>
+                      <td>
+                        <input class="button" type="submit" value="Modifier">
+                      </td>
+                    </form>
+                      <td>
+                        <button data-id="<%= benefit[j].id %>" class="delete field"><i class="fa-solid fa-trash-can"></i></button>
+                      </td>
+                    </tr>
+                  <% } %>
+                <% } %>
+              </tbody>
+            </table>
+          
         </fieldset>
       </fieldset>
-      <% } %>
-  </section>
-  <section class="admin">
-    <h3>Suppression d'une catégorie ou d'une prestation</h3>
-    <div>
-      <table class="tab js-post-table-benefit">
-        <thead>
-          <tr>
-            <th>Catégorie</th>
-            <th>Prestations</th>
-            <th>Prix</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% for(let i=0; i < benefit.length; i++) { %>
-          <tr data-id="<%=benefit[i].id%>">
-            <% for(let j=0; j < category.length; j++) { %>
-              <% if (benefit[i].category_id===category[j].id) { %>
-                <td><%=category[j].title%></td>
-              <% } %>
-            <% } %>
-            <td><%=benefit[i].title%></td>
-            <td><%=benefit[i].price%></td>
-            <td><i class="fa-solid fa-trash-can"></i></td>
-          </tr>
-          <% } %>
-        </tbody>
-      </table>
-    </div>
-    <div>
-      <table class="tab js-post-table-category">
-        <thead>
-          <th>Catégorie</th>
-          <th></th>
-        </thead>
-        <tbody>
-          <% for(let i=0; i < category.length; i++) { %>
-            <tr data-id="<%=category[i].id%>">
-              <td>
-                <%=category[i].title%>
-              </td>
-              <td><i class="fa-solid fa-trash-can"></i></td>
-            </tr>
-            <% } %>
-        </tbody>
-      </table>
-    </div>
-  </section>
+    <% } %>
+    
   <section class="admin">
     <h2>Galerie photo</h2>
     <div class="add-picture">

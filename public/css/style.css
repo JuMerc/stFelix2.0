@@ -24,6 +24,12 @@
 
 @font-face {
     font-family: "montserrat";
+    src: url("../fonts/Montserrat-medium.ttf") format("truetype");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "montserrat";
     font-weight: bold;
     font-style: italic;
     src: url("../fonts/Montserrat-BoldItalic.ttf") format("truetype");
@@ -388,6 +394,17 @@ height: 200px
     font-size: 3rem;
     line-height: 20px;
     font-family: montserrat, sans-serif;
+    text-align: center;
+}
+
+.delete{
+    display: inline;
+    float: right;
+    cursor: pointer;
+}
+
+.delete:hover{
+    background-color: rgba(172,24,32,0.5);
 }
 
 .form .role {
@@ -754,6 +771,23 @@ height: 200px
     height: auto;
 }
 
+.tab-benefit {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+.tab-benefit th{
+    text-decoration: underline;
+    padding: 10px;
+    text-align: center;
+    
+}
+.tab-benefit td {
+    padding: 10px;
+    text-align: center;
+    border-top: 2px solid var(--second-color);
+}
+
 /*****************Tableaux de supression********************/
 .add-category,
 .add-benefit{
@@ -992,6 +1026,8 @@ height: 200px
     }
     .header .nav ul li a{
         color:black;
+        font-weight: 500;
+        text-shadow: var(--main-color) 1px 1px 2px;
     } 
     .tarifs .serve {
         flex-direction: row;
