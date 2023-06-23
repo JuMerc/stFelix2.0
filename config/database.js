@@ -1,10 +1,15 @@
 import mysql from "mysql";
-
+import dotenv from 'dotenv';
+dotenv.config();
+const dbHost = process.env.DB_HOST;
+const dbUser = process.env.DB_USER;
+const dbPassword = process.env.DB_PASSWORD;
+console.log([dbHost,dbUser,dbPassword])
 let pool  = mysql.createPool({
   connectionLimit : 10000,
-    host: "db.3wa.io",// on rentre l'hôte l'adresse url où se trouve la bdd
-    user: "julienmercourt", // identifiant BDD
-    password: "a31b900e5340a13471ddd22fc55bb8dd", // le password
+    host: dbHost,
+    user: dbUser, 
+    password: dbPassword, 
     database: "julienmercourt_APSstFelix", // nom de la base de donnée
 });
 
