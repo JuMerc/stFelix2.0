@@ -3,67 +3,62 @@ import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
 import formidable from "formidable";
 import fs from "fs";
+import validator from "validator";
 
 export const AdminController = (req, res) => {
+  const handleError = (error) => {
+    console.error(error);
+    res.status(500).send("Erreur de base de données");
+  };
+
   pool.query("SELECT * FROM Brand", (error, brandResults) => {
     if (error) {
-      console.error(error);
-      res.status(500).send("Erreur de base de données");
+      handleError(error);
       return;
     }
     pool.query("SELECT * FROM Category", (error, categoriesResult) => {
       if (error) {
-        console.error(error);
-        res.status(500).send("Erreur de base de données");
+        handleError(error);
         return;
       }
-      pool.query(
-        "SELECT * FROM Benefit ORDER BY pos",
-        (error, benefitResult) => {
+      pool.query("SELECT * FROM Benefit ORDER BY pos", (error, benefitResult) => {
+        if (error) {
+          handleError(error);
+          return;
+        }
+        pool.query("SELECT * FROM User", (error, adminResult) => {
           if (error) {
-            console.error(error);
-            res.status(500).send("Erreur de base de données");
+            handleError(error);
             return;
           }
-          pool.query("SELECT * FROM User", (error, adminResult) => {
+          pool.query("SELECT * FROM Gallery ORDER BY date", (error, galerieResult) => {
             if (error) {
-              console.error(error);
-              res.status(500).send("Erreur de base de données");
+              handleError(error);
               return;
             }
-            pool.query("SELECT * FROM Gallery ORDER BY date", (error, galerieResult) => {
+            pool.query("SELECT * FROM Info", (error, infosResult) => {
               if (error) {
-                console.error(error);
-                res.status(500).send("Erreur de base de données");
+                handleError(error);
                 return;
               }
-              pool.query("SELECT * FROM Info", (error, infosResult) => {
+              pool.query("SELECT * FROM Schedule ORDER BY pos", (error, scheduleResult) => {
                 if (error) {
-                  console.error(error);
-                  res.status(500).send("Erreur de base de données");
+                  handleError(error);
                   return;
                 }
-                pool.query("SELECT * FROM Schedule ORDER BY pos", (error, scheduleResult) => {
+                pool.query("SELECT * FROM Carousel", (error, carrouselResult) => {
                   if (error) {
-                    console.error(error);
-                    res.status(500).send("Erreur de base de données");
+                    handleError(error);
                     return;
                   }
-                  pool.query("SELECT * FROM Carousel", (error, carrouselResult) => {
-                    if (error) {
-                      console.error(error);
-                      res.status(500).send("Erreur de base de données");
-                      return;
-                    }
-                    res.render("layout", {template: "admin",brands: brandResults,category: categoriesResult,benefit: benefitResult,admin: adminResult, 
-                    galerie: galerieResult, info: infosResult, schedule: scheduleResult, carrousel: carrouselResult});
-                  });
+                  res.render("layout", {template: "admin",brands: brandResults,category: categoriesResult,benefit: benefitResult,
+                  admin: adminResult,galerie: galerieResult,info: infosResult,schedule: scheduleResult,carrousel: carrouselResult});
                 });
               });
             });
           });
-        }
-      );
+        });
+      });
     });
   });
 };
@@ -93,6 +88,16 @@ export const AddNewAdmin = (req, res) => {
   const authorizedExtention = ["image/jpeg", "image/png", "image/jpg"];
   form.parse(req, (err, fields, files) => {
     console.log(fields);
+    if (!validator.isEmail(fields.email)) {
+      return res.status(400).send("Veuillez saisir une adresse e-mail valide");
+    }
+    if (validator.isLength(fields.password, { min: 6, max: 20 }) && validator.matches(fields.password, /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*])/)) {
+      console.log('Le mot de passe est valide.');
+      next()
+    } else {
+      console.log('Le mot de passe n\'est pas valide.');
+      return
+    }
 
     if (err) {
       console.error(err);

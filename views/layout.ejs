@@ -10,12 +10,28 @@
 	<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+	<div class="accessibility">
+		<div class="admin-icone"><a href="/admin" class="dark"><i class="fa-solid fa-user-gear"></i></a></div>
+		<div class="logout"><a href="/logout" class="dark"><i class="fa-solid fa-right-from-bracket"></i></a></div>
+		<div class="newAdmin-icone"><a href="/addnewadmin" class="dark"><i class="fa-solid fa-user-plus"></i></a></div>	
+		<div class="toggle-container-dark">
+			<input type="checkbox" class="toggle-checkbox-dark" id="toggle-button-dark">
+			<label class="toggle-label-dark" for="toggle-button-dark">
+			  <span class="toggle-text-dark toggle-text-day"><i class="fa-solid fa-sun"></i></span>
+			  <span class="toggle-text-dark toggle-text-night"><i class="fa-solid fa-moon"></i></span>
+			  <span class="toggle-handle-dark"></span>
+			</label>
+		</div>
+		<div class="toggle-container-dys">
+			<input type="checkbox" class="toggle-checkbox-dys" id="toggle-button-dys">
+			<label class="toggle-label-dys" for="toggle-button-dys">
+			  <span class="toggle-text-dys">Dys</span>
+			</label>
+		</div>
+	</div>
 	<header class="header">
 		<div class="title">
-			<div class="admin-icone"><a href="/admin" class="dark"><i class="fa-solid fa-user-gear"></i></a></div>
 			
-			<div class="logout dark"><a href="/logout" class="dark"><i class="fa-solid fa-right-from-bracket"></i></a></div>
-			<div class="newAdmin-icone dark"><a href="/addnewadmin" class="dark"><i class="fa-solid fa-user-plus"></i></a></div>
 			<% if(locals.second) { %>
 	
 			<% } %>	
@@ -24,21 +40,7 @@
 			<% } %>
 			<h1><a href="/" class="dark">Au Petit Salon</a></h1>
 			<h2><a href="/" class="dark">Saint Félix</a></h2>
-			<div class="toggle-container-dark">
-				<input type="checkbox" class="toggle-checkbox-dark" id="toggle-button-dark">
-				<label class="toggle-label-dark" for="toggle-button-dark">
-				  <span class="toggle-text-dark toggle-text-day"><i class="fa-solid fa-sun"></i></span>
-				  <span class="toggle-text-dark toggle-text-night"><i class="fa-solid fa-moon"></i></span>
-				  <span class="toggle-handle-dark"></span>
-				</label>
-			</div>
-			<div class="toggle-container-dys">
-				<input type="checkbox" class="toggle-checkbox-dys" id="toggle-button-dys">
-				<label class="toggle-label-dys" for="toggle-button-dys">
-				  <span class="toggle-text-dys toggle-text-dys">Dys</span>
-				  <span class="toggle-text-dys toggle-text-nodys"><del>Dys</del></span>
-				</label>
-			</div>
+			
 		</div>
 		<nav class="nav">
 			<ul>
