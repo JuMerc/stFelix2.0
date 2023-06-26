@@ -147,15 +147,6 @@
           <legend>Prestations</legend>
           
             <table class="tab-benefit">
-              <thead>
-                <tr>
-                  <th>Prestations</th>
-                  <th>Prix</th>
-                  <th>Ordre</th>
-                  <th></th>
-                  <th></th>
-                </tr>
-              </thead>
               <tbody>
                 <% for (let j = 0; j < benefit.length; j++) { %>
                   <% if (benefit[j].category_id === category[i].id) { %>
@@ -267,13 +258,6 @@
     <h2>Horaires</h2>
       <h3>Modification d'un horaire</h3>
       <table class="tab-schedule js-post-table-schedule">
-        <thead>
-          <th>Jours</th>
-          <th>Heures</th>
-          <th>Ordre</th>
-          <th></th>
-          <th></th>
-        </thead>
         <tbody>
           <% for(let i=0; i < schedule.length; i++) { %>
             <form action="/updateschedule" method="post">

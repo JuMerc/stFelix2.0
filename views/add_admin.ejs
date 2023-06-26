@@ -33,6 +33,7 @@
         <thead>
             <th>administrateur secondaire</th>
             <th>Photo</th>
+            <th></th>
         </thead>
         <tbody>
           <% for(let i = 0; i < admin.length; i++) { %>
@@ -40,6 +41,7 @@
             <tr data-id="<%=admin[i].id%>">
               <td><%=admin[i].name%></td>
               <td><img src="<%= admin[i].picture %>" alt="<%= admin[i].name %>"></td>
+              <td><i class="fa-solid fa-trash-can"></i></td>
             </tr>
           <% }} %>
         </tbody>
