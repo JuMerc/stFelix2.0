@@ -124,6 +124,13 @@ legend {
     text-align: left;
 }
 
+.decline{
+    background-color: rgba(172, 24, 32, 0.5);
+    border: 2px solid rgba(172, 24, 32, 1);
+    font-size: 2rem;
+    padding:5px;
+}
+
 /**********PARAMETRES***********/
 .toggle-container-dark {
     display: inline-block;
@@ -197,7 +204,9 @@ body.dark-mode {
 }
 
 .title h1 .dark-mode,
-.title h2 .dark-mode {
+.title h2 .dark-mode,
+.footer p.dark-mode,
+.shadow-title{
     text-shadow: var(--main-color) 1px 1px 2px;
 }
 
@@ -326,7 +335,8 @@ body.dark-mode {
 }
 
 .title h1,
-.title h2 {
+.title h2,
+.footer h3.dark-mode {
     color: var(--main-color);
     text-shadow: black 1px 1px 2px;
 }
@@ -862,6 +872,30 @@ fieldset legend{
     max-width: 100px;
     height: auto;
 }
+.tab-admin{
+    width:100%
+}
+.tab-admin th{
+    display: none;
+}
+.tab-admin tr{
+    display: flex;
+    flex-direction: column;
+}
+.tab-admin tr td{
+    margin: auto;
+}
+.tab-admin tr{
+    border-bottom: 3px solid var(--second-color);
+    padding:20px 0
+}
+.tab-admin tr:last-child{
+    border:none
+}
+.tab-admin .text{
+    height:300px
+}
+
 
 
 /*****************Tableaux de supression/modification********************/
@@ -1100,7 +1134,13 @@ fieldset legend{
         background-color:rgba(172, 24, 32, 0.5);
         cursor: pointer;
     }
-
+    .add-admin .picture{
+        font-size: 2rem;
+    }
+    .tab-admin tr{
+        display: flex;
+        flex-direction: row;
+    }
 
 }
 

@@ -1,6 +1,19 @@
 <main class="desktop">
     <h2>Ajout d'un nouvel administrateur</h2>
     <div class="admin add-admin">
+      <% if(emailError){ %>
+        <p class="decline">L'adresse mail doit etre au format : _______@______.___</p>
+      <% } %>
+      <% if(passwordError){ %>
+        <p class="decline">Le mot de passe  doit contenir une majuscule, 1 chiffre, 1 caractère spéciale et au moins 8 caractères.</p>
+      <% } %>
+      <% if(sizeError){ %>
+        <p class="decline">L'image ne doit pas dépasser 5MO.</p>
+      <% } %>
+      <% if(typeError){ %>
+        <p class="decline">L'image doit etre au format JPG, JPEG ou PNG.</p>
+      <% } %>
+      
     <form action="/addnewadmin" method="post" class="form" enctype="multipart/form-data">
       <div class="sub-form">
         <input class="field email" type="email" id="email" name="email" placeholder="Email">
@@ -28,22 +41,34 @@
       </div>
     </form>
   </div>
-    <h2>Suppression d'un administrateur</h2>
-    <table class="tab js-post-table-admin">
-        <thead>
-            <th>administrateur secondaire</th>
-            <th>Photo</th>
-            <th></th>
-        </thead>
-        <tbody>
-          <% for(let i = 0; i < admin.length; i++) { %>
-            <% if(admin[i].role === 'second'){ %>
-            <tr data-id="<%=admin[i].id%>">
-              <td><%=admin[i].name%></td>
-              <td><img src="<%= admin[i].picture %>" alt="<%= admin[i].name %>"></td>
-              <td><i class="fa-solid fa-trash-can"></i></td>
-            </tr>
-          <% }} %>
-        </tbody>
-      </table>
+    <h2>Modification d'un administrateur</h2>
+    <table class="tab-admin js-post-table-admin">
+      
+      <tbody>
+        <% for(let i = 0; i < admin.length; i++) { %>
+          <tr data-id="<%=admin[i].id%>">
+            <form action="/updateadmin" method="post" enctype="multipart/form-data">
+              <td class="image-container">
+                <img src="<%=admin[i].picture%>">
+                <label class="file-label" for="adminPicture<%= i %>">
+                  <i class="fas fa-download"></i>
+                </label>
+                <input class="file-input" type="file" id="adminPicture<%= i %>" name="adminPicture<%= i %>">
+              </td>
+              <input type="hidden" id="adminId" name="adminId" value="<%= admin[i].id %>">
+              <td>
+                <textarea class="field text" id="adminText" name="adminText"><%=admin[i].text%></textarea>
+              </td>
+              <td>
+                <input class="button" type="submit" value="Modifier">
+              </td>
+            </form>
+            <td>
+              <button data-id="<%=admin[i].id%>" class="delete field"><i class="fa-solid fa-trash-can"></i></button>
+            </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+    
 </main>

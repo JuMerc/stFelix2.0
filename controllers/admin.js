@@ -76,45 +76,47 @@ export const NewAdmin = (req, res) => {
         res.status(500).send("Erreur de base de données");
         return;
       }
-      res.render("layout", { template: "add_admin", admin: adminResult, info: infosResult });
+      res.render("layout", { template: "add_admin", admin: adminResult, info: infosResult, 
+      passwordError: req.session.passwordError, emailError: req.session.emailError, sizeError: req.session.sizeError, typeError: req.session.typeError});
+      
     });
-    
   });
 };
+
 
 export const AddNewAdmin = (req, res) => {
   const maxSize = 5 * 1024 * 1024;
   const form = new formidable.IncomingForm();
   const authorizedExtention = ["image/jpeg", "image/png", "image/jpg"];
   form.parse(req, (err, fields, files) => {
-    console.log(fields);
     if (!validator.isEmail(fields.email)) {
-      return res.status(400).send("Veuillez saisir une adresse e-mail valide");
+      req.session.emailError = true;
+      return res.redirect("/addnewadmin")
     }
-    if (validator.isLength(fields.password, { min: 6, max: 20 }) && validator.matches(fields.password, /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*])/)) {
-      console.log('Le mot de passe est valide.');
-      next()
-    } else {
-      console.log('Le mot de passe n\'est pas valide.');
-      return
+    if (!validator.isLength(fields.password, { min: 6, max: 20 }) || !validator.matches(fields.password, /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*])/)) {
+      req.session.passwordError = true;
+      return res.redirect("/addnewadmin")
     }
-
     if (err) {
       console.error(err);
-      return res
-        .status(500)
-        .send("Une erreur est survenue lors de l'upload de l'image.");
+      return res.status(500).send("Une erreur est survenue lors de l'upload de l'image.");
     }
     const extension = files.myfile.originalFilename.split(".").pop();
     const oldPath = files.myfile.filepath;
     const newPath = `./public/team/${files.myfile.newFilename}.${extension}`;
 
     if (files.myfile.size > maxSize) {
-      return res.status(500).send("Image trop volumineuse");
+      req.session.sizeError = true;
+      return res.redirect("/addnewadmin")
     }
     if (!authorizedExtention.includes(files.myfile.mimetype)) {
-      return res.status(500).send("Le fichier n'a pas la bonne extention");
+      req.session.typeError = true;
+      return res.redirect("/addnewadmin")
     }
+    req.session.passwordError = false;
+    req.session.emailError = false;
+    req.session.sizeError = false;
+    req.session.typeError = false;
     fs.rename(oldPath, newPath, (error) => {
       if (error) {
         console.log(error);
@@ -129,7 +131,7 @@ export const AddNewAdmin = (req, res) => {
         const newUser = {
           id: uuidv4(),
           email: fields.email,
-          name: fields.name,
+          name: fields.name.charAt(0).toUpperCase() + fields.name.slice(1),
           picture: img,
           text: fields.text,
           role: fields.role,
@@ -153,6 +155,78 @@ export const AddNewAdmin = (req, res) => {
     });
   });
 };
+
+export const UpdateAdmin = (req, res) => {
+  const maxSize = 5 * 1024 * 1024;
+  const form = new formidable.IncomingForm();
+  const authorizedExtension = ["image/jpeg", "image/png", "image/jpg"];
+
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send("Une erreur est survenue lors de l'upload de l'image.");
+    }
+
+    pool.query("SELECT id, picture, text FROM User", (error, results) => {
+      if (error) {
+        console.error(error);
+        return res.status(500).send("Une erreur est survenue lors de la récupération des anciens uploads.");
+      }
+      for (let i = 0; i < results.length; i++) {
+        const row = results[i];
+        const adminFile = files[`adminPicture${i}`];
+        const adminText = fields.adminText;
+        const adminId = fields.adminId;
+        
+        if (adminFile && adminFile.originalFilename) {
+          const extension = adminFile.originalFilename.split(".").pop();
+          const oldPath = adminFile.filepath;
+          const newPath = `./public/team/${adminFile.newFilename}.${extension}`;
+
+          if (!authorizedExtension.includes(adminFile.mimetype)) {
+            return res.status(500).send("Le fichier n'a pas la bonne extension");
+          }
+
+          if (adminFile.size > maxSize) {
+            return res.status(500).send("Image trop volumineuse");
+          }
+
+          // Supprimer l'ancien fichier
+          const oldImagePath = `./public${row.picture}`;
+          fs.unlinkSync(oldImagePath);
+
+          fs.rename(oldPath, newPath, (error) => {
+            if (error) {
+              console.log(error);
+            }
+          });
+
+          const picture = `/team/${adminFile.newFilename}.${extension}`;
+          // Mettre à jour l'enregistrement avec le nouvel URL et le texte
+          pool.query("UPDATE User SET picture = ?, text = ? WHERE id = ?",
+            [picture, adminText, adminId],
+            function (error, result, fields) {
+              if (error) {
+                console.log(error);
+              }
+            }
+          );
+        } else{
+          pool.query("UPDATE User SET text = ? WHERE id = ?",
+            [adminText, adminId],
+            function (error, result, fields) {
+              if (error) {
+                console.log(error);
+              }
+            }
+          );
+        }
+      }
+      res.redirect("/addnewadmin");
+    });
+  });
+};
+
 
 export const DeleteAdmin = (req, res) => {
   let id = req.params.id;
@@ -201,55 +275,6 @@ export const DeleteAdmin = (req, res) => {
     }
   });
 };
-// export const UpdateCarrouselPicture = (req, res) => {
-//   const maxSize = 5 * 1024 * 1024;
-//   const form = new formidable.IncomingForm();
-//   const authorizedExtention = ["image/jpeg", "image/png", "image/jpg"];
-
-//   form.parse(req, (err, fields, files) => {
-//     if (err) {
-//       console.error(err);
-//       return res.status(500).send("Une erreur est survenue lors de l'upload de l'image.");
-//     }
-
-//     for (let i = 1; i <= 5; i++) {
-//       const carrouselFile = files[`carrousel${i}`];
-
-//       if (carrouselFile && carrouselFile.originalFilename) {
-//         const extension = carrouselFile.originalFilename.split(".").pop();
-//         const oldPath = carrouselFile.filepath;
-//         const newPath = `./public/carrousel/${carrouselFile.newFilename}.${extension}`;
-
-//         if (!authorizedExtention.includes(carrouselFile.mimetype)) {
-//           return res.status(500).send("Le fichier n'a pas la bonne extension");
-//         }
-
-//         if (carrouselFile.size > maxSize) {
-//           return res.status(500).send("Image trop volumineuse");
-//         }
-
-//         fs.rename(oldPath, newPath, (error) => {
-//           if (error) {
-//             console.log(error);
-//           }
-//         });
-
-//         const img = `/carrousel/${carrouselFile.newFilename}.${extension}`;
-
-//         pool.query(
-//           "INSERT INTO carrousel (id, img) VALUES (?, ?)",
-//           [uuidv4(), img],
-//           function (error, result, fields) {
-//             console.log(error);
-//           }
-//         );
-//       }
-//     }
-
-//     res.redirect("/admin");
-//   });
-// };
-//****************************************************AJOUT DE 5 PHOTOS POUR TESTS************************************************** */
 
 export const UpdateCarrouselPicture = (req, res) => {
   const maxSize = 5 * 1024 * 1024;

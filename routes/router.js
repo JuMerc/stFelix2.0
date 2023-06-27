@@ -10,8 +10,9 @@ import { TeamController } from "../controllers/team.js";
 import { GalleryController } from "../controllers/gallery.js";
 import { ContactController } from "../controllers/contact.js";
 import { LoginController, LoginSubmit, Logout } from "../controllers/login.js";
-import { AdminController, NewAdmin, AddNewAdmin, DeleteAdmin,UpdateCarrouselPicture, UpdateIndexText, AddBrand, DeleteBrand, AddCategory, AddBenefit,
-     DeleteCategory, DeleteBenefit, UpdateCategory, UpdateBenefit, AddPictureInGallery, DeletePictureInGallery, UpdateInfos, UpdateSchedule ,AddNewSchedule, DeleteSchedule } from "../controllers/admin.js"
+import { AdminController, NewAdmin, AddNewAdmin, UpdateAdmin ,DeleteAdmin,UpdateCarrouselPicture, UpdateIndexText, AddBrand, DeleteBrand, AddCategory, AddBenefit,
+     DeleteCategory, DeleteBenefit, UpdateCategory, UpdateBenefit, AddPictureInGallery, DeletePictureInGallery, UpdateInfos, UpdateSchedule ,AddNewSchedule,
+      DeleteSchedule } from "../controllers/admin.js"
 
 // Middleware qui bloque les routes si on est pas connecté
 const adminCheckMiddleware = (roles) => (req, res, next) => {
@@ -57,6 +58,9 @@ router.get('/addnewadmin',NewAdmin);
 //Ajout d'un nouvel administrateur a l'aide du formulaire
 // router.post('/addnewadmin',  adminCheckMiddleware(['main']) ,AddNewAdmin);
 router.post('/addnewadmin',AddNewAdmin);
+
+//Modification d'un admin
+router.post('/updateadmin',UpdateAdmin);
 
 //Suppression d'un admin secondaire
 // router.delete('/admin/:id',  adminCheckMiddleware(['main']) ,DeleteAdmin);

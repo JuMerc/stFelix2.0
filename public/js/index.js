@@ -34,7 +34,7 @@ function addEventListeners(selector, url) {
 
 document.addEventListener("DOMContentLoaded", () => {
   addEventListeners(".js-post-table-brand tr[data-id]", "/brand/");
-  addEventListeners(".js-post-table-admin tr[data-id]", "/admin/");
+  addEventListeners(".js-post-table-admin button[data-id]", "/admin/");
   addEventListeners(".js-category button[data-id]", "/category/");
   addEventListeners(".js-benefit button[data-id]", "/benefit/");
   addEventListeners(".js-post-table-schedule button[data-id]", "/schedule/");
