@@ -103,7 +103,7 @@ export const AddNewAdmin = (req, res) => {
     }
     const extension = files.myfile.originalFilename.split(".").pop();
     const oldPath = files.myfile.filepath;
-    const newPath = `./public/team/${files.myfile.newFilename}.${extension}`;
+    const newPath = `./public/team/${files.myfile.newFilename}.${extension.toLowerCase()}`;
 
     if (files.myfile.size > maxSize) {
       req.session.sizeError = true;
@@ -123,7 +123,7 @@ export const AddNewAdmin = (req, res) => {
       }
     });
 
-    const img = `/team/${files.myfile.newFilename}.${extension}`;
+    const img = `/team/${files.myfile.newFilename}.${extension.toLowerCase()}`;
     bcrypt.hash(fields.password, 10, function (error, hash) {
       if (error) {
         console.log(error);
@@ -181,7 +181,7 @@ export const UpdateAdmin = (req, res) => {
         if (adminFile && adminFile.originalFilename) {
           const extension = adminFile.originalFilename.split(".").pop();
           const oldPath = adminFile.filepath;
-          const newPath = `./public/team/${adminFile.newFilename}.${extension}`;
+          const newPath = `./public/team/${adminFile.newFilename}.${extension.toLowerCase()}`;
 
           if (!authorizedExtension.includes(adminFile.mimetype)) {
             return res.status(500).send("Le fichier n'a pas la bonne extension");
@@ -201,7 +201,7 @@ export const UpdateAdmin = (req, res) => {
             }
           });
 
-          const picture = `/team/${adminFile.newFilename}.${extension}`;
+          const picture = `/team/${adminFile.newFilename}.${extension.toLowerCase()}`;
           // Mettre à jour l'enregistrement avec le nouvel URL et le texte
           pool.query("UPDATE User SET picture = ?, text = ? WHERE id = ?",
             [picture, adminText, adminId],
@@ -360,7 +360,7 @@ export const UpdateCarrouselPicture = (req, res) => {
 //       if (carrouselFile && carrouselFile.originalFilename) {
 //         const extension = carrouselFile.originalFilename.split(".").pop();
 //         const oldPath = carrouselFile.filepath;
-//         const newPath = `./public/carrousel/${carrouselFile.newFilename}.${extension}`;
+//         const newPath = `./public/carrousel/${carrouselFile.newFilename}.${extension.toLowerCase()}`;
 
 //         if (!authorizedExtention.includes(carrouselFile.mimetype)) {
 //           return res.status(500).send("Le fichier n'a pas la bonne extension");
@@ -376,7 +376,7 @@ export const UpdateCarrouselPicture = (req, res) => {
 //           }
 //         });
 
-//         const img = `/carrousel/${carrouselFile.newFilename}.${extension}`;
+//         const img = `/carrousel/${carrouselFile.newFilename}.${extension.toLowerCase()}`;
 
 //         pool.query(
 //           "INSERT INTO Carousel (id, img) VALUES (?, ?)",
@@ -427,7 +427,7 @@ export const AddBrand = (req, res) => {
 
     const extension = files.newbrand.originalFilename.split(".").pop();
     const oldPath = files.newbrand.filepath;
-    const newPath = `./public/brand_img/${files.newbrand.newFilename}.${extension}`;
+    const newPath = `./public/brand_img/${files.newbrand.newFilename}.${extension.toLowerCase()}`;
 
     // Vérifier si tous les champs requis sont présents
     if (!files.newbrand || !fields.brandText || !fields.title) {
@@ -454,7 +454,7 @@ export const AddBrand = (req, res) => {
         console.log(error);
       }
     });
-    const img = `/brand_img/${files.newbrand.newFilename}.${extension}`;
+    const img = `/brand_img/${files.newbrand.newFilename}.${extension.toLowerCase()}`;
     const brandText = fields.brandText;
     const title = fields.title;
     pool.query("INSERT INTO Brand (id, title, img, text) VALUES (?, ?, ?, ?)",
@@ -651,7 +651,7 @@ export const AddPictureInGallery = (req, res) => {
     }
     const extension = files.newpicture.originalFilename.split(".").pop();
     const oldPath = files.newpicture.filepath;
-    const newPath = `./public/gallery/${files.newpicture.newFilename}.${extension}`;
+    const newPath = `./public/gallery/${files.newpicture.newFilename}.${extension.toLowerCase()}`;
 
     if (files.newpicture.size > maxSize) {
       return res.status(500).send("Image trop volumineuse");
@@ -665,7 +665,7 @@ export const AddPictureInGallery = (req, res) => {
       }
     });
 
-    const img = `/gallery/${files.newpicture.newFilename}.${extension}`;
+    const img = `/gallery/${files.newpicture.newFilename}.${extension.toLowerCase()}`;
     const newPicture = {
       id: uuidv4(),
       img: img,
