@@ -712,7 +712,7 @@ fieldset legend{
 
 .admin:last-child {
     border-bottom: none;
-}
+} 
 
 .carrousel-admin .form {
     display: flex;
@@ -756,7 +756,7 @@ fieldset legend{
     cursor: pointer;
 }
 
-.file-input {
+ .file-input {
     display: none
 }
 

@@ -284,9 +284,7 @@ export const UpdateCarrouselPicture = (req, res) => {
   form.parse(req, (err, fields, files) => {
     if (err) {
       console.error(err);
-      return res
-        .status(500)
-        .send("Une erreur est survenue lors de l'upload de l'image.");
+      return res.status(500).send("Une erreur est survenue lors de l'upload de l'image.");
     }
 
     pool.query("SELECT id, img FROM Carousel", (error, results) => {
@@ -305,7 +303,7 @@ export const UpdateCarrouselPicture = (req, res) => {
         if (carrouselFile && carrouselFile.originalFilename) {
           const extension = carrouselFile.originalFilename.split(".").pop();
           const oldPath = carrouselFile.filepath;
-          const newPath = `./public/carrousel/${carrouselFile.newFilename}.${extension}`;
+          const newPath = `./public/carrousel/${carrouselFile.newFilename}.${extension.toLowerCase()}`;
           if (!authorizedExtention.includes(carrouselFile.mimetype)) {
             return res
               .status(500)
@@ -326,7 +324,7 @@ export const UpdateCarrouselPicture = (req, res) => {
             }
           });
 
-          const img = `/carrousel/${carrouselFile.newFilename}.${extension}`;
+          const img = `/carrousel/${carrouselFile.newFilename}.${extension.toLowerCase()}`;
 
           // Mettre à jour l'enregistrement avec le nouvel URL
           pool.query(
@@ -345,6 +343,54 @@ export const UpdateCarrouselPicture = (req, res) => {
   });
 };
 
+// export const UpdateCarrouselPicture = (req, res) => {
+//   const maxSize = 5 * 1024 * 1024;
+//   const form = new formidable.IncomingForm();
+//   const authorizedExtention = ["image/jpeg", "image/png", "image/jpg"];
+
+//   form.parse(req, (err, fields, files) => {
+//     if (err) {
+//       console.error(err);
+//       return res.status(500).send("Une erreur est survenue lors de l'upload de l'image.");
+//     }
+
+//     for (let i = 0; i < 5; i++) {
+//       const carrouselFile = files[`carrousel${i}`];
+
+//       if (carrouselFile && carrouselFile.originalFilename) {
+//         const extension = carrouselFile.originalFilename.split(".").pop();
+//         const oldPath = carrouselFile.filepath;
+//         const newPath = `./public/carrousel/${carrouselFile.newFilename}.${extension}`;
+
+//         if (!authorizedExtention.includes(carrouselFile.mimetype)) {
+//           return res.status(500).send("Le fichier n'a pas la bonne extension");
+//         }
+
+//         if (carrouselFile.size > maxSize) {
+//           return res.status(500).send("Image trop volumineuse");
+//         }
+
+//         fs.rename(oldPath, newPath, (error) => {
+//           if (error) {
+//             console.log(error);
+//           }
+//         });
+
+//         const img = `/carrousel/${carrouselFile.newFilename}.${extension}`;
+
+//         pool.query(
+//           "INSERT INTO Carousel (id, img) VALUES (?, ?)",
+//           [uuidv4(), img],
+//           function (error, result, fields) {
+//             console.log(error);
+//           }
+//         );
+//       }
+//     }
+
+//     res.redirect("/admin");
+//   });
+// };
 export const UpdateIndexText = (req, res) => {
   const indexText = req.body.indexText; // Récupérer le nouveau texte à partir du corps de la requête
   // Mettre à jour le texte dans la base de données
