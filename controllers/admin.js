@@ -293,7 +293,7 @@ export const UpdateCarrouselPicture = (req, res) => {
         return res
           .status(500)
           .send(
-            "Une erreur est survenue lors de la récupération des anciens uploads."
+            "Une erreur est survenuee lors de la récupération des anciens uploads."
           );
       }
 
