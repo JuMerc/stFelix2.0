@@ -950,6 +950,34 @@ fieldset legend{
 }
 
 /***********************Info/horaires************************/
+.admin-nav-bot{
+    position: sticky;
+    bottom:0;
+    width:100%;
+    background-color: #C3672D;
+    margin-bottom:-30px;
+    border-top: 2px solid black
+}
+.admin-nav-bot ul{
+    display:flex;
+    justify-content: space-around;
+    padding:5px
+    
+}
+.admin-nav-bot ul a{
+    text-decoration: none;
+    color: var(--main-color);
+    text-shadow: black 1px 2px 5px;
+}
+.admin-nav-bot ul a:active{
+    letter-spacing: 2px;
+    color:black
+}
+.admin-nav-top{
+    display: none;
+}
+
+/****************************Navigation*********************************/
 
 
 /**************************************ADMIN****************************************/
@@ -1212,5 +1240,32 @@ fieldset legend{
     .toggle-text-dys {
         top: 4px;
     }
+    .admin-nav-bot{
+        display: none;
+    }
+    .admin-nav-top{
+        width:100%;
+        background-color: #C3672D;
+        border-top: 2px solid black;
+        display:block;
+        position: sticky;
+        bottom:0;
+        margin-bottom: -30px;
+    }
+    .admin-nav-top ul{
+        display:flex;
+        justify-content: space-around;
+        padding:5px
+    }
+    .admin-nav-top ul a{
+        text-decoration: none;
+        color: var(--main-color);
+        text-shadow: black 1px 2px 5px;
+    }
+    .admin-nav-top ul a:hover{
+        letter-spacing: 2px;
+        color:black
+    }
+
 
 }

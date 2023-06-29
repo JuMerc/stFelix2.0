@@ -1,14 +1,7 @@
+
 <main class="desktop">
-  <nav>
-    <ul>
-      <li><a href=""></a></li>
-      <li><a href=""></a></li>
-      <li><a href=""></a></li>      
-      <li><a href=""></a></li>
-      <li><a href=""></a></li>
-    </ul>
-  </nav>
-  <section class="admin">
+  
+  <section class="admin" id="index">
     <h2>Page d'accueil</h3>
       <h3>Modification des photos du carrousel</h4>
         <div class="carrousel-admin">
@@ -75,7 +68,7 @@
             </table>
           </div>
   </section>
-  <section class="admin">
+  <section class="admin" id="serve">
     <h2>Services et tarifs</h2>
     <h3>Ajout d'une catégorie </h3>
     <div class="add-category">
@@ -120,7 +113,6 @@
       </div>
 
     </div>
-    <a href="/admin/benefit"></a>
     <h3>Modification d'une catégorie ou d'une prestation</h3>
     <% for (let i = 0; i < category.length; i++) { %>
       <fieldset class="field fieldset js-category" data-id="<%= category[i].id %>">
@@ -190,7 +182,7 @@
       </fieldset>
     <% } %>
     
-  <section class="admin">
+  <section class="admin" id="gallery">
     <h2>Galerie photo</h2>
     <div class="add-picture">
       <h3>Ajout d'une photo</h3>
@@ -232,7 +224,7 @@
       </tbody>
     </table>
   </section>
-  <section class="admin">
+  <section class="admin" id="info">
     <h3>Informations diverses</h3>
     <div class="info-admin">
       <form action="/updateinfos" method="post" class="form">
@@ -254,7 +246,7 @@
       </form>
     </div>
   </section>
-  <section class="admin">
+  <section class="admin" id="schedule">
     <h2>Horaires</h2>
       <h3>Modification d'un horaire</h3>
       <table class="tab-schedule js-post-table-schedule">
@@ -308,6 +300,25 @@
       </div>
       </form>
     </div>
-    
   </section>
 </main>
+<nav class="admin-nav-top">
+  <ul>
+    <li><a href="#index"><i class="fa-solid fa-gears"></i>Accueil</a></li>
+    <li><a href="#serve"><i class="fa-solid fa-gears"></i>Tarifs</a></li>
+    <li><a href="#gallery"><i class="fa-solid fa-gears"></i>Galerie</a></li>      
+    <li><a href="#info"><i class="fa-solid fa-gears"></i>informations</a></li>
+    <li><a href="#schedule"><i class="fa-solid fa-gears"></i>Horaires</a></li>
+  </ul>
+</nav>
+<nav class="admin-nav-bot">
+  <ul>
+    <li><a href="#index"><i class="fa-solid fa-gears"></i>Accueil</a></li>
+    <li><a href="#serve"><i class="fa-solid fa-gears"></i>Tarifs</a></li>
+    <li><a href="#gallery"><i class="fa-solid fa-gears"></i>Galerie</a></li>      
+  </ul>
+  <ul>
+    <li><a href="#info"><i class="fa-solid fa-gears"></i>informations</a></li>
+    <li><a href="#schedule"><i class="fa-solid fa-gears"></i>Horaires</a></li>
+  </ul>
+</nav>

@@ -12,8 +12,14 @@
 <body>
 	<div class="accessibility">
 		<div class="admin-icone"><a href="/admin" class="dark"><i class="fa-solid fa-user-gear"></i></a></div>
-		<div class="logout"><a href="/logout" class="dark"><i class="fa-solid fa-right-from-bracket"></i></a></div>
-		<div class="newAdmin-icone"><a href="/addnewadmin" class="dark"><i class="fa-solid fa-user-plus"></i></a></div>	
+		<% if(locals.second) { %>
+			<div class="logout"><a href="/logout" class="dark"><i class="fa-solid fa-right-from-bracket"></i></a></div>
+		<% } %>	
+		<% if(locals.main) { %>
+			<div class="logout"><a href="/logout" class="dark"><i class="fa-solid fa-right-from-bracket"></i></a></div>
+			<div class="newAdmin-icone"><a href="/addnewadmin" class="dark"><i class="fa-solid fa-user-plus"></i></a></div>	
+		<% } %>
+		
 		<div class="toggle-container-dark">
 			<input type="checkbox" class="toggle-checkbox-dark" id="toggle-button-dark">
 			<label class="toggle-label-dark" for="toggle-button-dark">
@@ -31,16 +37,8 @@
 	</div>
 	<header class="header">
 		<div class="title">
-			
-			<% if(locals.second) { %>
-	
-			<% } %>	
-			<% if(locals.main) { %>
-				
-			<% } %>
 			<h1><a href="/" class="dark">Au Petit Salon</a></h1>
 			<h2><a href="/" class="dark">Saint Félix</a></h2>
-			
 		</div>
 		<nav class="nav">
 			<ul>
