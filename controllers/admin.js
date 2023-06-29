@@ -117,7 +117,7 @@ export const AddNewAdmin = (req, res) => {
     req.session.emailError = false;
     req.session.sizeError = false;
     req.session.typeError = false;
-    fs.rename(oldPath, newPath, (error) => {
+    fs.copyFile(oldPath, newPath, (error) => {
       if (error) {
         console.log(error);
       }
@@ -193,9 +193,14 @@ export const UpdateAdmin = (req, res) => {
 
           // Supprimer l'ancien fichier
           const oldImagePath = `./public${row.picture}`;
-          fs.unlinkSync(oldImagePath);
+          try {
+            fs.unlinkSync(oldImagePath);
+          } catch(error) {
+            console.log(error)
+          }
+          
 
-          fs.rename(oldPath, newPath, (error) => {
+          fs.copyFile(oldPath, newPath, (error) => {
             if (error) {
               console.log(error);
             }
@@ -316,9 +321,14 @@ export const UpdateCarrouselPicture = (req, res) => {
 
           // Supprimer l'ancien fichier
           const oldImagePath = `./public${row.img}`;
-          fs.unlinkSync(oldImagePath);
+          try {
+            fs.unlinkSync(oldImagePath);
+          } catch(error) {
+            console.log(error)
+          }
+          
 
-          fs.rename(oldPath, newPath, (error) => {
+          fs.copyFile(oldPath, newPath, (error) => {
             if (error) {
               console.log(error);
             }
@@ -370,7 +380,7 @@ export const UpdateCarrouselPicture = (req, res) => {
 //           return res.status(500).send("Image trop volumineuse");
 //         }
 
-//         fs.rename(oldPath, newPath, (error) => {
+//         fs.copyFile(oldPath, newPath, (error) => {
 //           if (error) {
 //             console.log(error);
 //           }
@@ -449,7 +459,7 @@ export const AddBrand = (req, res) => {
     const brandId = uuidv4();
 
     // Déplacer le fichier vers le dossier de destination avec le nouveau nom
-    fs.rename(oldPath, newPath, (error) => {
+    fs.copyFile(oldPath, newPath, (error) => {
       if (error) {
         console.log(error);
       }
@@ -659,7 +669,7 @@ export const AddPictureInGallery = (req, res) => {
     if (!authorizedExtention.includes(files.newpicture.mimetype)) {
       return res.status(500).send("Le fichier n'a pas la bonne extention");
     }
-    fs.rename(oldPath, newPath, (error) => {
+    fs.copyFile(oldPath, newPath, (error) => {
       if (error) {
         console.log(error);
       }
